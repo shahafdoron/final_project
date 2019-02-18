@@ -21,9 +21,9 @@
         </div>
 
         <!-- Login Form -->
-        <form action="autintication.php" method="post">
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-          <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+        <form action="authentication.php" method="post">
+          <input type="text" id="emailAddress" name="emailAddress" placeholder="Email Address">
+          <input type="text" id="password" name="password" placeholder="Passowrd">
           <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 

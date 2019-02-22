@@ -1,0 +1,68 @@
+body {
+  font-family: "Ariel", sans-serif;
+  height: 500px;
+  background: url("p.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.sidenav {
+  height: 60%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  left: 0;
+  background-color: #074863;
+  overflow-x: hidden;
+  padding-top: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  cursor: pointer;
+  background-color:  #074863;
+	color: black;
+	border-radius: 1px;
+	border:none;
+	/* border: 1px solid #f1f1f126; */
+	border-radius: 3px;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  background-color:#5c849463;
+}
+
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  width:80%;
+  height:80%;
+}
+
+/* @media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+} */
+
+.iframe {
+   overflow: hidden;
+   display: flex;
+   /* flex-direction: column; */
+   margin: 50px;
+   width:80%;
+   height:520px;
+   min-height: 100px;
+   border-radius: 20px;
+   /* box-shadow: 0.5px 1px 15px 3px #aaaaaa;
+
+   /* background-color: #ffffffe8; */
+}

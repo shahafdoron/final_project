@@ -41,3 +41,24 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   -ms-transform: scale(0.95);
   transform: scale(0.95);
 }
+.container {
+  border: 1px solid black;
+  padding: 4px;
+  margin: 4px;
+}
+
+.row {
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  margin-right: 6px;
+  background-color: #EEE;
+  height: 100%;
+  width: 100%;
+}
+
+.clear {
+  clear: both;
+}

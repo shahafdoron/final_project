@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+
     <meta charset="utf-8">
       <link rel="stylesheet" href="style/innerWindow.css" type="text/css">
     <title></title>
@@ -10,7 +11,7 @@
   </head>
   <body>
   <br>
-  <form action="/action_page.php">
+  <form action="Existing_guided_Tour.php">
   Starting Date: <input type="date" name="enter">
   <br>
   <br>
@@ -20,12 +21,12 @@
   <br>
   <br>
   Accessibility:
-  <input type="radio" name="radio" value="true"> Yes
-  <input type="radio" name="radio" value="false"> No
+  <input type="radio" name="access" value="1" > Yes
+  <input type="radio" name="access" value="0" checked="checked"> No
   <br>
   <br>
   <br>
   <input type="submit">
-</form>
+  </form>
   </body>
 </html>

@@ -4,33 +4,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="style/homeStyle.css" type="text/css">
 <script>
-
-function make_str_date(){
-var dateNow = new Date();
-var hour=dateNow.toLocaleTimeString();
- var month = dateNow.getMonth();
- var day = dateNow.getDate();
- var year = dateNow.getFullYear();
-
-
-str_date="";
-if(day <10){
-		if((month+1)<10)
-			str_date+=year +"-0"+(month+1)+"-0"+day ;
-		else
-			str_date+=year +"-"+(month+1)+"-0"+day ;
-}
-else{
-		if((month+1)<10)
-		str_date+=year +"-0"+(month+1)+"-"+day ;
-
-		else
-		str_date+=year +"-"+(month+1)+"-"+day ;
-
-}
-return str_date;
-
-}
+//
+// function make_str_date(){
+// var dateNow = new Date();
+// var hour=dateNow.toLocaleTimeString();
+//  var month = dateNow.getMonth();
+//  var day = dateNow.getDate();
+//  var year = dateNow.getFullYear();
+//
+//
+// str_date="";
+// if(day <10){
+// 		if((month+1)<10)
+// 			str_date+=year +"-0"+(month+1)+"-0"+day ;
+// 		else
+// 			str_date+=year +"-"+(month+1)+"-0"+day ;
+// }
+// else{
+// 		if((month+1)<10)
+// 		str_date+=year +"-0"+(month+1)+"-"+day ;
+//
+// 		else
+// 		str_date+=year +"-"+(month+1)+"-"+day ;
+//
+// }
+// return str_date;
+//
+// }
 function callFrame(url)
 {
 	// make_str_date();

@@ -34,7 +34,10 @@
 function callFrame(url)
 {
 	// make_str_date();
+
 	document.getElementById('iframe1').src = url;
+
+
   // +"?date="+make_str_date();
 }
 </script>
@@ -44,7 +47,7 @@ function callFrame(url)
 
 <div class="sidenav">
   <a href="homepage_user.php">Home</a>
-  <a onclick="callFrame('events.php')">Infomation about Points</a>
+  <a onclick="callFrame('points_info.php')">Infomation about Points</a>
   <a onclick="callFrame('enter_dates_guided.php')">Guided Tours</a>
   <a onclick="callFrame('events.php')">Make your own Tour</a>
   <a onclick="callFrame('events.php')">Contact</a>

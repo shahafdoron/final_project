@@ -25,9 +25,7 @@ function validate_email_password(){
     $_SESSION["password"]=$row["Password"];
     $result->free();
     header('location:user/homepage_user.php');
-
   }
-
 
   else {
     $_SESSION['error'] = "Incorrect login or password!";
@@ -35,16 +33,29 @@ function validate_email_password(){
   	header('location:index.php');
 
   }
-
-
-
 }
-
 
 function user_authintication($emailAddress,$password){
   if ($emailAddress=='' || $password==''){
     echo "Please enter email address and password";
   }
-  // $query= "select * from user where user.Email='" . $emailAddress "' and user.Password='" . $password "''";
 }
+
+function extract_data_to_json($query){
+  global $conn;
+  $data=array();
+  $result=mysqli_query($conn,$query);
+
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+      $data[]=$row;
+  }
+}
+  $json_string_data=json_encode($data);
+  $result->free();
+  $conn->close();
+  return $json_string_data;
+}
+
+
  ?>

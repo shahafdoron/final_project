@@ -40,6 +40,7 @@ function concatenatePoints(json_data){
   console.log(json_data);
   for (var i = 0; i < json_data.length; i++) {
     // txt+="<div class='card' >";
+    txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>"
     txt+="<div class='col-4' style='width: 18rem;'>";
     txt+="<img class='card-img-top' src='' alt='Card image cap'>";
     txt+="<div class='card-body'>";
@@ -51,19 +52,20 @@ function concatenatePoints(json_data){
     txt+="<li class='list-group-item'>Short description:</li>";
     txt+="</ul>"
     txt+="<div class='card-body'>";
-    txt+="<button type='button' class='btn btn-primary'>Card link</button>";
+    txt+="<button type='submit' class='btn btn-primary'>Card link</button>";
     txt+="</div>";
     txt+="</div>";
+    txt+="</form>";
       }
   txt+="</div>";
   txt+="</div>";
   points_div.innerHTML=txt;
   var all_bt=document.getElementsByClassName("btn btn-primary");
-  for (var i = 0; i < all_bt.length; i++) {
-  all_bt[i].addEventListener('click', function(){
-    window.location.href='point_description.php';
-      });
-}
+  // for (var i = 0; i < all_bt.length; i++) {
+  // all_bt[i].addEventListener('click', function(){
+  //   window.location.href='point_description.php';
+  //     });
+  //   }
 }
 
 
@@ -80,7 +82,7 @@ function concatenateGuidedTours(json_data){
     txt+="<td style='text-align: center'>Date : "+json_data[i].tour_date+", Hours: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</td></tr>";
     txt+="<tr><td>&nbsp;</td>";
     txt+="<td style='text-align: center'>Cost: "+json_data[i].tour_cost+"₪ <br><br>Remaining tickets: "+json_data[i].remaining_tickets+" Tickets</td></tr></table>";
-    txt+="<div class='btn' style='text-align: center'><input name='Submit1' type='submit' value='More information and booking' ></div>";
+    txt+="<div class='btn btn-primary' style='text-align: center'><input name='Submit1' type='submit' value='More information and booking' ></div>";
     txt+="</div><div class='clear'></div></form>";
     counter+=counter;
 

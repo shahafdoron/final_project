@@ -5,10 +5,24 @@ $password = "";
 $database= "final_project";
 $conn =  mysqli_connect($host,$username,$password,$database);
 session_start();
+
 if (!$conn){
   die("Database connection has failed!");
 }
 
+if (is_ajax_request()) {
+  ajaxCall();
+}
+
+function is_ajax_request(){
+  return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ;
+}
+function ajaxCall(){
+  $query=$_REQUEST['query'];
+  $jsonData=extract_data_to_json($query);
+  echo $jsonData;
+
+}
 function validate_email_password(){
 
   global  $conn;

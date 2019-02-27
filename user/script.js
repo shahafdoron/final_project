@@ -2,15 +2,18 @@
 function callAjax(func,url){
   var request = new XMLHttpRequest();
   request.open("GET",url);
+  request.setRequestHeader('X-Requested-With','XMLHttpRequest');
   request.onreadystatechange = function() {
     if ((request.readyState==4) & (request.status==200)){
+      // console.log(request.responseText);
       var json_data=JSON.parse(request.responseText);
-      console.log(json_data);
+      // console.log(json_data);
       func(json_data);
         }
     }
     request.send();
   }
+
 
 function concatenateCategories(json_data){
 
@@ -29,7 +32,7 @@ function showCategoryPoints(){
   var cat_id=cat.options[cat.selectedIndex].id;
   var cat_name=cat.options[cat.selectedIndex].value;
   var query="SELECT * FROM point_of_interest,category WHERE point_of_interest.category_ID=category.category_ID AND category.cat_name='"+cat_name+"'";
-  callAjax(concatenatePoints,'file.php?query='+query);
+  callAjax(concatenatePoints,'../db_conn.php?query='+query);
 }
 
 function concatenatePoints(json_data){
@@ -40,8 +43,9 @@ function concatenatePoints(json_data){
   console.log(json_data);
   for (var i = 0; i < json_data.length; i++) {
     // txt+="<div class='card' >";
-    txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>"
+
     txt+="<div class='col-4' style='width: 18rem;'>";
+    txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>";
     txt+="<img class='card-img-top' src='' alt='Card image cap'>";
     txt+="<div class='card-body'>";
     txt+="<h5 class='card-title'>Card title</h5>";
@@ -52,7 +56,7 @@ function concatenatePoints(json_data){
     txt+="<li class='list-group-item'>Short description:</li>";
     txt+="</ul>"
     txt+="<div class='card-body'>";
-    txt+="<button type='submit' class='btn btn-primary'>Card link</button>";
+    txt+="<input class='btn btn-primary' type='submit' value='For more details'>";
     txt+="</div>";
     txt+="</div>";
     txt+="</form>";
@@ -63,8 +67,8 @@ function concatenatePoints(json_data){
   var all_bt=document.getElementsByClassName("btn btn-primary");
   // for (var i = 0; i < all_bt.length; i++) {
   // all_bt[i].addEventListener('click', function(){
-  //   window.location.href='point_description.php';
   //     });
+  //   window.location.href='point_description.php';
   //   }
 }
 

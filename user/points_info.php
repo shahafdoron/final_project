@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <?php
-include("../db_conn.php");
-// extractPoints();
+// include("../db_conn.php");
 
-
-        ?>
+  ?>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -15,14 +13,13 @@ include("../db_conn.php");
 
   <body >
     <script src="script.js">  </script>
-
       <div class="container">
         <h2>Points of interest</h2>
         <div >
           <select id="categories" width=50px >
               <script> //function showCategories()
               var query='select * from category';
-              callAjax(concatenateCategories,'file.php?query='+query); </script>
+              callAjax(concatenateCategories,'../db_conn.php?query='+query); </script>
           </select>
         </div>
         <div id="points">
@@ -35,4 +32,5 @@ include("../db_conn.php");
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
   </body>
+
 </html>

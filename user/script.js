@@ -21,7 +21,7 @@ function concatenateCategories(json_data){
   var txt="<option selected disabled hidden>Choose category</option>";
   var x = document.getElementById("categories");
   for (var i = 0; i < json_data.length; i++){
-    txt+="<option id='"+json_data[i].category_ID+"' >"+json_data[i].cat_name+"</option>";
+    txt+="<option id='"+json_data[i].category_id+"' >"+json_data[i].cat_name+"</option>";
   }
   el.innerHTML=txt;
   el.addEventListener("change",showCategoryPoints);
@@ -31,40 +31,41 @@ function showCategoryPoints(){
   var cat=document.getElementById("categories");
   var cat_id=cat.options[cat.selectedIndex].id;
   var cat_name=cat.options[cat.selectedIndex].value;
-  var query="SELECT * FROM point_of_interest,category WHERE point_of_interest.category_ID=category.category_ID AND category.cat_name='"+cat_name+"'";
+  var query="SELECT * FROM point_of_interest,category WHERE point_of_interest.category_id=category.category_id AND category.cat_name='"+cat_name+"'";
   callAjax(concatenatePoints,'../db_conn.php?query='+query);
 }
 
 function concatenatePoints(json_data){
   var points_div=document.getElementById("points");
   // points_div.innerHTML="<p>"+JSON.stringify(json_data)+"</p>";
-  var txt="<div class'container'>";
+  var txt="<br><br><div class'container'>";
   txt+="<div class='card-group'>";
   console.log(json_data);
   for (var i = 0; i < json_data.length; i++) {
     // txt+="<div class='card' >";
 
-    txt+="<div class='col-4' style='width: 18rem;'>";
+    txt+="<div class='col-4 col-md-4' style='width: 18rem;'>";
     txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>";
-    txt+="<img class='card-img-top' src='' alt='Card image cap'>";
+    txt+="<img class='card-img-top img-responsive text-center' src='wolfson.jpg' alt='Card image cap'>";
     txt+="<div class='card-body'>";
     txt+="<h5 class='card-title'>Card title</h5>";
     txt+="<p class='card-text'>Some quick example</p>";
     txt+="</div>";
     txt+="<ul class='list-group list-group-flush'>";
-    txt+="<li class='list-group-item'>Name:"+json_data[i].name + "</li>";
-    txt+="<li class='list-group-item'>Short description:</li>";
+    txt+="<li class='list-group-item card-text'>Name:"+json_data[i].name + "</li>";
+    txt+="<li class='list-group-item card-text'>Short description:</li>";
     txt+="</ul>"
     txt+="<div class='card-body'>";
     txt+="<input class='btn btn-primary' type='submit' value='For more details'>";
     txt+="</div>";
     txt+="</div>";
+
     txt+="</form>";
       }
   txt+="</div>";
   txt+="</div>";
   points_div.innerHTML=txt;
-  var all_bt=document.getElementsByClassName("btn btn-primary");
+
   // for (var i = 0; i < all_bt.length; i++) {
   // all_bt[i].addEventListener('click', function(){
   //     });

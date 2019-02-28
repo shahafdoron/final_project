@@ -2,6 +2,7 @@
 <?php
 
 include('db_conn.php');
+
 $error='';
 if (isset($_SESSION['error'])) {
   $error = $_SESSION['error'];

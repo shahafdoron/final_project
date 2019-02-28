@@ -1,4 +1,7 @@
+<?php
+?>
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,6 +53,7 @@ function callFrame(url)
   <a onclick="callFrame('points_info.php')">Infomation about Points</a>
   <a onclick="callFrame('enter_dates_guided.php')">Guided Tours</a>
   <a onclick="callFrame('events.php')">Make your own Tour</a>
+	<a onclick="callFrame('my_tours.php')">My tours</a>
   <a onclick="callFrame('events.php')">Contact</a>
 </div>
 

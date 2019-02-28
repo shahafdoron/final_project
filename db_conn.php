@@ -35,8 +35,9 @@ function validate_email_password(){
   $result=mysqli_query($conn,$query);
 
   if ($row=mysqli_fetch_assoc($result)){
-    $_SESSION["emailAddress"]=$row["Email"];
-    $_SESSION["password"]=$row["Password"];
+    $_SESSION["emailAddress"]=$row["email"];
+    $_SESSION["password"]=$row["password"];
+    $_SESSION["user_id"]=$row["user_id"];
     $result->free();
     header('location:user/homepage_user.php');
   }

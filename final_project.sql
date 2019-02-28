@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2019 at 12:46 PM
+-- Generation Time: Feb 28, 2019 at 04:23 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `category` (
-  `category_ID` int(10) UNSIGNED NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL,
   `cat_name` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -36,7 +36,7 @@ CREATE TABLE `category` (
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`category_ID`, `cat_name`, `description`) VALUES
+INSERT INTO `category` (`category_id`, `cat_name`, `description`) VALUES
 (1, 'history', 'some desc'),
 (2, 'tree', 'some desc'),
 (3, 'Gate', 'some desc'),
@@ -53,9 +53,9 @@ INSERT INTO `category` (`category_ID`, `cat_name`, `description`) VALUES
 --
 
 CREATE TABLE `feedback` (
-  `feedback_ID` int(10) UNSIGNED NOT NULL,
-  `tour_ID` int(10) UNSIGNED NOT NULL,
-  `user_ID` int(10) UNSIGNED NOT NULL
+  `feedback_id` int(10) UNSIGNED NOT NULL,
+  `tour_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -65,16 +65,16 @@ CREATE TABLE `feedback` (
 --
 
 CREATE TABLE `guide` (
-  `Guide_ID` int(10) NOT NULL,
-  `Experience` int(2) NOT NULL,
-  `Category_Expertise` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `guide_id` int(10) NOT NULL,
+  `experience` int(2) NOT NULL,
+  `category_expertise` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `guide`
 --
 
-INSERT INTO `guide` (`Guide_ID`, `Experience`, `Category_Expertise`) VALUES
+INSERT INTO `guide` (`guide_id`, `experience`, `category_expertise`) VALUES
 (2, 10, 'History');
 
 -- --------------------------------------------------------
@@ -84,21 +84,24 @@ INSERT INTO `guide` (`Guide_ID`, `Experience`, `Category_Expertise`) VALUES
 --
 
 CREATE TABLE `guided_tour` (
-  `guided_tour_ID` int(10) UNSIGNED NOT NULL,
-  `guide_ID` int(10) UNSIGNED NOT NULL,
+  `guided_tour_id` int(10) UNSIGNED NOT NULL,
+  `guide_id` int(10) UNSIGNED NOT NULL,
   `group_size` int(3) UNSIGNED NOT NULL,
   `currently_participants` int(3) UNSIGNED NOT NULL,
   `registration_deadline` datetime NOT NULL,
-  `tour_cost` int(6) UNSIGNED NOT NULL
+  `tour_cost` int(6) UNSIGNED NOT NULL,
+  `short_desc` text COLLATE utf8_unicode_ci,
+  `description` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `guided_tour`
 --
 
-INSERT INTO `guided_tour` (`guided_tour_ID`, `guide_ID`, `group_size`, `currently_participants`, `registration_deadline`, `tour_cost`) VALUES
-(1, 2, 20, 10, '2019-03-26 00:00:00', 80),
-(2, 2, 15, 4, '2019-03-24 00:00:00', 15);
+INSERT INTO `guided_tour` (`guided_tour_id`, `guide_id`, `group_size`, `currently_participants`, `registration_deadline`, `tour_cost`, `short_desc`, `description`) VALUES
+(1, 2, 20, 10, '2019-03-26 00:00:00', 80, 'short desc', 'long desc'),
+(2, 2, 15, 4, '2019-03-24 00:00:00', 15, 'short desc', 'long desc'),
+(4, 2, 35, 15, '2019-03-31 00:00:00', 80, 'short desc', 'long desc');
 
 -- --------------------------------------------------------
 
@@ -107,10 +110,18 @@ INSERT INTO `guided_tour` (`guided_tour_ID`, `guide_ID`, `group_size`, `currentl
 --
 
 CREATE TABLE `guided_tour_registration` (
-  `guided_tour_ID` int(10) UNSIGNED NOT NULL,
-  `registered_tourist_ID` int(10) UNSIGNED NOT NULL,
+  `guided_tour_id` int(10) UNSIGNED NOT NULL,
+  `registered_tourist_id` int(10) UNSIGNED NOT NULL,
+  `subscribers` int(3) UNSIGNED NOT NULL DEFAULT '0',
   `registration_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `guided_tour_registration`
+--
+
+INSERT INTO `guided_tour_registration` (`guided_tour_id`, `registered_tourist_id`, `subscribers`, `registration_date`) VALUES
+(4, 1, 3, '2019-02-27 19:00:00');
 
 -- --------------------------------------------------------
 
@@ -119,10 +130,18 @@ CREATE TABLE `guided_tour_registration` (
 --
 
 CREATE TABLE `independent_tour` (
-  `independent_tour_ID` int(10) UNSIGNED NOT NULL,
-  `independent_tourist_ID` int(10) UNSIGNED NOT NULL,
+  `independent_tour_id` int(10) UNSIGNED NOT NULL,
+  `independent_tourist_id` int(10) UNSIGNED NOT NULL,
   `remaining_time` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `independent_tour`
+--
+
+INSERT INTO `independent_tour` (`independent_tour_id`, `independent_tourist_id`, `remaining_time`) VALUES
+(3, 1, 0),
+(5, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -131,8 +150,8 @@ CREATE TABLE `independent_tour` (
 --
 
 CREATE TABLE `point_feedback` (
-  `feedback_ID` int(10) UNSIGNED NOT NULL,
-  `point_ID` int(10) UNSIGNED NOT NULL,
+  `feedback_id` int(10) UNSIGNED NOT NULL,
+  `point_id` int(10) UNSIGNED NOT NULL,
   `point_ranking` float UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -143,8 +162,8 @@ CREATE TABLE `point_feedback` (
 --
 
 CREATE TABLE `point_of_interest` (
-  `point_ID` int(10) UNSIGNED NOT NULL,
-  `category_ID` int(10) UNSIGNED NOT NULL,
+  `point_id` int(10) UNSIGNED NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
@@ -158,7 +177,7 @@ CREATE TABLE `point_of_interest` (
 -- Dumping data for table `point_of_interest`
 --
 
-INSERT INTO `point_of_interest` (`point_ID`, `category_ID`, `name`, `latitude`, `longitude`, `average_time_minutes`, `average_ranking`, `is_accessible`, `description`) VALUES
+INSERT INTO `point_of_interest` (`point_id`, `category_id`, `name`, `latitude`, `longitude`, `average_time_minutes`, `average_ranking`, `is_accessible`, `description`) VALUES
 (1, 4, 'Memorial to the Victims of the Holocaust', 34.8191, 31.9082, 0, 0, NULL, NULL),
 (2, 4, 'The Inner Light', 34.8102, 31.906, 0, 0, NULL, NULL),
 (3, 2, 'Mount Tabor Oak', 34.8141, 31.9078, 0, 0, NULL, NULL),
@@ -242,35 +261,25 @@ INSERT INTO `point_of_interest` (`point_ID`, `category_ID`, `name`, `latitude`, 
 --
 
 CREATE TABLE `tour` (
-  `tour_ID` int(10) UNSIGNED NOT NULL,
+  `tour_id` int(10) UNSIGNED NOT NULL,
   `planned_date_and_time_tour` datetime NOT NULL,
   `tour_duration` int(3) UNSIGNED NOT NULL,
   `is_acccessible_only` tinyint(1) NOT NULL,
   `is_cafeteria` tinyint(1) NOT NULL,
   `cafeteria_time` int(3) UNSIGNED NOT NULL,
-  `tour_type` int(1) UNSIGNED NOT NULL,
-  `short_desc` text COLLATE utf8_unicode_ci,
-  `description` text COLLATE utf8_unicode_ci
+  `tour_type` int(1) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tour`
 --
 
-INSERT INTO `tour` (`tour_ID`, `planned_date_and_time_tour`, `tour_duration`, `is_acccessible_only`, `is_cafeteria`, `cafeteria_time`, `tour_type`, `short_desc`, `description`) VALUES
-(1, '2019-03-27 12:00:00', 120, 1, 1, 20, 2, NULL, NULL),
-(2, '2019-03-25 09:00:00', 150, 1, 1, 20, 2, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tourist`
---
-
-CREATE TABLE `tourist` (
-  `Tourist_ID` int(10) NOT NULL,
-  `Subscribers` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `tour` (`tour_id`, `planned_date_and_time_tour`, `tour_duration`, `is_acccessible_only`, `is_cafeteria`, `cafeteria_time`, `tour_type`) VALUES
+(1, '2019-03-27 12:00:00', 120, 1, 1, 20, 2),
+(2, '2019-03-25 09:00:00', 150, 1, 1, 20, 2),
+(3, '2019-03-22 10:30:00', 110, 0, 1, 30, 1),
+(4, '2019-04-01 14:00:00', 135, 0, 1, 20, 2),
+(5, '2019-03-16 09:00:00', 60, 0, 1, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -279,8 +288,8 @@ CREATE TABLE `tourist` (
 --
 
 CREATE TABLE `tour_categories` (
-  `tour_ID` int(10) UNSIGNED NOT NULL,
-  `category_ID` int(10) UNSIGNED NOT NULL
+  `tour_id` int(10) UNSIGNED NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -290,8 +299,8 @@ CREATE TABLE `tour_categories` (
 --
 
 CREATE TABLE `tour_points_of_interest` (
-  `point_ID` int(10) UNSIGNED NOT NULL,
-  `tour_ID` int(10) UNSIGNED NOT NULL,
+  `point_id` int(10) UNSIGNED NOT NULL,
+  `tour_id` int(10) UNSIGNED NOT NULL,
   `point_position` int(2) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -302,27 +311,28 @@ CREATE TABLE `tour_points_of_interest` (
 --
 
 CREATE TABLE `user` (
-  `User_ID` int(10) UNSIGNED NOT NULL,
-  `First_Name` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `Last_Name` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `Gender` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
-  `Date_Of_Birth` date NOT NULL,
-  `Email` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `Password` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `Phone` int(10) NOT NULL,
-  `Street_Name` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `House_Number` int(3) NOT NULL,
-  `City` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `User_Type` int(1) NOT NULL
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `first_name` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `gender` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `email` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` int(10) NOT NULL,
+  `street_name` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `house_number` int(3) NOT NULL,
+  `city` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `user_type` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`User_ID`, `First_Name`, `Last_Name`, `Gender`, `Date_Of_Birth`, `Email`, `Password`, `Phone`, `Street_Name`, `House_Number`, `City`, `User_Type`) VALUES
+INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `password`, `phone`, `street_name`, `house_number`, `city`, `user_type`) VALUES
 (1, 'Guy', 'Cohen', 'Male', '1992-05-20', 'guycohen@gmail.com', '12345678', 522555462, 'Dizingof', 20, 'Tel Aviv', 1),
-(2, 'Nadav', 'Golan', 'Male', '1980-02-01', 'nadavgolan27@gmail.com', '123456', 503213211, 'Neve Yehosua', 19, 'Ramat Gan', 2);
+(2, 'Nadav', 'Golan', 'Male', '1980-02-01', 'nadavgolan27@gmail.com', '123456', 503213211, 'Neve Yehosua', 19, 'Ramat Gan', 2),
+(3, 'Beni', 'Levi', 'Male', '1992-02-11', 'benilevi@gmail.com', '11223344', 501234567, 'Arlozorov', 22, 'Tel Aviv', 1);
 
 --
 -- Indexes for dumped tables
@@ -332,28 +342,28 @@ INSERT INTO `user` (`User_ID`, `First_Name`, `Last_Name`, `Gender`, `Date_Of_Bir
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`category_ID`);
+  ADD PRIMARY KEY (`category_id`);
 
 --
 -- Indexes for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`feedback_ID`),
-  ADD KEY `tour_ID` (`tour_ID`),
-  ADD KEY `user_ID` (`user_ID`);
+  ADD PRIMARY KEY (`feedback_id`),
+  ADD KEY `tour_ID` (`tour_id`),
+  ADD KEY `user_ID` (`user_id`);
 
 --
 -- Indexes for table `guide`
 --
 ALTER TABLE `guide`
-  ADD PRIMARY KEY (`Guide_ID`);
+  ADD PRIMARY KEY (`guide_id`);
 
 --
 -- Indexes for table `guided_tour`
 --
 ALTER TABLE `guided_tour`
-  ADD PRIMARY KEY (`guided_tour_ID`),
-  ADD KEY `guide_ID` (`guide_ID`),
+  ADD PRIMARY KEY (`guided_tour_id`),
+  ADD KEY `guide_ID` (`guide_id`),
   ADD KEY `group_size` (`group_size`),
   ADD KEY `currently_participants` (`currently_participants`),
   ADD KEY `tour_cost` (`tour_cost`);
@@ -362,31 +372,31 @@ ALTER TABLE `guided_tour`
 -- Indexes for table `guided_tour_registration`
 --
 ALTER TABLE `guided_tour_registration`
-  ADD KEY `guided_tour_ID` (`guided_tour_ID`),
-  ADD KEY `registered_tourist_ID` (`registered_tourist_ID`);
+  ADD KEY `guided_tour_ID` (`guided_tour_id`),
+  ADD KEY `registered_tourist_ID` (`registered_tourist_id`);
 
 --
 -- Indexes for table `independent_tour`
 --
 ALTER TABLE `independent_tour`
-  ADD PRIMARY KEY (`independent_tour_ID`),
-  ADD KEY `independent_tourist_ID` (`independent_tourist_ID`),
+  ADD PRIMARY KEY (`independent_tour_id`),
+  ADD KEY `independent_tourist_ID` (`independent_tourist_id`),
   ADD KEY `remaining_time` (`remaining_time`);
 
 --
 -- Indexes for table `point_feedback`
 --
 ALTER TABLE `point_feedback`
-  ADD KEY `feedback_ID` (`feedback_ID`),
-  ADD KEY `point_ID` (`point_ID`),
+  ADD KEY `feedback_ID` (`feedback_id`),
+  ADD KEY `point_ID` (`point_id`),
   ADD KEY `point_ranking` (`point_ranking`);
 
 --
 -- Indexes for table `point_of_interest`
 --
 ALTER TABLE `point_of_interest`
-  ADD PRIMARY KEY (`point_ID`),
-  ADD KEY `category_ID` (`category_ID`),
+  ADD PRIMARY KEY (`point_id`),
+  ADD KEY `category_ID` (`category_id`),
   ADD KEY `average_time_minutes` (`average_time_minutes`),
   ADD KEY `average_ranking` (`average_ranking`);
 
@@ -394,37 +404,30 @@ ALTER TABLE `point_of_interest`
 -- Indexes for table `tour`
 --
 ALTER TABLE `tour`
-  ADD PRIMARY KEY (`tour_ID`),
+  ADD PRIMARY KEY (`tour_id`),
   ADD KEY `tour_duration` (`tour_duration`),
   ADD KEY `cafeteria_time` (`cafeteria_time`);
-
---
--- Indexes for table `tourist`
---
-ALTER TABLE `tourist`
-  ADD PRIMARY KEY (`Tourist_ID`),
-  ADD KEY `Subscribers` (`Subscribers`);
 
 --
 -- Indexes for table `tour_categories`
 --
 ALTER TABLE `tour_categories`
-  ADD KEY `tour_ID` (`tour_ID`),
-  ADD KEY `category_ID` (`category_ID`);
+  ADD KEY `tour_ID` (`tour_id`),
+  ADD KEY `category_ID` (`category_id`);
 
 --
 -- Indexes for table `tour_points_of_interest`
 --
 ALTER TABLE `tour_points_of_interest`
-  ADD KEY `point_ID` (`point_ID`),
-  ADD KEY `tour_ID` (`tour_ID`),
+  ADD KEY `point_ID` (`point_id`),
+  ADD KEY `tour_ID` (`tour_id`),
   ADD KEY `point_position` (`point_position`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`User_ID`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -434,37 +437,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedback_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `feedback_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `guided_tour`
 --
 ALTER TABLE `guided_tour`
-  MODIFY `guided_tour_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `guided_tour_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `independent_tour`
 --
 ALTER TABLE `independent_tour`
-  MODIFY `independent_tour_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `independent_tour_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `point_of_interest`
 --
 ALTER TABLE `point_of_interest`
-  MODIFY `point_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `point_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `tour`
 --
 ALTER TABLE `tour`
-  MODIFY `tour_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `tour_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -473,13 +476,13 @@ ALTER TABLE `user`
 -- Constraints for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`User_ID`);
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `point_of_interest`
 --
 ALTER TABLE `point_of_interest`
-  ADD CONSTRAINT `point_of_interest_ibfk_1` FOREIGN KEY (`category_ID`) REFERENCES `category` (`category_ID`);
+  ADD CONSTRAINT `point_of_interest_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

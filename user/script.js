@@ -42,24 +42,20 @@ function concatenatePoints(json_data){
   txt+="<div class='card-group'>";
   console.log(json_data);
   for (var i = 0; i < json_data.length; i++) {
-    // txt+="<div class='card' >";
-    txt+="<div class='col-4 col-md-4' style='width: 18rem;'>";
+    // txt+="<div class='card' >";4
+
+    txt+="<div class='col-4 mb-4'>";
+    txt+="<div class='card w-100 h-100 p-2' style='width: 18rem;'>";
+    txt+="<div class='card-body d-flex flex-column p-2'>";
     txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>";
     txt+="<img class='card-img-top img-responsive text-center' src='wolfson.jpg' alt='Card image cap'>";
-    txt+="<div class='card-body'>";
-    txt+="<h5 class='card-title'>Card title</h5>";
-    txt+="<p class='card-text'>Some quick example</p>";
-    txt+="</div>";
-    txt+="<ul class='list-group list-group-flush'>";
-    txt+="<li class='list-group-item card-text'>Name:"+json_data[i].name + "</li>";
-    txt+="<li class='list-group-item card-text'>Short description:</li>";
-    txt+="</ul>"
-    txt+="<div class='card-body'>";
-    txt+="<input class='btn btn-primary' type='submit' value='For more details'>";
-    txt+="</div>";
-    txt+="</div>";
-
+    txt+="<br><br><h5 class='card-title'>"+json_data[i].name+"</h5>";
+    txt+="<p class='card-text'>Short description:</p>";
+    txt+="<input class='btn btn-primary btn-lg btn-block' type='submit' value='For more details'>";
     txt+="</form>";
+    txt+="</div>";
+    txt+="</div>";
+    txt+="</div>";
       }
   txt+="</div>";
   txt+="</div>";

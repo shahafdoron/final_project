@@ -14,6 +14,13 @@ function callAjax(func,url){
     request.send();
   }
 
+// function getCard(json_data,url){
+//   // txt='';
+//
+//   return txt;
+// }
+
+
 
 function concatenateCategories(json_data){
 
@@ -40,23 +47,26 @@ function concatenatePoints(json_data){
   // points_div.innerHTML="<p>"+JSON.stringify(json_data)+"</p>";
   var txt="<br><br><div class'container'>";
   txt+="<div class='card-group'>";
+
   console.log(json_data);
   for (var i = 0; i < json_data.length; i++) {
     // txt+="<div class='card' >";4
-
     txt+="<div class='col-4 mb-4'>";
-    txt+="<div class='card w-100 h-100 p-2' style='width: 18rem;'>";
+    txt+="<div class='card w-100 h-100 p-2'>";
     txt+="<div class='card-body d-flex flex-column p-2'>";
-    txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>";
+    txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data)+"'>";
     txt+="<img class='card-img-top img-responsive text-center' src='wolfson.jpg' alt='Card image cap'>";
-    txt+="<br><br><h5 class='card-title'>"+json_data[i].name+"</h5>";
+    txt+="<br><br><h5 class='card-title'>"+json_data.name+"</h5>";
     txt+="<p class='card-text'>Short description:</p>";
     txt+="<input class='btn btn-primary btn-lg btn-block' type='submit' value='For more details'>";
     txt+="</form>";
     txt+="</div>";
     txt+="</div>";
     txt+="</div>";
+
+
       }
+
   txt+="</div>";
   txt+="</div>";
   points_div.innerHTML=txt;
@@ -84,34 +94,38 @@ function concatenateGuidedTours(json_data){
     document.getElementById("container").innerHTML=txt;
 }
 
-function showGuidedAndIndependentTours(user_id){
-  query_independent="SELECT * FROM user,tour,independent_tour WHERE user.user_id='"+user_id+"' AND tour.tour_id=independent_tour.independent_tour_id AND user.user_id=independent_tour.independent_tourist_id ";
-  query_guided="SELECT * FROM user, tour, guided_tour, guided_tour_registration WHERE user.user_id='"+user_id+"' AND user.user_id=guided_tour_registration.registered_tourist_id AND tour.tour_id=guided_tour.guided_tour_id AND guided_tour.guided_tour_id=guided_tour_registration.guided_tour_id ";
-  callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_independent);
-  console.log(query_independent);
-  console.log(query_guided);
-}
+// function showGuidedAndIndependentTours(user_id){
+//   // query_independent="SELECT * FROM user,tour,independent_tour WHERE user.user_id='"+user_id+"' AND tour.tour_id=independent_tour.independent_tour_id AND user.user_id=independent_tour.independent_tourist_id ";
+//   // query_guided="SELECT * FROM user, tour, guided_tour, guided_tour_registration WHERE user.user_id='"+user_id+"' AND user.user_id=guided_tour_registration.registered_tourist_id AND tour.tour_id=guided_tour.guided_tour_id AND guided_tour.guided_tour_id=guided_tour_registration.guided_tour_id ";
+//   var txt_independent="";
+//   var txt_guided="";
+//   txt_independent=callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_independent);
+//   txt_guided=callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_guided);
+//
+// }
 
 function concatenateIndependentSchedule(json_data){
-  var independent_tour_div=document.getElementById("independent_tours");
-  var txt="<div class='card-group'>";
+  // var independent_tour_div=document.getElementById("independent_tours");
+  // var txt="<div class='card-group'>";
+  var txt='';
+  console.log(json_data);
 
   for (var i = 0; i < json_data.length; i++) {
-    // txt+="<div class='card' >";
-
-    txt+="<div class='col-4 col-md-4' style='width: 18rem;'>";
+    var type= json_data[i].tour_type==1 ? "Independent":"Guided";
+    console.log(json_data[i].tour_type);
+    txt+="<div class='row mt-4'>";
+    txt+="<div class='card w-50 h-50 mb-24 p-2'>";
+    txt+="<div class='card-body d-flex flex-column p-2'>";
     txt+="<form method='POST' action='tour_map?point="+JSON.stringify(json_data[i])+"'>";
-    txt+="<div class='card-body'>";
-    txt+="<h5 class='card-title'>Tour number "+json_data[i].tour_id+"</h5>";
+    txt+="<h5 class='card-title mr-auto'>Tour number "+json_data[i].tour_id+" ("+type+") </h5>";
     txt+="<p class='card-text'>Date: "+json_data[i].planned_date_and_time_tour+"</p>";
-    txt+="</div>";
-    txt+="<input class='btn btn-primary' type='submit' value='Show on map'>";
-    txt+="</div>";
+    txt+="<input class='btn btn-primary btn-lg btn-block' type='submit' value='Show on map'>";
     txt+="</form>";
+    txt+="</div>";
+    txt+="</div>";
+    txt+="</div>";
       }
-  txt+="</div>";
-  independent_tour_div.innerHTML=txt;
-
+  document.getElementById("my_tours_schedule").innerHTML+=txt;
 }
 
 

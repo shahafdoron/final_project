@@ -13,18 +13,31 @@ $user_id=$_SESSION["user_id"];
     <title></title>
   </head>
   <body>
-  <script src="script.js">  </script>
-  <br><br>
-  <h1>My Schedule:</h1>
+    <script src="script.js">  </script>
 
-      <div class="container">
-      <script type="text/javascript">
-      var user_id= <?php echo $user_id; ?>;
-      showGuidedAndIndependentTours(user_id);
-    </script>
-    <div id="independent_tours"></div>
-    <div id="guided_tours"></div>
+
+    <br><br>
+    <div class="container">
+      <h1 ><u>My Schedule:</u></h1><br>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary active">
+          <input type="radio" name="options" id="option1" autocomplete="off" checked> Future Schedule
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" name="options" id="option2" autocomplete="off"> past Schedule
+        </label>
+      </div>
+      <div id="my_tours_schedule">
+        <script type="text/javascript">
+          var user_id= <?php echo $user_id; ?>;
+          var query_independent="SELECT * FROM user,tour,independent_tour WHERE user.user_id='"+user_id+"' AND tour.tour_id=independent_tour.independent_tour_id AND user.user_id=independent_tour.independent_tourist_id ";            callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_independent);
+          var query_guided="SELECT * FROM user, tour, guided_tour, guided_tour_registration WHERE user.user_id='"+user_id+"' AND user.user_id=guided_tour_registration.registered_tourist_id AND tour.tour_id=guided_tour.guided_tour_id AND guided_tour.guided_tour_id=guided_tour_registration.guided_tour_id ";
+          callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_guided);
+        </script>
+      </div>
     </div>
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -20,15 +20,21 @@ $user_id=$_SESSION["user_id"];
     <div class="container">
       <h1 ><u>My Schedule:</u></h1><br>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary active">
-          <input type="radio" name="options" id="option1" autocomplete="off" checked> Future Schedule
+        <label class="btn btn-secondary active" id="future">
+          <input type="radio" name="options"  > My future tours
         </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="options" id="option2" autocomplete="off"> past Schedule
+        <label class="btn btn-secondary" id="past">
+          <input type="radio" name="options" id="option2"  > My past tours
         </label>
       </div>
       <div id="my_tours_schedule">
         <script type="text/javascript">
+        // document.getElementById("o").addEventListener("click", function(){
+        //   console.log("ASDASDASDASD");
+        // });
+        if (document.getElementById("future").click){
+          console.log("asd");
+        }
           var user_id= <?php echo $user_id; ?>;
           var query_independent="SELECT * FROM user,tour,independent_tour WHERE user.user_id='"+user_id+"' AND tour.tour_id=independent_tour.independent_tour_id AND user.user_id=independent_tour.independent_tourist_id ";            callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_independent);
           var query_guided="SELECT * FROM user, tour, guided_tour, guided_tour_registration WHERE user.user_id='"+user_id+"' AND user.user_id=guided_tour_registration.registered_tourist_id AND tour.tour_id=guided_tour.guided_tour_id AND guided_tour.guided_tour_id=guided_tour_registration.guided_tour_id ";

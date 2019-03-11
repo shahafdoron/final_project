@@ -15,43 +15,20 @@ $user_id=$_SESSION["user_id"];
   <body>
     <script src="script.js">  </script>
 
-
     <br><br>
     <div class="container">
       <h1 ><u>My Schedule:</u></h1><br>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-secondary active" id="future">
-          <input type="radio" name="options"  > My future tours
-        </label>
-        <label class="btn btn-secondary" id="past">
-          <input type="radio" name="options" id="option2"  > My past tours
-        </label>
+      <nav class="nav nav-pills flex-column flex-sm-row">
+      <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('>',<?php echo $user_id; ?>)">My future tours</a>
+      <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('<',<?php echo $user_id; ?>)">My past tours</a>
+    </nav>
+
+
       </div>
-      <div id="my_tours_schedule">
-        <script type="text/javascript">
-        // document.getElementById("o").addEventListener("click", function(){
-        //   console.log("ASDASDASDASD");
-        // });
-        if (document.getElementById("future").click){
-          console.log("asd");
-        }
-          var user_id= <?php echo $user_id; ?>;
-          var test="SELECT user.user_id, user.email , tour.tour_id, tour.planned_date_and_time_tour, tour.tour_type FROM user ";
-          test+="JOIN independent_tour  ON user.user_id=independent_tour.independent_tourist_id ";
-          test+="JOIN guided_tour_registration ON user.user_id=guided_tour_registration.registered_tourist_id ";
-          test+="JOIN tour ON (tour.tour_id=independent_tour.independent_tour_id OR tour.tour_id=guided_tour_registration.guided_tour_id) ";
-          test+="WHERE user.user_id="+user_id;
-          test+=" ORDER BY tour.planned_date_and_time_tour ASC";
-          console.log(test);
-          // var query_independent="SELECT * FROM user,tour,independent_tour WHERE user.user_id='"+user_id+"' AND tour.tour_id=independent_tour.independent_tour_id AND user.user_id=independent_tour.independent_tourist_id ";
-          callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+test);
-          // console.log(query_independent);
-          // var query_guided="SELECT * FROM user, tour, guided_tour, guided_tour_registration WHERE user.user_id='"+user_id+"' AND user.user_id=guided_tour_registration.registered_tourist_id AND tour.tour_id=guided_tour.guided_tour_id AND guided_tour.guided_tour_id=guided_tour_registration.guided_tour_id ";
-          // callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_guided);
-          // console.log(query_guided);
-        </script>
+      <div class="container">
+        <div id="my_tours_schedule"> </div>
       </div>
-    </div>
+
 
 
 

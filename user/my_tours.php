@@ -14,23 +14,17 @@ $user_id=$_SESSION["user_id"];
   </head>
   <body>
     <script src="script.js">  </script>
-
     <br><br>
     <div class="container">
       <h1 ><u>My Schedule:</u></h1><br>
       <nav class="nav nav-pills flex-column flex-sm-row">
-      <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('>',<?php echo $user_id; ?>)">My future tours</a>
-      <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('<',<?php echo $user_id; ?>)">My past tours</a>
+      <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('>',<?php echo $user_id; ?>,'my_tours_schedule')">My future tours</a>
+      <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('<',<?php echo $user_id; ?>,'my_tours_schedule')">My past tours</a>
     </nav>
-
-
       </div>
       <div class="container">
         <div id="my_tours_schedule"> </div>
       </div>
-
-
-
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

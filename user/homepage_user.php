@@ -52,7 +52,7 @@ function callFrame(url)
   <a href="homepage_user.php">Home</a>
   <a onclick="callFrame('points_info.php')">Infomation about Points</a>
   <a onclick="callFrame('enter_dates_guided.php')">Guided Tours</a>
-  <a onclick="callFrame('')">Make your own Tour</a>
+  <a onclick="callFrame('independent_tour.php')">Make your own Tour</a>
 	<a onclick="callFrame('my_tours.php')">My tours</a>
   <a onclick="callFrame('')">Contact</a>
 </div>

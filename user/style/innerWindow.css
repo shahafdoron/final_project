@@ -12,7 +12,7 @@ body {
 }
 
 
-input[type=button], input[type=submit], input[type=reset]  {
+ input[type=submit], input[type=reset]  {
   background-color: #56baed;
   border: none;
   color: white;
@@ -34,17 +34,17 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
   background-color: #39ace7;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+ input[type=submit]:active, input[type=reset]:active  {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
   -ms-transform: scale(0.95);
   transform: scale(0.95);
 }
-.container {
-  border: 1px solid black;
+.container1 {
   padding: 4px;
   margin: 4px;
+  border: 1px solid black;
 }
 
 .row {
@@ -61,4 +61,14 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
 
 .clear {
   clear: both;
+}
+.edit_frame{
+  overflow: hidden;
+  display: flex;
+  /* flex-direction: column; */
+  margin: 5px;
+  width: 95%;
+  height: 440px;
+  min-height: 100px;
+  border-radius: 20px;
 }

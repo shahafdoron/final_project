@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
 
@@ -11,7 +10,7 @@
   </head>
   <body>
   <br>
-  <form action="Existing_guided_Tour.php">
+  <form action="../user/Existing_guided_Tour.php">
   Starting Date: <input type="date" name="enter">
   <br>
   <br>

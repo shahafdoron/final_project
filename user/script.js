@@ -7,7 +7,7 @@ function callAjax(func,url,id){
     if ((request.readyState==4) & (request.status==200)){
       // console.log(request.responseText);
       var json_data=JSON.parse(request.responseText);
-      // console.log(json_data);
+      console.log(json_data);
       func(json_data,id);
         }
     }
@@ -79,10 +79,10 @@ function concatenateGuidedTours(json_data,user_type){
     txt+="<div class='row' style='border-style: solid; border-width: 1px; padding: 1px 4px'>";
     txt+="<table style='width: 100%'>";
     txt+="<tr>";
-    txt+="<td style='text-align: center; text-decoration: underline;'>Tour number "+counter+"</td>";
+    txt+="<td style='text-align: center; text-decoration: underline;'>Tour Number "+counter+"</td>";
     txt+="<td style='text-align: center'>Date : "+json_data[i].tour_date+", Hours: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</td></tr>";
     txt+="<tr><td>&nbsp;</td>";
-    txt+="<td style='text-align: center'>Cost: "+json_data[i].tour_cost+"₪ <br><br>Remaining tickets: "+json_data[i].remaining_tickets+" Tickets</td></tr></table>";
+    txt+="<td style='text-align: center'>Cost: "+json_data[i].tour_cost+"₪ <br><br>Remaining Tickets: "+json_data[i].remaining_tickets+" Tickets</td></tr></table>";
     txt+="<div  style='text-align: center'><input name='Submit1' type='submit' class='btn btn-primary' value='More information and booking' ></div>";
     txt+="</div><div class='clear'></div></form>";
     counter+=counter;
@@ -90,12 +90,12 @@ function concatenateGuidedTours(json_data,user_type){
     }
   else if (user_type==3) {
     console.log(json_data[i]);
-    txt+="<div class='row' style='border-style: solid; border-width: 1px; padding: 1px 4px'>";
+    txt+="<div class='row1'>";
     txt+="<table style='width: 100%'>";
     txt+="<tr>";
-    txt+="<td style='text-align: center; text-decoration: underline;'>Tour number "+counter+"</td>";
+    txt+="<td style='text-align: center; text-decoration: underline;'>Tour Number "+counter+"</td>";
     txt+="<td style='text-align: center'>Date : "+json_data[i].tour_date+", Hours: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</td></tr>";
-    txt+="<tr><td><button type='button' onclick=\"window.location.href='guided_info_book.php?tour="+JSON.stringify(json_data[i])+"&counter="+counter+"'\" ><span class='glyphicon glyphicon-edit'></span> Edit Tour</button></td>";
+    txt+="<tr><form><td><button type='button' onclick='send("+JSON.stringify(json_data[i])+","+counter+")' ><span class='glyphicon glyphicon-edit'></span> Edit Tour</button></td></form>";
     txt+="<td style='text-align: center'>Cost: "+json_data[i].tour_cost+"₪ <br><br>Remaining tickets: "+json_data[i].remaining_tickets+" Tickets</td></tr></table>";
     txt+="<div ><form method='POST' action='guided_info_book.php?tour="+JSON.stringify(json_data[i])+"&counter="+counter+"'><input name='Submit1' type='submit' class='btn btn-primary' style='text-align: center;margin-left: 0px;margin-right: 0px;' value='tour Participants'></form></div>";
     txt+="</div><div class='clear'></div>";

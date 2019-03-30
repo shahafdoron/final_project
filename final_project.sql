@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2019 at 04:23 PM
+-- Generation Time: Mar 30, 2019 at 04:48 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -101,7 +101,7 @@ CREATE TABLE `guided_tour` (
 INSERT INTO `guided_tour` (`guided_tour_id`, `guide_id`, `group_size`, `currently_participants`, `registration_deadline`, `tour_cost`, `short_desc`, `description`) VALUES
 (1, 2, 20, 10, '2019-03-26 00:00:00', 80, 'short desc', 'long desc'),
 (2, 2, 15, 4, '2019-03-24 00:00:00', 15, 'short desc', 'long desc'),
-(4, 2, 35, 15, '2019-03-31 00:00:00', 80, 'short desc', 'long desc');
+(4, 2, 15, 10, '2019-03-31 00:00:00', 80, 'short desc', 'description');
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,8 @@ CREATE TABLE `guided_tour_registration` (
 --
 
 INSERT INTO `guided_tour_registration` (`guided_tour_id`, `registered_tourist_id`, `subscribers`, `registration_date`) VALUES
-(4, 1, 3, '2019-02-27 19:00:00');
+(4, 1, 3, '2019-02-27 19:00:00'),
+(2, 3, 5, '2019-03-24 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -141,7 +142,8 @@ CREATE TABLE `independent_tour` (
 
 INSERT INTO `independent_tour` (`independent_tour_id`, `independent_tourist_id`, `remaining_time`) VALUES
 (3, 1, 0),
-(5, 3, 0);
+(5, 3, 0),
+(6, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -165,8 +167,8 @@ CREATE TABLE `point_of_interest` (
   `point_id` int(10) UNSIGNED NOT NULL,
   `category_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
-  `latitude` float NOT NULL,
   `longitude` float NOT NULL,
+  `latitude` float NOT NULL,
   `average_time_minutes` float UNSIGNED NOT NULL DEFAULT '0',
   `average_ranking` float UNSIGNED NOT NULL DEFAULT '0',
   `is_accessible` tinyint(1) DEFAULT NULL,
@@ -177,7 +179,7 @@ CREATE TABLE `point_of_interest` (
 -- Dumping data for table `point_of_interest`
 --
 
-INSERT INTO `point_of_interest` (`point_id`, `category_id`, `name`, `latitude`, `longitude`, `average_time_minutes`, `average_ranking`, `is_accessible`, `description`) VALUES
+INSERT INTO `point_of_interest` (`point_id`, `category_id`, `name`, `longitude`, `latitude`, `average_time_minutes`, `average_ranking`, `is_accessible`, `description`) VALUES
 (1, 4, 'Memorial to the Victims of the Holocaust', 34.8191, 31.9082, 0, 0, NULL, NULL),
 (2, 4, 'The Inner Light', 34.8102, 31.906, 0, 0, NULL, NULL),
 (3, 2, 'Mount Tabor Oak', 34.8141, 31.9078, 0, 0, NULL, NULL),
@@ -279,7 +281,8 @@ INSERT INTO `tour` (`tour_id`, `planned_date_and_time_tour`, `tour_duration`, `i
 (2, '2019-03-25 09:00:00', 150, 1, 1, 20, 2),
 (3, '2019-03-22 10:30:00', 110, 0, 1, 30, 1),
 (4, '2019-04-01 14:00:00', 135, 0, 1, 20, 2),
-(5, '2019-03-16 09:00:00', 60, 0, 1, 15, 1);
+(5, '2019-03-16 09:00:00', 60, 0, 1, 15, 1),
+(6, '2019-02-06 17:00:00', 60, 0, 1, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -332,7 +335,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `password`, `phone`, `street_name`, `house_number`, `city`, `user_type`) VALUES
 (1, 'Guy', 'Cohen', 'Male', '1992-05-20', 'guycohen@gmail.com', '12345678', 522555462, 'Dizingof', 20, 'Tel Aviv', 1),
 (2, 'Nadav', 'Golan', 'Male', '1980-02-01', 'nadavgolan27@gmail.com', '123456', 503213211, 'Neve Yehosua', 19, 'Ramat Gan', 2),
-(3, 'Beni', 'Levi', 'Male', '1992-02-11', 'benilevi@gmail.com', '11223344', 501234567, 'Arlozorov', 22, 'Tel Aviv', 1);
+(3, 'Beni', 'Levi', 'Male', '1992-02-11', 'benilevi@gmail.com', '11223344', 501234567, 'Arlozorov', 22, 'Tel Aviv', 1),
+(4, 'Shahaf', 'Doron', 'Male', '1991-03-05', 'shahaf1doron@gmail.com', '12345', 500001112, 'hagefen', 9, 'Ramt Gan', 3);
 
 --
 -- Indexes for dumped tables
@@ -452,7 +456,7 @@ ALTER TABLE `guided_tour`
 -- AUTO_INCREMENT for table `independent_tour`
 --
 ALTER TABLE `independent_tour`
-  MODIFY `independent_tour_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `independent_tour_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `point_of_interest`
 --
@@ -462,12 +466,12 @@ ALTER TABLE `point_of_interest`
 -- AUTO_INCREMENT for table `tour`
 --
 ALTER TABLE `tour`
-  MODIFY `tour_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `tour_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --

@@ -14,7 +14,7 @@
     <div class="container">
       <br><br>
       <h1 ><u>Make Your Own Tour:</u></h1><br>
-      <form>
+      <form action="tour_map_test.php">
         <div class="form-group row">
           <label for="tour_duration" class="col-sm-2 col-form-label">Tour duration:</label>
           <div class="col-sm-2.5">
@@ -48,18 +48,6 @@
           </div>
         </div>
 
-        <!-- <div class="form-group row">
-          <div class="col-sm-10">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">By Categories</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">By Points Of Interest</a>
-              </li>
-            </ul>
-          </div>
-        </div> -->
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
@@ -81,7 +69,7 @@
         <br><br><br>
         <div class="form-group row">
           <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
       </form>

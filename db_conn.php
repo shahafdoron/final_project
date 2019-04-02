@@ -68,7 +68,7 @@ function extract_data_to_json($query){
 }
   $json_string_data=json_encode($data);
   $result->free();
-  $conn->close();
+  // $conn->close();
   return $json_string_data;
 }
 

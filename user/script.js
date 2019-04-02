@@ -27,6 +27,7 @@ function concatenateCategories(json_data,id){
   }
   // txt+="</select>";
   el.innerHTML=txt;
+  console.log(json_data);
 }
 
 function showCategoryPoints(){
@@ -101,7 +102,7 @@ function concatenateGuidedTours(json_data,id){
 //
 // }
 
-function concatenateIndependentSchedule(json_data,id){
+function concatenateSchedule(json_data,id){
   // var independe  nt_tour_div=document.getElementById("independent_tours");
   // var txt="<div class='card-group'>";
 
@@ -130,16 +131,7 @@ function showMySchedule(biger_or_smaller, user_id,id){
 
   console.log(biger_or_smaller,user_id);
 
-  // var test="SELECT user.user_id, user.email , tour.tour_id, tour.planned_date_and_time_tour, tour.tour_type FROM user ";
-  // test+="JOIN independent_tour  ON user.user_id=independent_tour.independent_tourist_id ";
-  // test+="JOIN guided_tour_registration ON user.user_id=guided_tour_registration.registered_tourist_id ";
-  // test+="JOIN tour ON (tour.tour_id=independent_tour.independent_tour_id OR tour.tour_id=guided_tour_registration.guided_tour_id) ";
-  // test+="WHERE user.user_id="+user_id +" AND tour.planned_date_and_time_tour "+biger_or_smaller+"NOW()";
-  // test+=" ORDER BY tour.planned_date_and_time_tour ASC";
-  // console.log(test);
-  // var query_independent="SELECT * FROM user,tour,independent_tour WHERE user.user_id='"+user_id+"' AND tour.tour_id=independent_tour.independent_tour_id AND user.user_id=independent_tour.independent_tourist_id ";
-  // callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+test);
-// document.getElementById("my_tours_schedule").innerHTML="";
+
 document.getElementById(id).innerHTML="";
 
   var query_independent="SELECT user.user_id, user.email , tour.tour_id, tour.planned_date_and_time_tour, tour.tour_type ";
@@ -150,7 +142,7 @@ document.getElementById(id).innerHTML="";
   query_independent+="AND tour.planned_date_and_time_tour"+biger_or_smaller+"NOW() ORDER BY tour.planned_date_and_time_tour ASC";
 
   // console.log(query_independent);
-  callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_independent,id);
+  callAjax(concatenateSchedule,'../db_conn.php?query='+query_independent,id);
 
   var query_guided="SELECT user.user_id, user.email , tour.tour_id, tour.planned_date_and_time_tour, tour.tour_type ";
   query_guided+="FROM user, tour, guided_tour, guided_tour_registration ";
@@ -160,8 +152,10 @@ document.getElementById(id).innerHTML="";
   query_guided+="AND guided_tour.guided_tour_id=guided_tour_registration.guided_tour_id ";
   query_guided+="AND tour.planned_date_and_time_tour"+biger_or_smaller+"NOW()ORDER BY tour.planned_date_and_time_tour";
   // console.log(query_guided);
-  callAjax(concatenateIndependentSchedule,'../db_conn.php?query='+query_guided,id);
+  callAjax(concatenateSchedule,'../db_conn.php?query='+query_guided,id);
 }
+
+
 
 
 //   <select id="categories" onchange="showCategories()">

@@ -14,7 +14,7 @@
     <div class="container">
       <br><br>
       <h1 ><u>Make Your Own Tour:</u></h1><br>
-      <form action="tour_map_test.php">
+      <form action="tour_map.php">
         <div class="form-group row">
           <label for="tour_duration" class="col-sm-2 col-form-label">Tour duration:</label>
           <div class="col-sm-2.5">

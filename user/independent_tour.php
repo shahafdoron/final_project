@@ -51,18 +51,20 @@
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link" id="by_categories_tab" data-toggle="tab" href="#by_categories" role="tab" aria-controls="by_categories" aria-selected="true">By Categories</a>
+            <a class="nav-link" id="tab_by_categories" data-toggle="tab" href="#by_categories" role="tab" aria-controls="by_categories" aria-selected="true">By Categories</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="by_points_tab" data-toggle="tab" href="#by_points" role="tab" aria-controls="by_points" aria-selected="false">By Points Of Interest</a>
+            <a class="nav-link" id="tab_by_points" data-toggle="tab" href="#by_points" role="tab" aria-controls="by_points" aria-selected="false">By Points Of Interest</a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="by_categories" role="tabpanel" aria-labelledby="by_categories_tab"><br>
-            <div id="by_categories_dropdown"></div>
+          <div class="tab-pane fade show active" id="by_categories" role="tabpanel" aria-labelledby="tab_by_categories"><br>
+            <div class="btn-group" id="div_by_categories">  </div>
+
           </div>
-          <div class="tab-pane fade" id="by_points" role="tabpanel" aria-labelledby="by_points_tab"><br>
-            <div id="by_points_dropdown"></div>
+          <div class="tab-pane fade" id="by_points" role="tabpanel" aria-labelledby="tab_by_points"><br>
+            <div class="btn-group" id="div_by_points"></div>
+
           </div>
         </div>
 
@@ -74,20 +76,104 @@
         </div>
       </form>
       <script type="text/javascript">
-      document.getElementById("by_categories_tab").addEventListener("click",function(){
-        document.getElementById("by_points_dropdown").innerHTML="";
-        document.getElementById("by_categories_dropdown").innerHTML="<select id='categories' width=50px></select>";
-        showCategory();
-      });
-      document.getElementById("by_points_tab").addEventListener("click",function(){
-          document.getElementById("by_categories_dropdown").innerHTML="";
-        document.getElementById("by_points_dropdown").innerHTML="<select id='categories' width=50px ></select>";
-        showCategory();
-      });
 
-    function showCategory(){
-      var query='select * from category';
-      callAjax(concatenateCategories,'../db_conn.php?query='+query,"categories");
+      //   var tab_data={"cat_tab_data":
+      //     {"tab_id":"tab_by_categories","fill_div":"div_by_categories","clean_div":"div_by_points"},
+      //   "opt_tab_data":
+      //     {"tab_id":"tab_by_points","fill_div":"div_by_points","clean_div":"div_by_categories"}
+      //   };
+      //
+      //
+      //   for (key in tab_data) {
+      //     let tab_id=tab_data[key]["tab_id"];
+      //     document.getElementById(tab_id).addEventListener("click",function(){
+      //       let fill_div_id=tab_data[key]["fill_div"];
+      //       let clean_div_id=tab_data[key]["clean_div"];
+      //       console.log(tab_id + " , " +clean_div_id + " , "+ fill_div_id );
+      //       document.getElementById(clean_div_id).innerHTML="";
+      //       document.getElementById(fill_div_id).innerHTML="<select class='custom-select' id='categories' width=50px></select>";
+      //       showCategory(fill_div_id);
+      //     });
+      //
+      // }
+
+      // callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
+
+
+// ===============================This section is working=============================================================================
+      document.getElementById("tab_by_categories").addEventListener("click",function(){
+        document.getElementById("div_by_points").innerHTML="";
+        document.getElementById("div_by_categories").innerHTML="<select class='custom-select' id='categories' width=50px></select>";
+        showCategory("div_by_categories");
+          // callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
+      });
+      document.getElementById("tab_by_points").addEventListener("click",function(){
+          document.getElementById("div_by_categories").innerHTML="";
+          document.getElementById("div_by_points").innerHTML="<select class='custom-select' id='categories' width=50px ></select>";
+        showCategory("div_by_points");
+    });
+
+    function showCategory(id){
+      var query_category='select * from category';
+      callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
+
+      var div_id="points_"+id;
+      var select_id="select_"+id;
+      document.getElementById(id).innerHTML+="<div id='"+div_id+"'></div>";
+      document.getElementById("categories").addEventListener("change", function(){
+
+      var categories_select_el=document.getElementById("categories");
+      var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
+
+      if(id=="div_by_points"){
+        document.getElementById(div_id).innerHTML="<br><select class='custom-select' ' id='"+select_id+"' width=50px ><option selected disabled hidden>Choose point</option></select>";
+        console.log(category_id);
+        var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id;
+        console.log(query_points);
+        callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_id);
+        // createSelectPoints(category_id,id);
+        }
+
+      else{
+        document.getElementById(div_id).innerHTML="<br><br><div"
+
+      }
+      });
+    }
+    // ==================================This section is working=======================================================
+
+
+          // callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
+        //   document.getElementById("categories").addEventListener("change", function(){
+        //
+        //
+        //   // var div_id="test";
+        // createSelectPoints();
+        // });
+
+
+          //
+          // var categories_select_el=document.getElementById("categories");
+          // categories_select_el.addEventListener("change", function(){
+          //   var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
+          //   createSelectPoints(category_id);
+          // });
+
+
+    function createSelectPoints(){
+      var categories_select_el=document.getElementById("categories");
+      var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
+      console.log(category_id);
+      // var div_id="div_points_per_category";
+      // var div_id="test";
+      // var select_id="select_test";
+
+      // document.getElementById("div_by_points").innerHTML+="<div id='"+div_id+"'></div>";
+      // var select_id="select_points_per_category";
+      // var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id;
+      // document.getElementById("div_by_points").innerHTML+="<br><select class='selectpicker' data-live-search='true' id='"+select_id+"' width=50px ><option selected disabled hidden>Choose point</option></select>";
+      // callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_id);
+
     }
 
       </script>

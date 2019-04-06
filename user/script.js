@@ -23,7 +23,7 @@ function concatenateCategories(json_data,id){
   var txt="<option selected disabled hidden>Choose category</option>";
   var x = document.getElementById("categories");
   for (var i = 0; i < json_data.length; i++){
-    txt+="<option id='"+json_data[i].category_id+"' >"+json_data[i].cat_name+"</option>";
+    txt+="<option id='"+json_data[i].category_id+"' data-tokens='"+json_data[i].cat_name+"'>"+json_data[i].cat_name+"</option>";
   }
   // txt+="</select>";
   el.innerHTML=txt;
@@ -156,6 +156,32 @@ document.getElementById(id).innerHTML="";
 }
 
 
+function concatenatePointsDropDown(json_data,id){
+
+  // var el=document.getElementById("categories");
+  var el=document.getElementById(id);
+  // var txt="<select id='categories' width=50px >";
+  var txt="";
+  for (var i = 0; i < json_data.length; i++){
+    txt+="<option id='"+json_data[i].point_id+"' data-tokens='"+json_data[i].name+"'>"+json_data[i].name+ " - "+json_data[i].average_time_minutes+"</option>";
+  }
+  // txt+="</select>";
+  el.innerHTML=txt;
+  console.log(json_data);
+
+//   <div class="btn-group">
+//   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+//     Action
+//   </button>
+//   <div class="dropdown-menu">
+//     <a class="dropdown-item" href="#">Action</a>
+//     <a class="dropdown-item" href="#">Another action</a>
+//     <a class="dropdown-item" href="#">Something else here</a>
+//     <div class="dropdown-divider"></div>
+//     <a class="dropdown-item" href="#">Separated link</a>
+//   </div>
+// </div>
+}
 
 
 //   <select id="categories" onchange="showCategories()">

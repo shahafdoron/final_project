@@ -15,7 +15,7 @@
     <div class="container">
       <h2>Points of interest</h2>
       <div id="points_by_category" >
-        <select id='categories' width=50px ></select>
+        <select class='selectpicker' data-live-search='true' id='categories' width=50px ></select>
 
       </div>
       <div id="points">

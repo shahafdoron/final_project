@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   </head>
-  <script src="script.js">  </script>
+
   <body>
+      <script src="script.js">  </script>
     <div class="container">
       <br><br>
       <h1 ><u>Make Your Own Tour:</u></h1><br>
@@ -57,15 +58,19 @@
             <a class="nav-link" id="tab_by_points" data-toggle="tab" href="#by_points" role="tab" aria-controls="by_points" aria-selected="false">By Points Of Interest</a>
           </li>
         </ul>
+
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="by_categories" role="tabpanel" aria-labelledby="tab_by_categories"><br>
+
+          <div class="tab-pane fade show active" id="by_categories" role="tabpanel" aria-labelledby="tab_by_categories" ><br>
+            <select class='custom-select' id='categories_by_categories_option'  onchange="createCategoryInput('categories_by_categories_option','div_by_categories')"><script>showCategory("categories_by_categories_option");</script></select><br>
             <div class="btn-group" id="div_by_categories">  </div>
-
           </div>
-          <div class="tab-pane fade" id="by_points" role="tabpanel" aria-labelledby="tab_by_points"><br>
+
+          <div class="tab-pane fade" id="by_points" role="tabpanel" aria-labelledby="tab_by_points" ><br>
+            <select class='custom-select' id='categories_by_points_option'  onchange="createSelectPoints('categories_by_points_option','div_by_points')"><script>showCategory("categories_by_points_option");</script></select><br>
             <div class="btn-group" id="div_by_points"></div>
-
           </div>
+
         </div>
 
         <br><br><br>
@@ -75,11 +80,11 @@
           </div>
         </div>
       </form>
-      <script type="text/javascript">
+      <script >
 
-      //   var tab_data={"cat_tab_data":
-      //     {"tab_id":"tab_by_categories","fill_div":"div_by_categories","clean_div":"div_by_points"},
-      //   "opt_tab_data":
+        //   var tab_data={"cat_tab_data":
+        //     {"tab_id":"tab_by_categories","fill_div":"div_by_categories","clean_div":"div_by_points"},
+        //   "opt_tab_data":
       //     {"tab_id":"tab_by_points","fill_div":"div_by_points","clean_div":"div_by_categories"}
       //   };
       //
@@ -101,19 +106,19 @@
 
 
 // ===============================This section is working=============================================================================
-      document.getElementById("tab_by_categories").addEventListener("click",function(){
-        document.getElementById("div_by_points").innerHTML="";
-        document.getElementById("div_by_categories").innerHTML="<select class='custom-select' id='categories' width=50px></select>";
-        showCategory("div_by_categories");
-          // callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
-      });
-      document.getElementById("tab_by_points").addEventListener("click",function(){
-          document.getElementById("div_by_categories").innerHTML="";
-          document.getElementById("div_by_points").innerHTML="<select class='custom-select' id='categories' width=50px ></select>";
-        showCategory("div_by_points");
-    });
+    //   document.getElementById("tab_by_categories").addEventListener("click",function(){
+    //     document.getElementById("div_by_points").innerHTML="";
+    //     document.getElementById("div_by_categories").innerHTML="<select class='custom-select' id='categories' width=50px></select>";
+    //     showCategory("div_by_categories");
+    //       // callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
+    //   });
+    //   document.getElementById("tab_by_points").addEventListener("click",function(){
+    //       document.getElementById("div_by_categories").innerHTML="";
+    //       document.getElementById("div_by_points").innerHTML="<select class='custom-select' id='categories' width=50px ></select>";
+    //     showCategory("div_by_points");
+    // });
 
-    function showCategory(id){
+    function showCategoryTest(id){ //need to vhange func name to showCategory for make it works.
       var query_category='select * from category';
       callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
 
@@ -126,7 +131,7 @@
       var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
 
       if(id=="div_by_points"){
-        document.getElementById(div_id).innerHTML="<br><select class='custom-select' ' id='"+select_id+"' width=50px ><option selected disabled hidden>Choose point</option></select>";
+        document.getElementById(div_id).innerHTML="<br><select  class='custom-select'  id='"+select_id+"'  ><option selected disabled hidden>Choose point</option></select>";
         console.log(category_id);
         var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id;
         console.log(query_points);
@@ -143,27 +148,49 @@
     // ==================================This section is working=======================================================
 
 
-          // callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
-        //   document.getElementById("categories").addEventListener("change", function(){
+
+
+// =================================================test section================================================
+var query_category='select * from category';
+
+        //   document.getElementById("tab_by_categories").addEventListener("click",function(){
+        //     document.getElementById("div_by_points").innerHTML="";
+        //     document.getElementById("div_by_categories").innerHTML="<select class='custom-select' id='categories' width=50px></select>";
+        //     callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
         //
         //
-        //   // var div_id="test";
-        // createSelectPoints();
+        //       // callAjax(concatenateCategories,'../db_conn.php?query='+query_category,"categories");
+        //   });
+        //   document.getElementById("tab_by_points").addEventListener("click",function(){
+        //       document.getElementById("div_by_categories").innerHTML="";
+        //       document.getElementById("div_by_points").innerHTML="<select class='custom-select' id='categories' width=50px ></select>";
+        //     showCategory("div_by_points");
         // });
 
-
-          //
-          // var categories_select_el=document.getElementById("categories");
-          // categories_select_el.addEventListener("change", function(){
-          //   var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
-          //   createSelectPoints(category_id);
-          // });
-
-
-    function createSelectPoints(){
-      var categories_select_el=document.getElementById("categories");
+    function createSelectPoints(select_id,div_id){
+      var categories_select_el=document.getElementById(select_id);
       var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
-      console.log(category_id);
+      var select_points_id="select_points_per_category";
+      var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id;
+      document.getElementById(div_id).innerHTML="<br><select class='custom-select' data-live-search='true' id='"+select_points_id+"' width=50px ><option selected disabled hidden>Choose point</option></select>";
+      callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_points_id);
+
+}
+    function createCategoryInput(select_id,div_id){
+      var categories_select_el=document.getElementById(select_id);
+      var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
+      var category_value=categories_select_el.options[categories_select_el.selectedIndex].value;
+      categories_select_el.options[categories_select_el.selectedIndex].disabled=true;
+      var div_el=document.getElementById(div_id);
+      console.log(category_id + " , " + category_value);
+      // document.getElementById(div_id).innerHTML+="<label for='"+category_value+"'>"+category_value+"</label>";
+      document.getElementById(div_id).innerHTML+="<br><div id='div_"+category_value+"'><label for='"+category_value+"'>"+category_value+"</label> <input type='text' class='form-control' id='"+category_value+"' placeholder='Another input'></div>";
+
+   //    <label for="">Another label</label>
+   // <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+
+    }
+
       // var div_id="div_points_per_category";
       // var div_id="test";
       // var select_id="select_test";
@@ -174,9 +201,23 @@
       // document.getElementById("div_by_points").innerHTML+="<br><select class='selectpicker' data-live-search='true' id='"+select_id+"' width=50px ><option selected disabled hidden>Choose point</option></select>";
       // callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_id);
 
-    }
 
+    // =================================================test section================================================
+    // function createCategoryInput(select_id,div_id){
+    //   var categories_select_el=document.getElementById(select_id);
+    //   var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
+    //   var category_value=categories_select_el.options[categories_select_el.selectedIndex].value;
+    //   var div_el=document.getElementById(div_id);
+    //   console.log(category_id + " , " + category_value);
+    //
+    //   div_el.innerHTML+="<div id='div_+"category_value+"'><label for='"+category_value+"'>"+category_value+"</label> <input type='text' class='form-control' id='"+category_value+"' placeholder='Another input'></div>";
+    //
+    // //    <label for="">Another label</label>
+    // // <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+    //
+    // }
       </script>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

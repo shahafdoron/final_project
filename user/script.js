@@ -183,6 +183,14 @@ function concatenatePointsDropDown(json_data,id){
 // </div>
 }
 
+function showCategory(id){
+  var query_category='select * from category';
+  callAjax(concatenateCategories,'../db_conn.php?query='+query_category,id);
+
+}
+
+
+
 
 //   <select id="categories" onchange="showCategories()">
 //     <option value="">Choose an option:</option>

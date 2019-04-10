@@ -228,3 +228,44 @@ function showCategory(id){
 //json_encode($assoc); -----> this is the most recomand implementation ----> result will be: '{"a":1,"b":2,"c":300}'
 // also can : $assoc=array("a","b","c"3);
 //            json_encode($assoc,JSON_FORCE_OBJECT); ------> result  wil bee: '{0:"a",1:"b",2:"c"}'
+
+
+
+
+// ================for cards!!!
+
+
+// <div class="row">
+//   <div class="col-sm-6 col-md-4">
+//     <div class="thumbnail">
+//       <img src="..." alt="...">
+//       <div class="caption">
+//         <h3>Thumbnail label</h3>
+//         <p>...</p>
+//         <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+
+
+// ===============================================================
+
+
+
+// =====================for people who already registrate==============
+
+// <div class="panel panel-default">
+//   <!-- Default panel contents -->
+//   <div class="panel-heading">Panel heading</div>
+//   <div class="panel-body">
+//     <p>...</p>
+//   </div>
+//
+//   <!-- Table -->
+//   <table class="table">
+//     ...
+//   </table>
+// </div>
+
+// ==============================================================

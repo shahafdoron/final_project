@@ -161,13 +161,17 @@ function concatenatePointsDropDown(json_data,id){
   // var el=document.getElementById("categories");
   var el=document.getElementById(id);
   // var txt="<select id='categories' width=50px >";
-  var txt="";
+  var txt="<option selected disabled hidden  >Choose point</option>";
   for (var i = 0; i < json_data.length; i++){
-    txt+="<option id='"+json_data[i].point_id+"' data-tokens='"+json_data[i].name+"'>"+json_data[i].name+ " - "+json_data[i].average_time_minutes+"</option>";
+    txt+="<option id='"+json_data[i].point_id+"' data-tokens='"+json_data[i].name+"'>"+json_data[i].name+ " - "+json_data[i].average_time_minutes+" - "+json_data[i].average_ranking+"</option>";
+    // addElement(id,"option",json_data[i].point_id,txt);
+    // txt="";
   }
-  // txt+="</select>";
+  txt+="</select>";
+
   el.innerHTML=txt;
-  console.log(json_data);
+  // console.log(json_data);
+
 
 //   <div class="btn-group">
 //   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -187,6 +191,22 @@ function showCategory(id){
   var query_category='select * from category';
   callAjax(concatenateCategories,'../db_conn.php?query='+query_category,id);
 
+}
+
+function addElement(parentId, elementTag, elementId, html) {
+  // Adds an element to the document
+  var p = document.getElementById(parentId);
+  var newElement = document.createElement(elementTag);
+  newElement.setAttribute('id', elementId);
+  newElement.innerHTML = html;
+  p.appendChild(newElement);
+}
+function removeElement(elementId,select_id,category_id) {
+  // Removes an element from the document
+  var element = document.getElementById(elementId);
+  element.parentNode.removeChild(element);
+  var select_el=document.getElementById(select_id);
+  select_el.options[category_id].disabled=false;
 }
 
 

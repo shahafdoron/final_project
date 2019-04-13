@@ -2,6 +2,12 @@
 <?php
 include("../db_conn.php");
 
+
+$json_data_str=$_REQUEST["json_data"];
+echo $json_data_str;
+$json_data=json_decode($json_data_str,true);
+print_r($json_data);
+
 $total_tour_duration=120;
 $is_accessible_only=0;
 $actual_time=80; //$capacity

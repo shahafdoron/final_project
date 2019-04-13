@@ -17,6 +17,7 @@ if (is_ajax_request()) {
 function is_ajax_request(){
   return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ;
 }
+
 function ajaxCall(){
   $query=$_REQUEST['query'];
   $jsonData=extract_data_to_json($query);

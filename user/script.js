@@ -14,6 +14,19 @@ function callAjax(func,url,id){
     request.send();
   }
 
+  function sendAjax(url,json_data){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    var myJsonString = JSON.stringify(json_data);
+    xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xhr.send("json_data="+json_data);
+  }
+
+  function respond() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+              document.getElementById('result').innerHTML = xmlhttp.responseText;
+          }
+        }
 
 function concatenateCategories(json_data,id){
 
@@ -201,12 +214,17 @@ function addElement(parentId, elementTag, elementId, html) {
   newElement.innerHTML = html;
   p.appendChild(newElement);
 }
-function removeElement(elementId,select_id,category_id) {
+function removeElement(remove_id,select_id,category_id) {
   // Removes an element from the document
-  var element = document.getElementById(elementId);
+  console.log('remove_id : '+remove_id);
+  var element = document.getElementById(remove_id);
   element.parentNode.removeChild(element);
   var select_el=document.getElementById(select_id);
-  select_el.options[category_id].disabled=false;
+  // select_el[category_id].disabled=false;
+  select_el.namedItem(category_id).disabled=false;
+  console.log("inside removeElement: "+ category_id);
+  console.log(select_el[category_id]);
+  console.log(typeof category_id);
 }
 
 

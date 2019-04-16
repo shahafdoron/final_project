@@ -6,7 +6,6 @@ $query="select * from point_of_interest where name='main gate'";
 $_SESSION["entry_point"]=extract_data_to_json($query);
 
 $json_data_str=$_REQUEST["json_data"];
-
 $json_data=json_decode($json_data_str,true);
 $is_accessible_only=0;
 $actual_time=80; //$capacity
@@ -126,7 +125,8 @@ $result=array();
 
 
 
-    var json_points =<?php print_r($result); ?>;
+    var json_points =(<?php print_r($result); ?>);
+    console.log(json_points);
     sorted_json_points = nearest(json_points);
 
     function nearest(points){
@@ -171,12 +171,12 @@ $result=array();
       });
 
       var point_pos={};
-      for (var i = 0; i < json_points.length; i++) {
-       point_pos={lat: parseFloat(json_points[i].latitude), lng: parseFloat(json_points[i].longitude)};
+      for (var i = 0; i < sorted_json_points.length; i++) {
+       point_pos={lat: parseFloat(sorted_json_points[i].latitude), lng: parseFloat(sorted_json_points[i].longitude)};
         new google.maps.Marker({
             position: point_pos,
             map: map,
-            title: "Station Number "+i+"\n"+json_points[i].name
+            title: "Station Number "+i+"\n"+sorted_json_points[i].name
         });
 
       }

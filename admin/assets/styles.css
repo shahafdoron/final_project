@@ -1,0 +1,66 @@
+
+body {
+  background-color: #eff4f7;
+  color: #777;
+  font-family: 'Titillium Web', Arial, Helvetica, sans-serif
+}
+
+/* h1, h2, h3, h4, h5, h6, strong {
+  font-weight: 600;
+} */
+
+.content-area {
+  max-width: 1070px;
+  margin: 0 auto;
+}
+
+.box {
+  max-height: 444px;
+}
+
+.box {
+  box-shadow: 0px 1px 22px -12px #607D8B;
+  background-color: #fff;
+  padding: 25px 35px 25px 30px;
+}
+/*
+#monthly-earnings-chart #apexcharts-canvas {
+  position: relative;
+}
+#monthly-earnings-chart #apexcharts-canvas:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 58%;
+  top: 0;
+  bottom: 0;
+  background: #24bdd3;
+  opacity: 0.65;
+}
+#monthly-earnings-chart #apexcharts-title-text {
+  font-weight: 600;
+}
+#monthly-earnings-chart #apexcharts-subtitle-text {
+  font-weight: 700;
+}
+.monthly-earnings-text {
+  position: absolute;
+  left: 70px;
+  top: 187px;
+  color: #fff;
+  z-index: 10;
+}
+
+.monthly-earnings-text h6 {
+  font-size: 16px;
+} */
+/* .chart-title h5 {
+  font-size: 18px;
+  color: rgba(51,51,51,1);
+  margin-bottom: 38px;
+} */
+
+
+
+/* overrides */
+/* .sparkboxes #apexcharts-subtitle-text { fill: #8799a2 !important; } */

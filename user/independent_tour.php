@@ -42,7 +42,7 @@
         <div class="form-group row">
           <label for="tour_duration" class="col-sm-2 col-form-label">Tour duration:</label>
           <div class="col-sm-2.5">
-            <input type="text" class="form-control" id="tour_duration" name="tour_duration" placeholder="Enter time in minutes...">
+            <input type="text" class="form-control" id="tour_duration" name="tour_duration_time" placeholder="Enter time in minutes...">
           </div>
         </div>
         <div class="form-group row">
@@ -167,10 +167,10 @@
         var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
         var select_points_id="select_points_per_category";
         var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id;
-        var ht='<select class="custom-select" id="'+select_points_id+'" width=50px ><option selected  >Choose point</option></select>"';
+        // var ht='<select class="custom-select" id="'+select_points_id+'" width=50px ><option selected  >Choose point</option></select>';
 
         // addElement(div_id,"select",select_points_id,ht);                                                                                               table_id table_id
-        document.getElementById(div_id).innerHTML='<select class="custom-select" id="'+select_points_id+'" name="'+select_points_id+'" onchange="addPointToTable( \''+select_points_id+'\' ,\''+table_id+'\',\''+query_points+'\')" width=50px ><option selected  >Choose point</option></select>"';
+        document.getElementById(div_id).innerHTML='<select class="custom-select" id="'+select_points_id+'" name="'+select_points_id+'" onchange="addPointToTable( \''+select_points_id+'\' ,\''+table_id+'\',\''+query_points+'\')" width=50px ><option selected  >Choose point</option></select>';
         var json_data_points=callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_points_id);
 
 
@@ -190,7 +190,7 @@
          console.log(selected_point_id + " : " + typeof selected_point_val);
          var j_point={"p_id":selected_point_id,"p_name":selected_point_val[0], "p_average_time":selected_point_val[1],"p_average_ranking":selected_point_val[2]};
          var tr_id="tr_p"+j_point["p_id"];
-         var ht=' <td class="pt-3-half" >'+j_point["p_name"]+'</td> <td class="pt-3-half">'+j_point["p_average_time"]+'</td><td class="pt-3-half" >'+j_point["p_average_ranking"]+'</td>';
+         var ht=' <td id="' + j_point["p_id"] + '" "class="pt-3-half" >'+j_point["p_name"]+'</td> <td class="pt-3-half">'+j_point["p_average_time"]+'</td><td class="pt-3-half" >'+j_point["p_average_ranking"]+'</td>';
          ht+='<td><span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0" onclick="removeElement( \''+tr_id+'\' ,\''+select_points_id+'\', \''+j_point["p_id"]+'\');">Remove</button></span></td>';
 
          addElement(table_id,"tr",tr_id,ht);
@@ -246,17 +246,28 @@
           cat_id=child[i].children[0].children[0].children[2].children[0].id;
           js[cat_name]={"category_id":cat_id, "category_weight":cat_val};
         }
-         json_data=JSON.stringify(js);
-        console.log(json_data);
+
 
         //  json={"categories":{1:"history",2:""}, };
         // // console.log(j);
         // sendAjax("independent_tour.php",j)
       }
+
       else{
-        json={}
-        console.log("WHERE");
+        var parent = document.getElementById("table_points");
+        var child = parent.children;
+        js={"ids":[]};
+          for (var i=1; i<child.length;i++){
+            js["ids"].push(child[i].children[0].id);
+
           }
+        console.log("WHERE");
+        console.log(js);
+
+        }
+
+       json_data=JSON.stringify(js);
+       console.log(json_data);
 
   // document.getElementById("tour_details_form").action='tour_map.php?json='+json_data;
     document.tour_details_form.action='tour_map.php?json_data='+json_data;

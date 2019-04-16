@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <?php
+<<<<<<< HEAD
     include("../db_conn.php");
     // session_start();
     $user_id=$_SESSION["user_id"];
@@ -86,3 +87,25 @@
   </body>
 
   </html>
+=======
+    $tour='';
+    if(isset($_REQUEST['tour'])){
+      $tour=$_REQUEST['tour'];
+    }
+     ?>
+    <meta charset="utf-8">
+      <link rel="stylesheet" href="style/innerWindow.css" type="text/css">
+    <title>
+    <h2>Enter date range for existing tours</h2>
+    </title>
+  </head>
+  <body>
+    <script>
+      var tour_info=(<?php echo $tour; ?>);
+      console.log(tour_info);
+    </script>
+
+
+  </body>
+</html>
+>>>>>>> 4da59ff9b8a1fc8eb14e8712f90efdd2ca294cda

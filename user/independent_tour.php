@@ -47,16 +47,22 @@
         </div>
         <div class="form-group row">
           <label for="cafiteria_radio" class="col-sm-2 col-form-label">Cafiteria:</label>
+          <div class="row">
+
           <div class="col-sm-2.5" id="cafiteria_radio">
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="cafiteria_yes" name="cafiteria" class="custom-control-input">
+            <div class="custom-control custom-radio custom-control-inline ">
+              <input type="radio" id="cafiteria_yes" name="cafiteria" class="custom-control-input" onchange="document.getElementById('cafiteria_time').style.visibility='visible' ;" >
               <label class="custom-control-label" for="cafiteria_yes">Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="cafiteria_no" name="cafiteria" class="custom-control-input">
+              <input type="radio" id="cafiteria_no" name="cafiteria" class="custom-control-input" checked onchange="document.getElementById('cafiteria_time').style.visibility='hidden';">
               <label class="custom-control-label" for="cafiteria_no">No</label>
             </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="text" id="cafiteria_time" name="cafiteria_time" class="form-control"  placeholder="Enter time in minutes..." style="visibility:hidden" >
+            </div>
           </div>
+            </div>
         </div>
         <div class="form-group row">
           <label for="accessible_radio" class="col-sm-2 col-form-label">Accessible:</label>
@@ -66,7 +72,7 @@
               <label class="custom-control-label" for="accessible_yes">Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="accessible_no" name="accessible" class="custom-control-input">
+              <input type="radio" id="accessible_no" name="accessible" class="custom-control-input" checked >
               <label class="custom-control-label" for="accessible_no">No</label>
             </div>
           </div>

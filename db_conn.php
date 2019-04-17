@@ -160,4 +160,14 @@ function byCategoryAlgo($json_data,$total_tour_duration){
   return $result;
 }
 
+
+function byPointAlgo($json_data){
+  $ids_str=implode(",",$json_data["ids"]);
+  $query="select * from point_of_interest WHERE point_of_interest.point_id in (".$ids_str.")";
+  echo $query;
+  $result=extract_data_to_json($query);
+  print_r($result) ;
+  return $result;
+}
+
  ?>

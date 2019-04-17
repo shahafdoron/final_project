@@ -4,28 +4,37 @@ include("../db_conn.php");
 //set the entry point for the Nearest Neighbour Algorithm
 $query="select * from point_of_interest where name='main gate'";
 
-$algorithem_key=$_REQUEST["sel_tab"];
+$total_tour_duration=floatval($_REQUEST["tour_duration_time"]);
 $_SESSION["entry_point"]=extract_data_to_json($query);
-$json_data_str=$_REQUEST["json_data"];
-$json_data=json_decode($json_data_str,true);
+// $json_data_str=$_REQUEST["json_data"];
+$json_data=json_decode($_REQUEST["json_data"],true);
+$algorithem_key=$_REQUEST["sel_tab"];
+
 $is_accessible_only=0;
-$actual_time=80; //$capacity
+// $actual_time=80; //$capacity
+// $total_tour_duration=0;
 $is_cafitaria=0;
 $cafiteria_time=0;
-$total_tour_duration=floatval($_REQUEST["tour_duration_time"]);
+
+if( isset($_REQUEST["cafiteria_time"])){
+  $cafiteria_time=floatval($_REQUEST["cafiteria_time"]);
+  $total_tour_duration=$total_tour_duration-$cafiteria_time;
+  $is_cafitaria=1;
+  $query="select * from point_of_interest where point_of_interest.category_id=7";
+  $cafiteria_json=extract_data_to_json($query);
+  print_r($cafiteria_json);
+}
+// $is_cafitaria=0;
 $result=array();
+
 if ($algorithem_key=="1") {
   $result=byCategoryAlgo($json_data,$total_tour_duration);
   echo "<br><br>";
+  print_r($result);
 }
 
 else {
-
-  $ids_str=implode(",",$json_data["ids"]);
-  $query="select * from point_of_interest WHERE point_of_interest.point_id in (".$ids_str.")";
-  echo $query;
-  $result=extract_data_to_json($query);
-  print_r($result) ;
+  $result=byPointAlgo($json_data);
 }
 
  ?>
@@ -70,6 +79,7 @@ else {
       var sorted=[];
       sorted.push(enter[0]);
       var len=points.length;
+
       for(i=0;i<len;i++){
         dis=[];
         for(j=0;j<points.length;j++){
@@ -79,6 +89,17 @@ else {
         sorted.push(points[index]);
         points.splice(index,1);
       }
+      // if(<?php //echo $is_cafitaria; ?>=="1"){
+        // var caf_json=<?php // print_r($cafiteria_json); ?>;
+      //
+      //   dis=[];
+      //   for (var i = 0; i < caf_json.length; i++) {
+      //     dis.push(haversine(sorted[sorted.length-1],caf_json[i]))
+      //   }
+      //   index=dis.indexOf(Math.min.apply(null, dis));
+      //   sorted.push(points[index]);
+      // }
+
       return sorted;
     }
 

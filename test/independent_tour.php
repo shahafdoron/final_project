@@ -46,7 +46,7 @@
 
 
       <h1 ><u>Make Your Own Tour:</u></h1><br>
-      <form action=""  accept-charset="UTF-8" method="post" name="tour_details_form" id="tour_details_form">
+      <form action=""  accept-charset="UTF-8" method='POST' name="tour_details_form" id="tour_details_form">
 
       <!-- <form action="tour_map.php"> -->
         <div class="form-group row">
@@ -61,11 +61,11 @@
 
           <div class="col-sm-2.5" id="cafiteria_radio">
             <div class="custom-control custom-radio custom-control-inline ">
-              <input type="radio" id="cafiteria_yes" name="cafiteria" class="custom-control-input" onchange="document.getElementById('cafiteria_time').style.visibility='visible' ;" value="Yes" >
+              <input type="radio" id="cafiteria_yes" name="cafiteria" class="custom-control-input" onchange="document.getElementById('cafiteria_time').style.visibility='visible' ;" value="1" >
               <label class="custom-control-label" for="cafiteria_yes">Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="cafiteria_no" name="cafiteria" class="custom-control-input" checked onchange="document.getElementById('cafiteria_time').style.visibility='hidden';" value="No">
+              <input type="radio" id="cafiteria_no" name="cafiteria" class="custom-control-input" checked onchange="document.getElementById('cafiteria_time').style.visibility='hidden';" value="0">
               <label class="custom-control-label" for="cafiteria_no">No</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
@@ -292,14 +292,15 @@ function validateGeneralInputs(){
 
   var tour_duration_time=document.getElementById("tour_duration_time").value;
   var cafiteria_is_selected=document.querySelector('input[name = cafiteria]:checked').value;
-
+  console.log(cafiteria_is_selected);
   if (tour_duration_time=="" || tour_duration_time=="0"){
     pass_validation=false;
     alert("Please insert tour duration time in minutes");
   }
 
-  if (cafiteria_is_selected=="Yes"){
-    var cafeteria_time=parsefloat(document.getElementById("cafiteria_time").value);
+  if (cafiteria_is_selected=="1"){
+
+    var cafeteria_time=parseFloat(document.getElementById("cafiteria_time").value);
     if (cafeteria_time==0){
       pass_validation=false;
       alert("Please insert cafiteria time in minutes");

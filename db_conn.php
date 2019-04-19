@@ -40,7 +40,7 @@ function validate_email_password(){
     $_SESSION["password"]=$row["password"];
     $_SESSION["user_id"]=$row["user_id"];
     $result->free();
-    header('location:user/homepage_user.php');
+    header('location:test/homepage_user.php');
   }
 
   else {
@@ -162,7 +162,7 @@ function byCategoryAlgo($json_data,$total_tour_duration){
 
 
 function byPointAlgo($json_data){
-  $ids_str=implode(",",$json_data["ids"]);
+  $ids_str=implode(",",$json_data);
   $query="select * from point_of_interest WHERE point_of_interest.point_id in (".$ids_str.")";
   echo $query;
   $result=extract_data_to_json($query);

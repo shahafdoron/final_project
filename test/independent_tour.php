@@ -52,7 +52,7 @@
         <div class="form-group row">
           <label for="tour_duration" class="col-sm-2 col-form-label">Tour duration:</label>
           <div class="col-sm-2.5">
-            <input type="text" class="form-control" id="tour_duration" name="tour_duration_time" placeholder="Enter time in minutes...">
+            <input type="text" class="form-control" id="tour_duration_time" name="tour_duration_time" placeholder="Enter time in minutes..."  required>
           </div>
         </div>
         <div class="form-group row">
@@ -61,15 +61,16 @@
 
           <div class="col-sm-2.5" id="cafiteria_radio">
             <div class="custom-control custom-radio custom-control-inline ">
-              <input type="radio" id="cafiteria_yes" name="cafiteria" class="custom-control-input" onchange="document.getElementById('cafiteria_time').style.visibility='visible' ;" >
+              <input type="radio" id="cafiteria_yes" name="cafiteria" class="custom-control-input" onchange="document.getElementById('cafiteria_time').style.visibility='visible' ;" value="Yes" >
               <label class="custom-control-label" for="cafiteria_yes">Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="cafiteria_no" name="cafiteria" class="custom-control-input" checked onchange="document.getElementById('cafiteria_time').style.visibility='hidden';">
+              <input type="radio" id="cafiteria_no" name="cafiteria" class="custom-control-input" checked onchange="document.getElementById('cafiteria_time').style.visibility='hidden';" value="No">
               <label class="custom-control-label" for="cafiteria_no">No</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="text" id="cafiteria_time" name="cafiteria_time" class="form-control"  placeholder="Enter time in minutes..." style="visibility:hidden" >
+              <input type="number" id="cafiteria_time" name="cafiteria_time" class="form-control" value="0" min="0" max="25" step="5"  style="visibility:hidden" required >
+
             </div>
           </div>
             </div>
@@ -156,7 +157,7 @@
         <br>
         <div class="form-group row">
           <div class="col-auto mr-auto">
-            <button type="submit" class="btn btn-primary" onclick="formHandler()">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="formHandler()">Submit</button>
           </div>
 
       </form>
@@ -190,7 +191,7 @@
       function addPointToTable(select_points_id,table_id,c){
          console.log(select_points_id);
          console.log(table_id);
-         var tour_duration=document.getElementById("tour_duration").value;
+         var tour_duration=document.getElementById("tour_duration_time").value;
          var points_select_el=document.getElementById(select_points_id);
          points_select_el.options[points_select_el.selectedIndex].disabled=true;
          var selected_point_val=points_select_el.options[points_select_el.selectedIndex].value.split("-").map(function(item) {
@@ -224,16 +225,35 @@
 
         // console.log("onclick='ff("+cat_card_id+")'");
 
+        // var input_name="cat_"+category_id;
+        // var max=1;
         var ht='<div id="'+cat_div_id+'"  class="col">';
-        ht+='<div class="card bg-light mb-3" style="max-width: 18rem;">';
+        ht+='<div class="card bg-light mb-3">';
         ht+='<button  class="btn-close-custom"  type="button" onclick="removeElement( \''+cat_div_id+'\' ,\''+select_id+'\', \''+category_id+'\');"><i>Remove</i></button>';
         ht+='<div class="card-header">'+category_value+'</div>';
         ht+='<div class="card-body">';
-        ht+='<input id="'+category_id+'" type="number" min="0.1" max="1" step="0.1" onkeypress="return false;" class="form-control" placeholder="0-1"  aria-describedby="btnGroupAddon" required>'
+        ht+='<input id="'+category_id+'"  type="number" value="0" min="0" max="1" step="0.1"  class="form-control" placeholder="0-1"  aria-describedby="btnGroupAddon" required >'
         ht+='</div></div></div>';
         addElement(div_id,"div",cat_div_id,ht);
 
 
+
+    }
+    function getMaxValue(input_name){
+      var max=1;
+      var parent = document.getElementById("div_by_categories");
+      var child = parent.children;
+
+      if (child.length>1){
+          for (var i=0; i<child.length;i++){
+            cat_val=child[i].children[0].children[0].children[2].children[0].value;
+            max=max-parseFloat(cat_val);
+          }
+      }
+      var str_max=max.toString();
+      document.getElementById(input_name).setAttribute("max",str_max);
+      // document.getElementsByName(input_name).max=str_max;
+      return str_max;
 
     }
 
@@ -242,81 +262,121 @@
       var sel_cat=document.getElementById("selected_tab").value;
       console.log(sel_cat);
       var json_data="";
-      if(sel_cat=="1"){
+      var ready_for_submit=true;
+      var validation={};
 
-        var parent = document.getElementById("div_by_categories");
-        var child = parent.children;
-        var js={};
-        var cat_val="";
-        var cat_id="";
-        var cat_name="";
+      if (validateGeneralInputs()){
+        if(sel_cat=="1"){
+          validation=validateByCategories();
+          console.log("formHandler: inside if category " + validation["json_data"]);
+          }
 
-        for (var i=0; i<child.length;i++){
-          cat_name=child[i].children[0].children[0].children[1].innerHTML;
-          cat_val=child[i].children[0].children[0].children[2].children[0].value;
-          cat_id=child[i].children[0].children[0].children[2].children[0].id;
-          js[cat_name]={"category_id":cat_id, "category_weight":cat_val};
-        }
-
-
-        //  json={"categories":{1:"history",2:""}, };
-        // // console.log(j);
-        // sendAjax("independent_tour.php",j)
+        else{
+          validation=validateBypoints();
+          console.log("formHandler: inside else ( by points) : " +validation["json_data"]);
       }
 
-      else{
-        var parent = document.getElementById("table_points");
-        var child = parent.children;
-        js={"ids":[]};
-          for (var i=1; i<child.length;i++){
-            js["ids"].push(child[i].children[0].id);
+      if (validation["validation_test"]){
+        console.log("formHandler: test is true, sending form: ");
+        console.log(validation["json_data"]);
+        document.tour_details_form.action='tour_map.php?json_data='+ validation["json_data"];
+        document.getElementById("tour_details_form").submit();
+      }
+    }
+  }
 
-          }
-        console.log("WHERE");
-        console.log(js);
 
-        }
 
-       json_data=JSON.stringify(js);
-       console.log(json_data);
+function validateGeneralInputs(){
+  var pass_validation=true;
 
-  // document.getElementById("tour_details_form").action='tour_map.php?json='+json_data;
-    document.tour_details_form.action='tour_map.php?json_data='+json_data;
-  document.getElementById("tour_details_form").submit();
+  var tour_duration_time=document.getElementById("tour_duration_time").value;
+  var cafiteria_is_selected=document.querySelector('input[name = cafiteria]:checked').value;
+
+  if (tour_duration_time=="" || tour_duration_time=="0"){
+    pass_validation=false;
+    alert("Please insert tour duration time in minutes");
+  }
+
+  if (cafiteria_is_selected=="Yes"){
+    var cafeteria_time=parsefloat(document.getElementById("cafiteria_time").value);
+    if (cafeteria_time==0){
+      pass_validation=false;
+      alert("Please insert cafiteria time in minutes");
+    }
+  }
+
+  return pass_validation;
+}
+
+function validateByCategories(){
+  var result={};
+  result["validation_test"]=true;
+  result["json_data"]='';
+  var parent = document.getElementById("div_by_categories");
+  var child = parent.children;
+  var data={};
+  var cat_val="";
+  var cat_id="";
+  var cat_name="";
+  var toal_weight=0;
+
+  if (child.length==0){
+    result["validation_test"]=false;
+    alert("Please chose category")
+    return result;
+  }
+
+  for (var i=0; i<child.length;i++){
+    cat_name=child[i].children[0].children[0].children[1].innerHTML;
+    cat_val=child[i].children[0].children[0].children[2].children[0].value;
+    cat_id=child[i].children[0].children[0].children[2].children[0].id;
+    data[cat_name]={"category_id":cat_id, "category_weight":cat_val};
+    toal_weight+=parseFloat(cat_val);
+  }
+  if (toal_weight>1){
+    result["validation_test"]=false;
+    console.log("hererere");
+    alert("Total is bigger than 1!");
+    return result;
     }
 
+  else if (toal_weight<1) {
+    result["validation_test"]=false;
+    alert("Total is smaller than 1!");
+    return result;
+    }
 
+  result["validation_test"]=true;
+  data=JSON.stringify(data);
+  result["json_data"]=data;
 
+  return result;
+}
 
-function getChilds(id){
+function validateBypoints(){
+  var result={};
+  result["validation_test"]=true;
+  result["json_data"]='';
 
-  // var elem = document.getElementById(id);
-  //
-  //   var parents = [];
-  //   while(elem.parentNode ) {
-  //     elem = elem.parentNode;
-  //     parents.push(elem);
-  //   }
-  //   return parents;
+  var parent = document.getElementById("table_points");
+  var child = parent.children;
 
+  if (child.length==1){
+    result["validation_test"]=false;
+    alert("Please chose points")
+    return result;
+  }
 
+  js={"ids":[]};
+  for (var i=1; i<child.length;i++){
+    console.log("inside loop");
+    js["ids"].push(child[i].children[0].id);
+  }
 
-// var childval = child[0].innerHTML;
-//
-console.log(js);
-//
-return js;
-
-
- //  var c = document.getElementById(id).childNodes;
- // var txt = "";
- // var i;
- // for (i = 0; i < c.length; i++) {
- //   txt = txt + c[i].id;
- //
- // }
- //
- // return txt;
+  result["json_data"]=JSON.stringify(js["ids"]);
+  console.log(typeof result["json_data"]);
+  return result;
 }
 
 

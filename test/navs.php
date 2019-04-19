@@ -1,7 +1,7 @@
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-static-top">
 <div class="container">
-  <a class="navbar-brand" href="index.php">Weizmann Institute of Science</a>
+  <a class="navbar-brand" href="homepage_user.php">Weizmann Institute of Science</a>
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

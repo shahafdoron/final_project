@@ -8,6 +8,7 @@ $total_tour_duration=floatval($_REQUEST["tour_duration_time"]);
 $_SESSION["entry_point"]=extract_data_to_json($query);
 // $json_data_str=$_REQUEST["json_data"];
 $json_data=json_decode($_REQUEST["json_data"],true);
+print_r($json_data);
 $algorithem_key=$_REQUEST["sel_tab"];
 
 $is_accessible_only=0;

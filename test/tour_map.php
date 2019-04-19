@@ -100,7 +100,17 @@ echo "<br>";
   </head>
   <body>
     <?php include('navs.php'); ?>
-
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="test.php">Home</a>
+        </li>
+        <li class="breadcrumb-item active">
+          <a href="independent_tour.php">Independent Tour</a>
+        </li>
+        <li class="breadcrumb-item active">Map</li>
+      </ol>
+    </div>
     <div id="map"></div>
 
 

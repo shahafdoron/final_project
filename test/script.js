@@ -9,24 +9,24 @@ function callAjax(func,url,id){
       var json_data=JSON.parse(request.responseText);
       // console.log(json_data);
       func(json_data,id);
-        }
     }
-    request.send();
   }
+  request.send();
+}
 
-  function sendAjax(url,json_data){
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    var myJsonString = JSON.stringify(json_data);
-    xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xhr.send("json_data="+json_data);
+function sendAjax(url,json_data){
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  var myJsonString = JSON.stringify(json_data);
+  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xhr.send("json_data="+json_data);
+}
+
+function respond() {
+  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+    document.getElementById('result').innerHTML = xmlhttp.responseText;
   }
-
-  function respond() {
-          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-              document.getElementById('result').innerHTML = xmlhttp.responseText;
-          }
-        }
+}
 
 function concatenateCategories(json_data,id){
 
@@ -75,7 +75,7 @@ function concatenatePoints(json_data,id){
     txt+="</div>";
 
 
-      }
+  }
 
   txt+="</div>";
   txt+="</div>";
@@ -83,11 +83,11 @@ function concatenatePoints(json_data,id){
 
 
   // <div class="col-lg-4 mb-4">
-    // <div class="card h-100">
-      // <h4 class="card-header">Card Title</h4>
-      // <div class="card-body">
-        // <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-      // </div>
+  // <div class="card h-100">
+  // <h4 class="card-header">Card Title</h4>
+  // <div class="card-body">
+  // <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+  // </div>
   //     <div class="card-footer">
   //       <a href="#" class="btn btn-primary">Learn More</a>
   //     </div>
@@ -114,7 +114,7 @@ function concatenateGuidedTours(json_data,id){
     counter+=counter;
 
   }
-    document.getElementById("container").innerHTML=txt;
+  document.getElementById("container").innerHTML=txt;
 
 }
 
@@ -148,7 +148,7 @@ function concatenateSchedule(json_data,id){
     txt+="</div>";
     txt+="</div>";
     txt+="</div>";
-      }
+  }
   // document.getElementById("my_tours_schedule").innerHTML+=txt;
   document.getElementById(id).innerHTML+=txt;
 }
@@ -158,7 +158,7 @@ function showMySchedule(biger_or_smaller, user_id,id){
   console.log(biger_or_smaller,user_id);
 
 
-document.getElementById(id).innerHTML="";
+  document.getElementById(id).innerHTML="";
 
   var query_independent="SELECT user.user_id, user.email , tour.tour_id, tour.planned_date_and_time_tour, tour.tour_type ";
   query_independent+="FROM user,tour,independent_tour ";
@@ -199,18 +199,18 @@ function concatenatePointsDropDown(json_data,id){
   // console.log(json_data);
 
 
-//   <div class="btn-group">
-//   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-//     Action
-//   </button>
-//   <div class="dropdown-menu">
-//     <a class="dropdown-item" href="#">Action</a>
-//     <a class="dropdown-item" href="#">Another action</a>
-//     <a class="dropdown-item" href="#">Something else here</a>
-//     <div class="dropdown-divider"></div>
-//     <a class="dropdown-item" href="#">Separated link</a>
-//   </div>
-// </div>
+  //   <div class="btn-group">
+  //   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  //     Action
+  //   </button>
+  //   <div class="dropdown-menu">
+  //     <a class="dropdown-item" href="#">Action</a>
+  //     <a class="dropdown-item" href="#">Another action</a>
+  //     <a class="dropdown-item" href="#">Something else here</a>
+  //     <div class="dropdown-divider"></div>
+  //     <a class="dropdown-item" href="#">Separated link</a>
+  //   </div>
+  // </div>
 }
 
 function showCategory(id){

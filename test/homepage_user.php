@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <title>Bootstrap</title>
 </head>
 
 <body>
@@ -15,7 +14,7 @@
 
 
   <!-- Navigation -->
-<?php include('navs.php'); ?>;
+<?php include('navs.php'); ?>
 <div class="container">
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -113,12 +112,12 @@
 
 
   <!-- Page Content -->
-  <div class="container">
+  <!-- <div class="container">
 
-    <h1 class="my-4">Welcome Weizmann Institute of Science</h1>
+    <h1 class="my-4">Welcome Weizmann Institute of Science</h1> -->
 
     <!-- Marketing Icons Section -->
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-4 mb-4">
         <div class="card h-100">
           <h4 class="card-header">Card Title</h4>
@@ -152,11 +151,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- /.row -->
 
     <!-- Portfolio Section -->
-    <h2>Portfolio Heading</h2>
+    <!-- <h2>Portfolio Heading</h2>
 
     <div class="row">
       <div class="col-lg-4 col-sm-6 portfolio-item">
@@ -225,11 +224,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- /.row -->
 
     <!-- Features Section -->
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-6">
         <h2>Modern Business Features</h2>
         <p>The Modern Business template by Start Bootstrap includes:</p>
@@ -247,13 +246,13 @@
       <div class="col-lg-6">
         <img class="img-fluid rounded" src="http://placehold.it/700x450" alt="">
       </div>
-    </div>
+    </div> -->
     <!-- /.row -->
 
-    <hr>
+    <!-- <hr> -->
 
     <!-- Call to Action Section -->
-    <div class="row mb-4">
+    <!-- <div class="row mb-4">
       <div class="col-md-8">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
       </div>
@@ -262,7 +261,7 @@
       </div>
     </div>
 
-  </div>
+  </div> -->
   <!-- /.container -->
 
   <!-- Footer -->

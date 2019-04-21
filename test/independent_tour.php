@@ -155,7 +155,7 @@
 
 
       <br>
-      <div class="form-group row">
+      <div class="form-group row" >
         <div class="col-auto mr-auto">
           <button type="button" class="btn btn-primary" onclick="formHandler()">Submit</button>
         </div>

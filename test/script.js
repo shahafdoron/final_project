@@ -97,19 +97,23 @@ function concatenatePoints(json_data,id){
 
 
 function concatenateGuidedTours(json_data,id){
-
   var counter=1;
   var txt="";
+  if (json_data.length==0) {
+    txt+="<h2 style=\"text-align: center;\"> There's no tours in the selected date</h2>";
+  }
   for (i=0;i<json_data.length;i++){
+    console.log(json_data);
+    txt+="<h2 style=\"text-align: center;\"><u>Guided tours in the selected dates</u></h2><br>";
     txt+="<form method='POST' action='guided_info_book.php?tour="+JSON.stringify(json_data[i])+"'>";
-    txt+="<div class='row' style='border-style: solid; border-width: 1px; padding: 1px 4px'>";
-    txt+="<table style='width: 100%'>";
+    txt+="<div class='row' style=\"border-style: solid; border-width: 1px; padding: 1px 4px; display: flex;  align-items: center; justify-content: center; \">";
+    txt+="<table style=\"width: 100%\">";
     txt+="<tr>";
-    txt+="<td style='text-align: center; text-decoration: underline;'>Tour number "+counter+"</td>";
-    txt+="<td style='text-align: center'>Date : "+json_data[i].tour_date+", Hours: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</td></tr>";
+    txt+="<td style=\"text-align: center; text-decoration: underline;\">Tour number "+counter+"</td>";
+    txt+="<td style=\"text-align: center\">Date : "+json_data[i].tour_date+", Hours: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</td></tr>";
     txt+="<tr><td>&nbsp;</td>";
-    txt+="<td style='text-align: center'>Cost: "+json_data[i].tour_cost+"₪ <br><br>Remaining tickets: "+json_data[i].remaining_tickets+" Tickets</td></tr></table>";
-    txt+="<div class='btn btn-primary' style='text-align: center'><input name='Submit1' type='submit' value='More information and booking' ></div>";
+    txt+="<td style=\"text-align: center\">Cost: "+json_data[i].tour_cost+"₪ <br><br>Remaining tickets: "+json_data[i].remaining_tickets+" Tickets</td></tr></table>";
+    txt+="<div><input class='btn btn-primary' type='submit' value='More information and booking'></div>";
     txt+="</div><div class='clear'></div></form>";
     counter+=counter;
 

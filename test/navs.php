@@ -4,17 +4,17 @@
     <div id="sideNavigation" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="homepage_user.php">Home</a>
-      <a href="points_info.php">Infomation about Points</a>
+      <a href="points_info.php">Infomation About Points</a>
       <a href="enter_dates_guided.php">Guided Tours</a>
-      <a href="independent_tour.php">Make your own Tour</a>
-      <a href="my_tours.php">My tours</a>
+      <a href="independent_tour.php">Make Your Own Tour</a>
+      <a href="my_tours.php">My Tours</a>
       <a href="#">Contact Us</a>
 
     </div>
 
     <nav class="topnav">
 
-      <a onclick="openNav()" href="#">
+      <a onclick="openNav()" class="ham" href="#">
         <svg width="30" height="30" id="icoOpen" >
           <path d="M0,5 30,5" stroke="#818181" stroke-width="5"/>
           <path d="M0,14 30,14" stroke="#818181" stroke-width="5"/>
@@ -36,24 +36,14 @@
   </script>
 
 
-  <a class="navbar-brand" href="homepage_user.php">Weizmann Institute of Science</a>
+  <a class="navbar-brand" href="homepage_user.php">Weizmann Institute of Science Tour Planing System</a>
 
 
 </div>
 </div>
 </nav><br><br><br>
 
-<div class="page-header">
-  <div class="container">
-    <div class="clearfix">
-      <div class="col-md-12">
-        <div class="col-md-8 col-sm-6 col-xs-12">
-          <h2 >  <small>Weizmann Institute of Science Tour Planing System</small></h2>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <style media="screen">
 /* The side navigation menu */
@@ -64,18 +54,24 @@
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #111; /* Black*/
+  background-color: #004f93 ;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
-
-/* The navigation menu links */
+.ham {
+    color: #007bff;
+    text-decoration: none;
+    background-color: #023c7d;
+}
+.bg-dark {
+    background-color: #023c7d !important;
+}/* The navigation menu links */
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #c5c6c8fa;
   display: block;
   transition: 0.3s
 }
@@ -115,7 +111,7 @@ body {
 .topnav a {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: #c5c6c8fa;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -182,6 +178,7 @@ a svg{
     &:hover{
       background: #555;
     }
+
   }
 }
 </style>

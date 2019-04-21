@@ -103,7 +103,7 @@ function haversine($point1,$point2){
   <div class="container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="test.php">Home</a>
+        <a href="homepage_user.php">Home</a>
       </li>
       <li class="breadcrumb-item active">
         <a href="independent_tour.php">Independent Tour</a>

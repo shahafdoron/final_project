@@ -19,7 +19,7 @@ $data=json_decode($point);
   <div class="container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="test.php">Home</a>
+        <a href="homepage_user.php">Home</a>
       </li>
       <li class="breadcrumb-item active">
         <a href="points_info.php">Points Information</a>

@@ -40,7 +40,7 @@ function validate_email_password(){
     $_SESSION["password"]=$row["password"];
     $_SESSION["user_id"]=$row["user_id"];
     $result->free();
-    header('location:test/homepage_user.php');
+    header('location:user/homepage_user.php');
   }
 
   else {

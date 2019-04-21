@@ -3,12 +3,10 @@
   <div class="container">
     <div id="sideNavigation" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="homepage_user.php">Home</a>
-      <a href="points_info.php">Infomation About Points</a>
-      <a href="enter_dates_guided.php">Guided Tours</a>
-      <a href="independent_tour.php">Make Your Own Tour</a>
-      <a href="my_tours.php">My Tours</a>
-      <a href="contact.php">Contact Us</a>
+      <a href="homepage_admin.php">Home</a>
+      <a href="points_info.php">Points Information</a>
+      <a href="#">Guided Tours</a>
+      <a href="analytics.php">Statistical Analysis</a>
 
     </div>
 
@@ -36,7 +34,7 @@
   </script>
 
 
-  <a class="navbar-brand" href="homepage_user.php">Weizmann Institute of Science Tour Planing System</a>
+  <a class="navbar-brand" href="homepage_admin.php">Weizmann Institute of Science Tour Planing System</a>
 
 
 </div>

@@ -39,8 +39,15 @@ function validate_email_password(){
     $_SESSION["emailAddress"]=$row["email"];
     $_SESSION["password"]=$row["password"];
     $_SESSION["user_id"]=$row["user_id"];
+    $_SESSION["user_type"]=$row["user_type"];
     $result->free();
-    header('location:user/homepage_user.php');
+    if ($_SESSION["user_type"]=='3'){
+      header('location:admin/homepage_admin.php');
+    }
+    else {
+      header('location:user/homepage_user.php');
+    }
+
   }
 
   else {

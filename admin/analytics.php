@@ -5,7 +5,7 @@
 
 	<?php
 		$year=date("Y");
-	 	// $query="SELECT count(user_id) as Users,MONTH(Registeration date) 
+	 	// $query="SELECT count(user_id) as Users,MONTH(Registeration date)
 		// 			FROM user
 		// 			WHERE user_type=1
 		// 			GROUP BY YEAR(".$year."), MONTH(Registeration date)";
@@ -29,6 +29,7 @@
 
 <body>
 
+<?php include('navs.php'); ?>
 
 	<div id="wrapper">
 

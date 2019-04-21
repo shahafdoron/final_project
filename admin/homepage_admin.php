@@ -1,29 +1,27 @@
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../user/style/homeStyle.css" type="text/css">
-<script>
-function callFrame(url)
-{
-
-	document.getElementById('iframe1').src = url;
-}
-</script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- <link rel="stylesheet" href="../user/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
+
 <body>
 
-<div class="sidenav">
-  <a href="homepage_admin.php">Home</a>
-  <a onclick="callFrame('points_info.php')">Infomation about Points</a>
-  <a onclick="callFrame('edit_guided.php')">Guided Tours</a>
-  <a onclick="callFrame('analytics.php')">Statistical Analysis </a>
-</div>
+<div class="container">
+  <!-- Navigation -->
+  <?php include('navs.php'); ?>
 
-<div class="main">
-  <iframe id="iframe1" class="iframe" src="" frameborder="0";></iframe>
-</div>
 
+</div><!-- container -->
+
+<script src="js/jquery.slim.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

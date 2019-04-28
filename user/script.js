@@ -100,21 +100,23 @@ function concatenateGuidedTours(json_data,id){
   var counter=1;
   var txt="";
   if (json_data.length==0) {
-    txt+="<h2 style=\"text-align: center;\"> There's no tours in the selected date</h2>";
+    txt+="<h1 style=\"text-align: center;\"><u> There's no tours in the selected date</h1>";
   }
   for (i=0;i<json_data.length;i++){
-    console.log(json_data);
-    txt+="<h2 style=\"text-align: center;\"><u>Guided tours in the selected dates</u></h2><br>";
-    txt+="<form method='POST' action='guided_info_book.php?tour="+JSON.stringify(json_data[i])+"'>";
-    txt+="<div class='row' style=\"border-style: solid; border-width: 1px; padding: 1px 4px; display: flex;  align-items: center; justify-content: center; \">";
-    txt+="<table style=\"width: 100%\">";
-    txt+="<tr>";
-    txt+="<td style=\"text-align: center; text-decoration: underline;\">Tour number "+counter+"</td>";
-    txt+="<td style=\"text-align: center\">Date : "+json_data[i].tour_date+", Hours: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</td></tr>";
-    txt+="<tr><td>&nbsp;</td>";
-    txt+="<td style=\"text-align: center\">Cost: "+json_data[i].tour_cost+"₪ <br><br>Remaining tickets: "+json_data[i].remaining_tickets+" Tickets</td></tr></table>";
-    txt+="<div><input class='btn btn-primary' type='submit' value='More information and booking'></div>";
-    txt+="</div><div class='clear'></div></form>";
+    // console.log(json_data);
+    txt+="<div class='row mt-2'>";
+    txt+="<div class='card w-100 h-50 mb-24 p-2'>";
+    txt+="<div class='card-header'><u><h5>Tour number "+counter+"</h5>  </u></div>"
+    txt+="<div class='card-body align-items-center d-flex justify-content-center'>";
+    txt+="<form method='POST' action='guided_info_book.php?tour="+JSON.stringify(json_data[i])+"&counter="+counter+"'>";
+    // txt+="<h5 class='card-title mr-auto'><u>Tour number "+counter+"</u></h5>";
+    txt+="<p class='card-text'>Date : "+json_data[i].tour_date+", Hours: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</p>";
+    txt+="<p class='card-text'>Cost: "+json_data[i].tour_cost+"₪</p>";
+    txt+="<div style=\"text-align: center;\"><input class='btn btn-primary btn-lg btn-block' type='submit' value='More information and booking'></div>";
+    txt+="</form>";
+    txt+="</div>";
+    txt+="</div>";
+    txt+="</div>";
     counter+=counter;
 
   }
@@ -142,7 +144,7 @@ function concatenateSchedule(json_data,id){
   for (var i = 0; i < json_data.length; i++) {
     var type= json_data[i].tour_type==1 ? "Independent":"Guided";
     txt+="<div class='row mt-4'>";
-    txt+="<div class='card w-50 h-50 mb-24 p-2'>";
+    txt+="<div class='card w-100 h-50 mb-24 p-2'>";
     txt+="<div class='card-body d-flex flex-column p-2'>";
     txt+="<form method='POST' action='tour_map?point="+JSON.stringify(json_data[i])+"'>";
     txt+="<h5 class='card-title mr-auto'>Tour number "+json_data[i].tour_id+" ("+type+") </h5>";

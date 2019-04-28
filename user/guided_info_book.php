@@ -9,7 +9,7 @@
   $tour='';
   $counter=0;
   if(isset($_REQUEST['tour'])&&isset($_REQUEST['counter'])){
-    $tour=json_decode($_REQUEST['tour']);
+    $tour=json_decode($_REQUEST['tour'],true);
     $_SESSION["tour"]=$tour;
     $counter=$_REQUEST['counter'];
     $_SESSION["counter"]=$counter;
@@ -17,25 +17,13 @@
 
   ?>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="style/innerWindow.css" type="text/css">
-  <title>Untitled 2</title>
-  <style type="text/css">
-  .auto-style3 {
-    border-style: solid;
-    border-width: 1px;
-    padding: 1px 4px;
-  }
-  .auto-style4 {
-    text-align: center;
-  }
-  .auto-style5 {
-    margin-left: 20px;
-  }
-  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <?php include('navs.php'); ?>
+
 </head>
 
 <body>
-  <?php include('navs.php'); ?>
+
   <div class="container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
@@ -48,78 +36,67 @@
         <a href="Existing_guided_Tour.php">Guided Tours</a>
       </li>
       <li class="breadcrumb-item active">
-        <a href="guided_info_book.php">Guided Tour information</a>
+        <a >Guided Tour Information And Booking</a>
       </li>
     </ol>
-  </div>
-  <div>
-    <div class="auto-style4">
-      <span>Tour Number <?php echo $counter; ?></span>
-      <br></br>
-      <span>Ticket cost: <?php echo $tour->tour_cost.' ₪'; ?></span> <br />
-
+    <div class='card w-100 h-50 mb-24 p-2'>
+      <div class='card-header body align-items-center d-flex justify-content-center'><u><h5>Tour Number <?php echo $counter; ?></h5></u></div>
+      <div class='card-body align-items-center d-flex justify-content-center'>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <p class='card-text align-items-center d-flex justify-content-center'>  Guide: <?php echo $tour['guide_first']." ".$tour['guide_last']; ?></p>
+            </div>
+            <div class="col-sm">
+              <p class='card-text align-items-center d-flex justify-content-center'> Tour duration: <?php echo floatval ($tour['tour_duration'])." Minutes."; ?></p>
+            </div>
+          </div>
+          <div class=".col-md-6">
+            <p class='card-text align-items-center d-flex justify-content-center'> Tour description: <?php echo $tour['description']."."; ?></p>
+          </div>
+        </div>
+      </div>
     </div>
+    <form method='post' action="">
 
-    <div class="auto-style3">
-      <div class="auto-style5">
-        <div class="auto-style5"><br/>
-          Guide: <?php echo $tour->guide_first." ".$tour->guide_last; ?></div>
-          <div class="auto-style5"><br/>
-            Tour description: <?php echo $tour->description."."; ?></div>
-            <div class="auto-style5"><br/>
-              Tour duration: <?php echo floatval ($tour->tour_duration)." Minutes."; ?></div>
-              <div class="auto-style5"><br/>
-                <form method='post' action="">
-                  <div>
-                  </div>
-                  Number of tickets to purchase: <input name="Ticket" type="text" style="width: 50px" required oninvalid="this.setCustomValidity('Please a password')"/></div><br>
-                  <?php
-                  if(isset($_POST['Ticket'])){
-                    if(floatval($_POST['Ticket'])>floatval ($tour->remaining_tickets)){
-                      echo "There's Not Enough Tickets";
-                    }
-                    else
-                    {
-                      $tour=$_SESSION["tour"];
-                      $couner=$_SESSION["counter"];
-                      $query="insert into guided_tour_registration (guided_tour_id, registered_tourist_id, subscribers, registration_date) VALUES (".$tour->guided_tour_id.", ".$user_id.", ".$_POST['Ticket'].", NOW())";
-                      $query2="update guided_tour SET currently_participants = ".(floatval($tour->currently_participants)+floatval($_POST['Ticket']))." WHERE guided_tour_id = ".$tour->guided_tour_id."";
-                      $conn->query($query);
-                      $conn->query($query2);
-                      $conn->close();
-                      echo "You been successfully booked to the tour";
-                    }
-                  }
-                  ?>
-                  <div class="auto-style4"><br/><input name="Submit1" type="submit" value="Book Tickets" />
+      <div class="card-footer align-items-center d-flex justify-content-center">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class=".col-md-9">Ticket cost: <?php echo $tour['tour_cost'].' ₪'; ?></div>
+          </div>
+          <br>
+          <div class="row justify-content-center">
 
-                  </div>
-                </div>
-              </div>
+            <div class=".col-md-6 ">Number of tickets to purchase: <input name="Ticket" type="text" style="width: 100px" required oninvalid="this.setCustomValidity('Please Enter Number Of Tickets')"/></div>
+          </div>
+          <?php
+          if(isset($_POST['Ticket'])){
+            if(floatval($_POST['Ticket'])>floatval($tour['remaining_tickets'])){
+              echo "<h3 align='center' style='color: red;'>There's Not Enough Tickets! </h3>";
+            }
+            else
+            {
+              $tour=$_SESSION["tour"];
+              $couner=$_SESSION["counter"];
+              $query="insert into guided_tour_registration (guided_tour_id, registered_tourist_id, subscribers, registration_date) VALUES (".$tour['guided_tour_id'].", ".$user_id.", ".$_POST['Ticket'].", NOW())";
+              $query2="update guided_tour SET currently_participants = ".(floatval($tour['currently_participants'])+floatval($_POST['Ticket']))." WHERE guided_tour_id = ".$tour['guided_tour_id']."";
+              $conn->query($query);
+              $conn->query($query2);
+              $conn->close();
+              echo "<h3 align='center'> You Been Successfully Booked To The Tour </h3>";
+            }
+          }
+          ?>
 
+          <br>
+          <div class="row justify-content-center">
+            <input class='btn btn-primary btn-lg btn-block' type='submit' value='Book Tour'>
+            <div>
             </div>
           </form>
-        </body>
-
-        </html>
-
-        $tour='';
-        if(isset($_REQUEST['tour'])){
-          $tour=$_REQUEST['tour'];
-        }
-        ?>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="style/innerWindow.css" type="text/css">
-        <title>
-          <h2>Enter date range for existing tours</h2>
-        </title>
-      </head>
-      <body>
-        <script>
-        var tour_info=(<?php echo $tour; ?>);
-        console.log(tour_info);
-        </script>
-
-
-      </body>
-      </html>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

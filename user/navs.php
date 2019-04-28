@@ -1,17 +1,18 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-static-top">
   <div class="container">
     <div id="sideNavigation" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="homepage_user.php">Home</a>
-      <a href="points_info.php">Infomation About Points</a>
-      <a href="enter_dates_guided.php">Guided Tours</a>
-      <a href="independent_tour.php">Make Your Own Tour</a>
-      <a href="my_tours.php">My Tours</a>
-      <a href="contact.php">Contact Us</a>
+      <a href="homepage_user.php"><i class="fas fa-home"></i> Home</a>
+      <a href="points_info.php"><i class="fas fa-info-circle"></i> Points Info</a>
+      <a href="enter_dates_guided.php"><i class="fas fa-map-signs"></i> Guided Tours</a>
+      <a href="independent_tour.php"><i class="fas fa-route"></i> Build A Tour</a>
+      <a href="my_tours.php"><i class="fas fa-map"></i> My Tours</a>
+      <a href="contact.php"><i class="fas fa-envelope-open-text"></i> Contact Us</a>
 
     </div>
-
 
     <nav class="topnav">
 
@@ -42,7 +43,7 @@
 
 </div>
 </div>
-</nav><br><br><br><br>
+</nav><br><br><br>
 
 
 

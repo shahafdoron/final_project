@@ -1,78 +1,107 @@
 <!DOCTYPE html>
 <?php
 include("../db_conn.php");
+include("algo.php");
+
+//set all needed parameters:
+$sorted_json_points=array();
+
+if( isset($_POST['sel_tab']) ){
+
 //set the entry point for the Nearest Neighbour Algorithm
 $query="select * from point_of_interest where name='main gate'";
-
 $total_tour_duration=floatval($_REQUEST["tour_duration_time"]);
 $_SESSION["entry_point"]=json_decode(extract_data_to_json($query),true);
 $json_data=json_decode($_REQUEST["json_data"],true);
+
+//set algo key
 $algorithem_key=$_REQUEST["sel_tab"];
 
-$is_accessible_only=0;
 
-$cafiteria_time=0;
-if(intval($_REQUEST["cafiteria"])==1){
-  $cafiteria_time=floatval($_REQUEST["cafiteria_time"]);
-  $total_tour_duration=$total_tour_duration-$cafiteria_time;
+//set accessible and cafeteria:
+$is_accessible_only=$_REQUEST["accessible"];
+$is_cafeteria=$_REQUEST["cafeteria"];
+$cafeteria_time=0;
+if(intval($is_cafeteria)==1){
+  $cafeteria_time=floatval($_REQUEST["cafeteria_time"]);
+  $total_tour_duration=$total_tour_duration-$cafeteria_time;
   $query="select * from point_of_interest where point_of_interest.category_id=7";
-  $_SESSION['cafiteria_json']=json_decode(extract_data_to_json($query),true);
+  $_SESSION['cafeteria_json']=json_decode(extract_data_to_json($query),true);
 
 }
+//get algo key result
 $result=array();
-
 if ($algorithem_key=="1") {
   $result=byCategoryAlgo($json_data,$total_tour_duration);
 }
-
 else {
   $result=byPointAlgo($json_data);
 }
 
+// final tour points (sorted)
 $sorted_json_points=nearest(json_decode($result,true));
-echo "<h1>Result:</h1>";
-echo "<br>";
 
-function nearest($points){
-  $entry=$_SESSION["entry_point"];
 
-  $sorted=[];
-  array_push($sorted,$entry[0]);
-  $len=sizeof($points);
+//=============================update db======================================
+$insert_tour_query="insert into tour (planned_date_and_time_tour, tour_duration,is_acccessible_only,is_cafeteria, cafeteria_time, tour_type) VALUES (NOW() ,$total_tour_duration ,$is_accessible_only ,$is_cafeteria ,$cafeteria_time ,1 )";
+$insert_tour_category_query="insert into tour_categories(tour_id, category_id) values ";
+mysqli_query($conn,$insert_tour_query);
 
-  for ($i=0; $i<$len ; $i++) {
-    $dis=[];
-    for ($j=0; $j <sizeof($points) ; $j++) {
-      array_push($dis,(haversine($sorted[sizeof($sorted)-1],$points[$j])));
-    }
-    $index=array_search(min($dis),$dis);
-    array_push($sorted,$points[$index]);
-    array_splice($points,$index,1);
-  }
-  if(intval($_REQUEST["cafiteria"])==1){
-    $dis=[];
-    for ($i=0; $i <sizeof($_SESSION['cafiteria_json']) ; $i++)
-    array_push($dis,(haversine($sorted[sizeof($sorted)-1],$_SESSION['cafiteria_json'][$i])));
-    $index=array_search(min($dis),$dis);
-    array_push($sorted,$_SESSION['cafiteria_json'][$index]);
-  }
-  return $sorted;
+$generated_tour_id=mysqli_insert_id($conn);
+
+
+foreach ($json_data as $key => $val){
+  $insert_tour_category_query.="(".$generated_tour_id.",".$json_data[$key]["category_id"]. "),";
+}
+$insert_tour_category_query=rtrim($insert_tour_category_query,",");
+mysqli_query($conn,$insert_tour_category_query);
+echo "<h5>insert_tour_category_query :</h5>  ". $insert_tour_category_query;
+echo "<br><br>";
+
+$insert_tour_points_query="insert into tour_points_of_interest (tour_id,point_id, point_position) VALUES ";
+foreach ($sorted_json_points as $position => $val){
+  $insert_tour_points_query.="(".$generated_tour_id.",".$sorted_json_points[$position]["point_id"].",".$position. "),";
+}
+$insert_tour_points_query=rtrim($insert_tour_points_query,  ",");
+mysqli_query($conn,$insert_tour_points_query);
+echo "<h5>insert_tour_points_query :</h5>  ". $insert_tour_points_query;
+
+$insert_independet_tour_query="insert into independent_tour (independent_tour_id,independent_tourist_id) values (".$generated_tour_id.",".$_SESSION["user_id"]. ")";
+mysqli_query($conn,$insert_independet_tour_query);
+echo $insert_independet_tour_query;
+
+$_SESSION["tour_points"]=$sorted_json_points;
+$_SESSION["tour_id_current"]=$generated_tour_id;
+
+//=============================update db======================================
+
 }
 
-function haversine($point1,$point2){
-  $earthRadius = 6371e3;
+// ===================================echo parameters===========================================
+// echo "<br><br><br><br> ";
+//
+// print_r("<h5>final result :</h5> ". json_encode ($sorted_json_points));
+// echo "<br><br>";
+// print_r("<h5>category json: </h5>".json_encode($json_data));
+// echo "<br><br>";
+// echo "<h5>is_accessible_only :</h5>  ".$is_accessible_only;
+// echo "<br><br>";
+//
+// $insert_tour_query="insert into tour (planned_date_and_time_tour, tour_duration,is_acccessible_only,is_cafeteria, cafeteria_time, tour_type) VALUES (NOW() ,$total_tour_duration ,$is_accessible_only ,$is_cafeteria ,$cafeteria_time ,1 )";
+// $insert_tour_category_query="insert into tour_categories(tour_id, category_id) values ";
+//
+// echo "<h5>insert_tour_category_query :</h5>  ". $insert_tour_query;
+// echo "<br><br>";
+//
+// echo "<h5>user id :</h5>  ". $_SESSION["user_id"];
+// echo "<br><br>";
+//
 
-  $diffLat = ($point2['latitude']-$point1['latitude']) * PI() / 180;
-  $diffLng = ($point2['longitude']-$point1['longitude']) * PI() / 180;
-  $arc = cos($point1['latitude'] * PI() / 180) * cos($point2['latitude'] * PI() / 180)
-  * sin($diffLng/2) * sin($diffLng/2)
-  + sin($diffLat/2) * sin($diffLat/2);
-  $line = 2 * atan2(sqrt($arc), sqrt(1-$arc));
+// ===================================echo parameters===========================================
 
-  $distance = $earthRadius * $line;
 
-  return $distance;
-}
+
+
 ?>
 <html lang="en" dir="ltr">
 <head>
@@ -86,8 +115,8 @@ function haversine($point1,$point2){
   /* Always set the map height explicitly to define the size of the div
   * element that contains the map. */
   #map {
-    height: 80%;
-    width: 80%;
+    height: 75%;
+    width: 75%;
     margin: auto;
   }
   /* Optional: Makes the sample page fill the window. */
@@ -99,24 +128,27 @@ function haversine($point1,$point2){
   </style>
 </head>
 <body>
+  <script src="script.js">  </script>
   <?php include('navs.php'); ?>
   <div class="container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
       </li>
-      <li class="breadcrumb-item active">
+      <li class="breadcrumb-item">
         <a href="independent_tour.php">Independent Tour</a>
       </li>
       <li class="breadcrumb-item active">Map</li>
     </ol>
   </div>
-  <div id="map"></div>
 
+  <button class="btn btn-primary" onclick="tourHandler()">Finish</button>
+  <div class="col-lg-8 mb-4" id="map"></div>
 
   <script>
 
-  var sorted_json_points= (<?php print_r(json_encode($sorted_json_points)); ?>);
+  var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 31.9045, lng: 34.8083},
@@ -157,6 +189,18 @@ function haversine($point1,$point2){
       strokeOpacity: 0
     });
 
+  }
+
+  function tourHandler() {
+    var ask = window.confirm("Would you like to share a feedback?");
+      if (ask) {
+          window.location.href = "tour_feedback.php";
+      }
+      else{
+        window.location.href = "homepage_user.php";
+      }
+
+  }
     // // Zoom and center map automatically by stations (each station will be in visible map area)
     // var lngs = stations.map(function(station) { return station.lng; });
     // var lats = stations.map(function(station) { return station.lat; });
@@ -176,8 +220,7 @@ function haversine($point1,$point2){
     //     });
     // }
 
-  }
-
+  // }
 
 
   </script>

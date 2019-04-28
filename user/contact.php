@@ -17,7 +17,7 @@
 <body>
 
   <!-- Navigation -->
-  <?php include('navs.php'); ?>;
+  <?php include('navs.php'); ?>
 
   <!-- Page Content -->
   <div class="container">

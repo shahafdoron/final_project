@@ -12,7 +12,7 @@
 </head>
 <script src="script.js">  </script>
 <body >
-  <?php include('navs.php'); ?>;
+  <?php include('navs.php'); ?>
 
   <div class="container">
     <ol class="breadcrumb">

@@ -16,7 +16,7 @@ $user_id=$_SESSION["user_id"];
 
   <script src="script.js">  </script>
 
-  <?php include('navs.php'); ?>;
+  <?php include('navs.php'); ?>
 
 
   <div class="container">

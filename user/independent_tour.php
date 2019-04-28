@@ -42,6 +42,7 @@
       </li>
       <li class="breadcrumb-item active">Independent Tour</li>
     </ol>
+
     <div class="container border">
 
 
@@ -50,26 +51,33 @@
 
         <!-- <form action="tour_map.php"> -->
         <div class="form-group row">
+          <label for="planned_tour_date_time" class="col-sm-2 col-form-label">Date and Time:</label>
+          <div class="col-sm-2.5">
+            <input type="datetime-local" class="form-control" id="planned_tour_date_time" name="planned_tour_date_time"   required>
+          </div>
+        </div>
+
+          <div class="form-group row">
           <label for="tour_duration" class="col-sm-2 col-form-label">Tour duration:</label>
           <div class="col-sm-2.5">
             <input type="text" class="form-control" id="tour_duration_time" name="tour_duration_time" placeholder="Enter time in minutes..."  required>
           </div>
         </div>
         <div class="form-group row">
-          <label for="cafiteria_radio" class="col-sm-2 col-form-label">Cafiteria:</label>
+          <label for="cafeteria_radio" class="col-sm-2 col-form-label">cafeteria:</label>
           <div class="row">
 
-            <div class="col-sm-2.5" id="cafiteria_radio">
+            <div class="col-sm-2.5" id="cafeteria_radio">
               <div class="custom-control custom-radio custom-control-inline ">
-                <input type="radio" id="cafiteria_yes" name="cafiteria" class="custom-control-input" onchange="document.getElementById('cafiteria_time').style.visibility='visible' ;" value="1" >
-                <label class="custom-control-label" for="cafiteria_yes">Yes</label>
+                <input type="radio" id="cafeteria_yes" name="cafeteria" class="custom-control-input" onchange="document.getElementById('cafeteria_time').style.visibility='visible' ;" value="1" >
+                <label class="custom-control-label" for="cafeteria_yes">Yes</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="cafiteria_no" name="cafiteria" class="custom-control-input" checked onchange="document.getElementById('cafiteria_time').style.visibility='hidden';" value="0">
-                <label class="custom-control-label" for="cafiteria_no">No</label>
+                <input type="radio" id="cafeteria_no" name="cafeteria" class="custom-control-input" checked onchange="document.getElementById('cafeteria_time').style.visibility='hidden';" value="0">
+                <label class="custom-control-label" for="cafeteria_no">No</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="number" id="cafiteria_time" name="cafiteria_time" class="form-control" value="0" min="0" max="25" step="5"  style="visibility:hidden" required >
+                <input type="number" id="cafeteria_time" name="cafeteria_time" class="form-control" value="0" min="0" max="25" step="5"  style="visibility:hidden" required >
 
               </div>
             </div>
@@ -79,12 +87,12 @@
           <label for="accessible_radio" class="col-sm-2 col-form-label">Accessible:</label>
           <div class="col-sm-2.5" id="accessible_radio">
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="accessible_yes" name="accessible" class="custom-control-input">
-              <label class="custom-control-label" for="accessible_yes">Yes</label>
+              <input type="radio" id="accessible_yes" name="accessible" class="custom-control-input" value="1">
+              <label class="custom-control-label" for="accessible_yes" >Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="accessible_no" name="accessible" class="custom-control-input" checked >
-              <label class="custom-control-label" for="accessible_no">No</label>
+              <input type="radio" id="accessible_no" name="accessible" class="custom-control-input" value="1"checked >
+              <label class="custom-control-label" for="accessible_no" >No</label>
             </div>
           </div>
         </div>
@@ -150,17 +158,17 @@
           </div>
 
         </div>
-      </div>
-
-
-
-      <br>
-      <div class="form-group row" >
-        <div class="col-auto mr-auto">
-          <button type="button" class="btn btn-primary" onclick="formHandler()">Submit</button>
+        <br>
+        <div class="form-group row" >
+          <div class="col-auto mr-auto">
+            <button type="button" class="btn btn-primary" onclick="formHandler()">Submit</button>
+          </div>
         </div>
+        </form>
 
-      </form>
+      </div>
+<br>
+    </div>
 
 
 
@@ -207,8 +215,6 @@
 
         addElement(table_id,"tr",tr_id,ht);
 
-        // document.getElementById(j_point["p_name"])[tr_id].disabled=true;
-
       }
 
 
@@ -221,12 +227,7 @@
         var div_el=document.getElementById(div_id);
         console.log(category_id + " , " + category_value);
         var cat_div_id="div_"+category_id;
-        // console.log(cat_div_id);
 
-        // console.log("onclick='ff("+cat_card_id+")'");
-
-        // var input_name="cat_"+category_id;
-        // var max=1;
         var ht='<div id="'+cat_div_id+'"  class="col">';
         ht+='<div class="card bg-light mb-3">';
         ht+='<button  class="btn-close-custom"  type="button" onclick="removeElement( \''+cat_div_id+'\' ,\''+select_id+'\', \''+category_id+'\');"><i>Remove</i></button>';
@@ -235,27 +236,8 @@
         ht+='<input id="'+category_id+'"  type="number" value="0" min="0" max="1" step="0.1"  class="form-control" placeholder="0-1"  aria-describedby="btnGroupAddon" required >'
         ht+='</div></div></div>';
         addElement(div_id,"div",cat_div_id,ht);
-
-
-
       }
-      function getMaxValue(input_name){
-        var max=1;
-        var parent = document.getElementById("div_by_categories");
-        var child = parent.children;
 
-        if (child.length>1){
-          for (var i=0; i<child.length;i++){
-            cat_val=child[i].children[0].children[0].children[2].children[0].value;
-            max=max-parseFloat(cat_val);
-          }
-        }
-        var str_max=max.toString();
-        document.getElementById(input_name).setAttribute("max",str_max);
-        // document.getElementsByName(input_name).max=str_max;
-        return str_max;
-
-      }
 
       function formHandler(){
 
@@ -291,19 +273,19 @@
         var pass_validation=true;
 
         var tour_duration_time=document.getElementById("tour_duration_time").value;
-        var cafiteria_is_selected=document.querySelector('input[name = cafiteria]:checked').value;
-        console.log(cafiteria_is_selected);
+        var cafeteria_is_selected=document.querySelector('input[name = cafeteria]:checked').value;
+        console.log(cafeteria_is_selected);
         if (tour_duration_time=="" || tour_duration_time=="0"){
           pass_validation=false;
           alert("Please insert tour duration time in minutes");
         }
 
-        if (cafiteria_is_selected=="1"){
+        if (cafeteria_is_selected=="1"){
 
-          var cafeteria_time=parseFloat(document.getElementById("cafiteria_time").value);
+          var cafeteria_time=parseFloat(document.getElementById("cafeteria_time").value);
           if (cafeteria_time==0){
             pass_validation=false;
-            alert("Please insert cafiteria time in minutes");
+            alert("Please insert cafeteria time in minutes");
           }
         }
 

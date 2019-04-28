@@ -172,6 +172,7 @@ function showMySchedule(biger_or_smaller, user_id,id){
   query_independent+="AND tour.planned_date_and_time_tour"+biger_or_smaller+"NOW() ORDER BY tour.planned_date_and_time_tour ASC";
 
   // console.log(query_independent);
+  console.log(query_independent);
   callAjax(concatenateSchedule,'../db_conn.php?query='+query_independent,id);
 
   var query_guided="SELECT user.user_id, user.email , tour.tour_id, tour.planned_date_and_time_tour, tour.tour_type ";
@@ -243,7 +244,6 @@ function removeElement(remove_id,select_id,category_id) {
   console.log(select_el[category_id]);
   console.log(typeof category_id);
 }
-
 
 
 

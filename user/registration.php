@@ -11,6 +11,7 @@
 	if(isset($_POST['register'])) {
 		$birthday=date("Y-m-d", strtotime($_REQUEST["birthday"]));
 		$gender='';
+		$date=date("Y-m-d");
 		if ($_REQUEST["gender"]==0) {
 			$gender='Male';
 		} else {
@@ -18,7 +19,7 @@
 		}
 		$number= $_REQUEST['code'];
 		$number.=$_REQUEST['number'];
-		$insert_user_query="insert into user (first_name, last_name, email, phone, city, street_name, house_number, date_of_birth, gender, user_type) VALUES ( '".$_REQUEST["first"]."','".$_REQUEST["last"]."' ,'".$_REQUEST["email"]."' ,'".$number."', '".$_REQUEST["city"]."','".$_REQUEST["street"]."','".$_REQUEST["house"]."' ,'".$birthday."','".$gender."' ,1 )";
+		$insert_user_query="insert into user (first_name, last_name, email, phone, city, street_name, house_number, date_of_birth, gender, user_type, registration_date) VALUES ( '".$_REQUEST["first"]."','".$_REQUEST["last"]."' ,'".$_REQUEST["email"]."' ,'".$number."', '".$_REQUEST["city"]."','".$_REQUEST["street"]."','".$_REQUEST["house"]."' ,'".$birthday."','".$gender."' ,1 ,'".$date."' )";
 		echo $insert_user_query;
 		mysqli_query($conn,$insert_user_query);
 		header("Location: user/homepage_user.php");

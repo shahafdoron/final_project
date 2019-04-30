@@ -29,16 +29,15 @@ if (isset($_POST["emailAddress"]) && isset($_POST["password"])){
       <div id="formContent">
         <!-- Tabs Titles -->
 
-        <div class="fadeIn first">
+        <!-- <div class="fadeIn first">
           <br><br>
         </div>
-
+           -->
         <!-- Login Form -->
         <form id="login"  action="index.php" method="post"  >
           <input type="text" id="emailAddress" name="emailAddress" placeholder="Email Address"  required oninvalid="this.setCustomValidity('Please Enter valid email')"
           oninput="setCustomValidity('')">
-          <input type="text" id="password" name="password" placeholder="Passowrd" required  oninvalid="this.setCustomValidity('Please a password')"
-          oninput="setCustomValidity('')">
+          <input type="text" id="password" name="password" placeholder="Passowrd" required oninvalid="this.setCustomValidity('Please a password')" oninput="setCustomValidity('')">
           <input type="submit" name="submit "class="fadeIn fourth" value="Log In">
           <div >
             <h3><?php echo  $error?></h3>
@@ -47,7 +46,7 @@ if (isset($_POST["emailAddress"]) && isset($_POST["password"])){
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-          <a class="underlineHover" href="#">Forgot Password?</a>
+          <a class="underlineHover" href="user/registration.php">I don't have an account > Sign Up</a>
         </div>
 
       </div>

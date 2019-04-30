@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="cafeteria_radio" class="col-sm-2 col-form-label">cafeteria:</label>
+          <label for="cafeteria_radio" class="col-sm-2 col-form-label">Cafeteria:</label>
           <div class="row">
 
             <div class="col-sm-2.5" id="cafeteria_radio">
@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="accessible_radio" class="col-sm-2 col-form-label">Accessible:</label>
+          <label for="accessible_radio" class="col-sm-2 col-form-label">Accessibility:</label>
           <div class="col-sm-2.5" id="accessible_radio">
             <div class="custom-control custom-radio custom-control-inline">
               <input type="radio" id="accessible_yes" name="accessible" class="custom-control-input" value="1">

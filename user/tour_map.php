@@ -129,7 +129,7 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
 </head>
 <body>
   <script src="script.js">  </script>
-  <?php include('navs.php'); ?>
+  <?php //include('navs.php'); ?>
   <div class="container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">

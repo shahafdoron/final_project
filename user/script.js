@@ -7,20 +7,40 @@ function callAjax(func,url,id){
     if ((request.readyState==4) & (request.status==200)){
       // console.log(request.responseText);
       var json_data=JSON.parse(request.responseText);
-      // console.log(json_data);
       func(json_data,id);
     }
   }
   request.send();
 }
+function sendAjax(url,action,json_data={}){
+  console.log("inside sendAjax");
+  var request = new XMLHttpRequest();
+  request.open("POST", url, true);
+  request.setRequestHeader('X-Requested-With','XMLHttpRequest');
+  request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 
-function sendAjax(url,json_data){
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
-  var myJsonString = JSON.stringify(json_data);
-  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhr.send("json_data="+json_data);
+
+  json_data=JSON.stringify(json_data);
+  console.log(json_data);
+  console.log(action);
+  request.send("action="+action+"&json_data="+json_data);
+
 }
+// function sendAjax(url,query,use_json_data=false,json_data={}){
+//   console.log("inside sendAjax");
+//   var request = new XMLHttpRequest();
+//   request.open("POST", url, true);
+//   request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+//   if(use_json_data){
+//     json_data=JSON.stringify(json_data);
+//     request.send("query="+query+"&use_json_data="+use_json_data+"&json_data="+json_data);
+//   }
+//   else{
+//     request.send("query="+query);
+//   }
+//
+//
+// }
 
 function respond() {
   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -48,6 +68,7 @@ function showCategoryPoints(){
   var cat_id=cat.options[cat.selectedIndex].id;
   var cat_name=cat.options[cat.selectedIndex].value;
   var query="SELECT * FROM point_of_interest,category WHERE point_of_interest.category_id=category.category_id AND category.cat_name='"+cat_name+"'";
+console.log(query);
   callAjax(concatenatePoints,'../db_conn.php?query='+query,"points");
 }
 
@@ -65,9 +86,9 @@ function concatenatePoints(json_data,id){
     txt+="<div class='card w-100 h-100 p-2'>";
     txt+="<div class='card-body d-flex flex-column p-2'>";
     txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>";
-    txt+="<img class='card-img-top img-responsive text-center' src='wolfson.jpg' alt='Card image cap'>";
+    txt+="<img class='card-img-top img-responsive text-center' src='../images/points/"+json_data[i].point_id+".jpg' alt='Card image cap'>";
     txt+="<br><br><h5 class='card-title'>"+json_data[i].name+"</h5>";
-    txt+="<p class='card-text'>Short description:</p>";
+    txt+="<p class='card-text'>Average ranking:   "+json_data[i].average_ranking+"</p>";
     txt+="<input class='btn btn-primary btn-lg btn-block' type='submit' value='For more details'>";
     txt+="</form>";
     txt+="</div>";

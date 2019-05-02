@@ -8,6 +8,7 @@
 
     <title></title>
   </head>
+  <script src="script.js">  </script>
   <body>
     <?php include("navs.php"); ?>
 
@@ -33,7 +34,7 @@
         <br>
         <div class="form-group" >
           <div class="col-auto mr-auto">
-            <button type="button" class="btn btn-primary" onclick="sendFeedback()">Submit</button>
+            <button type="submit" class="btn btn-primary" onclick="sendFeedback()">Submit</button>
           </div>
         </div>
       </div>
@@ -71,78 +72,25 @@
 
 
       function sendFeedback(){
-        var points_ranking_by_user={};
+
         var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+        var points_ranking_by_user={};
+
+        // define points_ranking_by_user:
         for (var i=1;i<sorted_json_points.length;i++){
-          // console.log(sorted_json_points[i].name);
           var p_id=sorted_json_points[i].point_id;
           var val=document.querySelector('input[name = "'+p_id+'"]:checked').value;
-            console.log(val);
           points_ranking_by_user[p_id]=val;
-
           }
 
-          console.log(points_ranking_by_user);
+        sendAjax('../db_conn.php','feedback',points_ranking_by_user);
+        // sendAjax('../ajax_post_management.php',points_ranking_by_user);
+        alert("Thank you for sharing your feedback!");
+        window.location.href = 'homepage_user.php';
+
       }
     </script>
 
-          <!-- <label  class="control-label col-sm-3 border">cafeteria:</label> -->
-            <!-- <div class="row" id="cafeteria_radio"> -->
-              <!-- <div class="custom-radio custom-control-inline border">
-                <input type="radio" id="1" name="cafeteria" class="custom-control-input border"  value="1" checked >
-                <label class="custom-control-label" for="1">1</label>
-              </div> -->
-              <!-- <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="2" name="cafeteria" class="custom-control-input" value="2">
-                <label class="custom-control-label" for="2">2</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="3" name="cafeteria" class="custom-control-input" value="3">
-                <label class="custom-control-label" for="3">3</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="4" name="cafeteria" class="custom-control-input" value="4">
-                <label class="custom-control-label" for="4">4</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="5" name="cafeteria" class="custom-control-input" value="5">
-                <label class="custom-control-label" for="5">5</label>
-              </div> -->
-            <!-- </div> -->
-
-
-
-
-
-      <!-- <div class="row-md-2 border"> -->
-
-
-   <!-- </div> -->
-
-
-      <!-- <div class="contaner border">
-        <div class="form-group row">
-          <label for="cafeteria_radio" class="col-sm-2 col-form-label">cafeteria:</label>
-          <div class="row">
-
-            <div class="col-sm-2.5" id="cafeteria_radio">
-              <div class="custom-control custom-radio custom-control-inline ">
-                <input type="radio" id="cafeteria_yes" name="cafeteria" class="custom-control-input" onchange="document.getElementById('cafeteria_time').style.visibility='visible' ;" value="1" >
-                <label class="custom-control-label" for="cafeteria_yes">Yes</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="cafeteria_no" name="cafeteria" class="custom-control-input" checked onchange="document.getElementById('cafeteria_time').style.visibility='hidden';" value="0">
-                <label class="custom-control-label" for="cafeteria_no">No</label>
-              </div>
-              <div class="custom-control custom-radio custom-control-inline">
-                <input type="number" id="cafeteria_time" name="cafeteria_time" class="form-control" value="0" min="0" max="25" step="5"  style="visibility:hidden" required >
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div> -->
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

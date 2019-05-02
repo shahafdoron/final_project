@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
 $point=$_REQUEST['point'];
-// $point = html_entity_decode($jsonText);
-$data=json_decode($point);
+$data=json_decode($point,true);
+
 
 ?>
 <html lang="en" dir="ltr">
@@ -26,17 +26,19 @@ $data=json_decode($point);
       </li>
       <li class="breadcrumb-item active">Point Description</li>
     </ol>
-    <br><br>
+
+    <br>
+
     <section class="card">
       <div class="card-body text-center">
-        <h2 class="card-title"><?php echo $data->{'name'}; ?></h2>
+        <h2 class="card-title"><?php echo $data["name"]; ?></h2>
         <br>
-        <img class="card-img-top img-responsive text-center" src="wolfson.jpg" style="width: 18rem; "  >
+        <img class="card-img-top img-responsive text-center" src="../images/points/<?php echo $data["point_id"].".jpg"; ?>" style="width: 18rem; "  >
         <br><br>
         <section class="card">
           <br>
           <h5 class="card-subtitle">Description</h5>
-          <p class="card-text"><?php echo $data->{'description'}; ?></p>
+          <p class="card-text"><?php echo $data["point_description"]; ?></p>
           <br><br>
         </section>
       </div>

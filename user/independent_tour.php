@@ -53,7 +53,19 @@
         <div class="form-group row">
           <label for="planned_tour_date_time" class="col-sm-2 col-form-label">Date and Time:</label>
           <div class="col-sm-2.5">
-            <input type="datetime-local" class="form-control" id="planned_tour_date_time" name="planned_tour_date_time"   required>
+            <input type="datetime-local" class="form-control" id="planned_tour_date_time" name="planned_tour_date_time"  step="1" required >
+            <script type="text/javascript">
+
+              var now=new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+              size=now.length;
+              now=now.slice(0,size-2);
+              now+="00";
+              document.getElementById("planned_tour_date_time").value=now;
+              document.getElementById("planned_tour_date_time").min=now;
+              console.log("aasd" +typeof(now)) ;
+
+              console.log(now);
+            </script>
           </div>
         </div>
 
@@ -63,6 +75,13 @@
             <input type="text" class="form-control" id="tour_duration_time" name="tour_duration_time" placeholder="Enter time in minutes..."  required>
           </div>
         </div>
+        <div class="form-group row">
+        <label for="participants" class="col-sm-2 col-form-label">Participants:</label>
+        <div class="col-sm-2.5">
+          <input type="number" id="participants" name="participants" class="form-control" value="1" min="1" max="20" step="1" onKeyDown="return false" required >
+
+        </div>
+      </div>
         <div class="form-group row">
           <label for="cafeteria_radio" class="col-sm-2 col-form-label">Cafeteria:</label>
           <div class="row">
@@ -271,11 +290,19 @@
 
       function validateGeneralInputs(){
         var pass_validation=true;
-
+        var now=new Date(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]);
+        var d_user=new Date(document.getElementById("planned_tour_date_time").value);
+        console.log(typeof(now));
+        console.log(typeof(d_user));
         var tour_duration_time=document.getElementById("tour_duration_time").value;
         var cafeteria_is_selected=document.querySelector('input[name = cafeteria]:checked').value;
         console.log(cafeteria_is_selected);
-        if (tour_duration_time=="" || tour_duration_time=="0"){
+
+        if(d_user < now){
+          pass_validation=false;
+          alert("Please enter valid date and time");
+        }
+        else if (tour_duration_time=="" || tour_duration_time=="0"){
           pass_validation=false;
           alert("Please insert tour duration time in minutes");
         }

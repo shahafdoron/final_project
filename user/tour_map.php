@@ -13,7 +13,8 @@ $query="select * from point_of_interest where name='main gate'";
 $total_tour_duration=floatval($_REQUEST["tour_duration_time"]);
 $_SESSION["entry_point"]=json_decode(extract_data_to_json($query),true);
 $json_data=json_decode($_REQUEST["json_data"],true);
-
+$planned_tour_date_time=$_REQUEST["planned_tour_date_time"];
+$participants=$_REQUEST["participants"];
 //set algo key
 $algorithem_key=$_REQUEST["sel_tab"];
 
@@ -43,7 +44,7 @@ $sorted_json_points=nearest(json_decode($result,true));
 
 
 //=============================update db======================================
-$insert_tour_query="insert into tour (planned_date_and_time_tour, tour_duration,is_acccessible_only,is_cafeteria, cafeteria_time, tour_type) VALUES (NOW() ,$total_tour_duration ,$is_accessible_only ,$is_cafeteria ,$cafeteria_time ,1 )";
+$insert_tour_query="insert into tour (planned_date_and_time_tour, tour_duration,is_acccessible_only,is_cafeteria, cafeteria_time, participants ,tour_type) VALUES ('".$planned_tour_date_time."' ,$total_tour_duration ,$is_accessible_only ,$is_cafeteria ,$cafeteria_time ,$participants,1 )";
 $insert_tour_category_query="insert into tour_categories(tour_id, category_id) values ";
 mysqli_query($conn,$insert_tour_query);
 

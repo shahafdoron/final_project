@@ -12,7 +12,7 @@
   <body>
     <?php include("navs.php"); ?>
 
-    <div class="container">
+    <div class="container border shadow p-3  bg-white rounded">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="homepage_user.php">Home</a>
@@ -28,20 +28,20 @@
       </ol>
 
 
-      <div class="container border" >
+      <div class="container border  shadow p-3  bg-white rounded" >
         <h1 ><u>Feedback:</u></h1><br>
         <div id="feedback"></div>
         <br>
         <div class="form-group" >
-          <div class="col-auto mr-auto">
-            <button type="submit" class="btn btn-primary" onclick="sendFeedback()">Submit</button>
+          <div class="mb-5 mt-5 row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-lg" onclick="sendFeedback()" style="width:250px;">Submit</button>
           </div>
         </div>
       </div>
 
       </div>
 
-      <?php print_r( $_SESSION["tour_points"] );?>
+
 
     <script type="text/javascript">
 

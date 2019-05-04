@@ -1,2 +1,0 @@
-we need use at the "mysqli_real_escape_string" function for each element we sent in a form.
-link: http://php.net/manual/en/mysqli.real-escape-string.php

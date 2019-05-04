@@ -24,9 +24,9 @@ $user_id=$_SESSION["user_id"];
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
       </li>
-      <li class="breadcrumb-item active">My Schedule</li>
+      <li class="breadcrumb-item active">My Tours</li>
     </ol>
-    <h2>My Schedule</h2><br>
+    <h2>My Tours</h2><br>
     <nav class="nav nav-pills flex-column flex-sm-row">
       <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('>',<?php echo $user_id; ?>,'my_tours_schedule')">My future tours</a>
       <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('<',<?php echo $user_id; ?>,'my_tours_schedule')">My past tours</a>

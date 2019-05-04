@@ -24,7 +24,7 @@
 
 <body>
 
-  <div class="container">
+  <div class="container  shadow p-3 mb-5 bg-white rounded border">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
@@ -39,6 +39,9 @@
         <a >Guided Tour Information And Booking</a>
       </li>
     </ol>
+    <div class="container shadow p-3 mb-5 bg-white rounded border">
+
+
     <div class='card w-100 h-50 mb-24 p-2'>
       <div class='card-header body align-items-center d-flex justify-content-center'><u><h5>Tour Number <?php echo $counter; ?></h5></u></div>
       <div class='card-body align-items-center d-flex justify-content-center'>
@@ -79,7 +82,7 @@
               $tour=$_SESSION["tour"];
               $couner=$_SESSION["counter"];
               $query="insert into guided_tour_registration (guided_tour_id, registered_tourist_id, subscribers, registration_date) VALUES (".$tour['guided_tour_id'].", ".$user_id.", ".$_POST['Ticket'].", NOW())";
-              $query2="update guided_tour SET currently_participants = ".(floatval($tour['currently_participants'])+floatval($_POST['Ticket']))." WHERE guided_tour_id = ".$tour['guided_tour_id']."";
+              $query2="update tour SET participants = ".(floatval($tour['participants'])+floatval($_POST['Ticket']))." WHERE tour_id = ".$tour['guided_tour_id']."";
               $conn->query($query);
               $conn->query($query2);
               $conn->close();
@@ -96,6 +99,7 @@
           </form>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </body>

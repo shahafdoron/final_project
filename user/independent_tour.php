@@ -35,18 +35,18 @@
   <script src="script.js">  </script>
   <?php include('navs.php'); ?>
 
-  <div class="container" >
+  <div class="container border shadow p-3 mb-5 bg-white rounded" >
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
       </li>
-      <li class="breadcrumb-item active">Independent Tour</li>
+      <li class="breadcrumb-item active">Build A Tour</li>
     </ol>
 
-    <div class="container border">
+    <div class="container border shadow p-3 mb-5 bg-white rounded">
 
 
-      <h1 ><u>Make Your Own Tour:</u></h1><br>
+      <h1 ><u>Build A Tour:</u></h1><br>
       <form action=""  accept-charset="UTF-8" method='POST' name="tour_details_form" id="tour_details_form">
 
         <!-- <form action="tour_map.php"> -->
@@ -70,9 +70,10 @@
         </div>
 
           <div class="form-group row">
-          <label for="tour_duration" class="col-sm-2 col-form-label">Tour duration:</label>
+          <label for="tour_duration" class="col-sm-2 col-form-label" >Tour duration (minutes):</label>
           <div class="col-sm-2.5">
-            <input type="text" class="form-control" id="tour_duration_time" name="tour_duration_time" placeholder="Enter time in minutes..."  required>
+            <input type="number" id="tour_duration_time" name="tour_duration_time" class="form-control" value="45" min="45" max="300" step="5" onKeyDown="return false" required >
+            <!-- <input type="text" class="form-control" id="tour_duration_time" name="tour_duration_time" placeholder="Enter time in minutes..."  required> -->
           </div>
         </div>
         <div class="form-group row">
@@ -84,23 +85,23 @@
       </div>
         <div class="form-group row">
           <label for="cafeteria_radio" class="col-sm-2 col-form-label">Cafeteria:</label>
-          <div class="row">
+          <!-- <div class="row"> -->
 
-            <div class="col-sm-2.5" id="cafeteria_radio">
-              <div class="custom-control custom-radio custom-control-inline ">
+            <!-- <div class="col-sm-2.5" id="cafeteria_radio"> -->
+              <div class="custom-control custom-radio custom-control-inline mt-1 ">
                 <input type="radio" id="cafeteria_yes" name="cafeteria" class="custom-control-input" onchange="document.getElementById('cafeteria_time').style.visibility='visible' ;" value="1" >
                 <label class="custom-control-label" for="cafeteria_yes">Yes</label>
               </div>
-              <div class="custom-control custom-radio custom-control-inline">
+              <div class="custom-control custom-radio custom-control-inline mt-1">
                 <input type="radio" id="cafeteria_no" name="cafeteria" class="custom-control-input" checked onchange="document.getElementById('cafeteria_time').style.visibility='hidden';" value="0">
                 <label class="custom-control-label" for="cafeteria_no">No</label>
               </div>
-              <div class="custom-control custom-radio custom-control-inline">
+              <div class="custom-control custom-radio custom-control-inline ">
                 <input type="number" id="cafeteria_time" name="cafeteria_time" class="form-control" value="0" min="0" max="25" step="5"  style="visibility:hidden" required >
 
               </div>
-            </div>
-          </div>
+            <!-- </div> -->
+          <!-- </div> -->
         </div>
         <div class="form-group row">
           <label for="accessible_radio" class="col-sm-2 col-form-label">Accessibility:</label>
@@ -110,7 +111,7 @@
               <label class="custom-control-label" for="accessible_yes" >Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="accessible_no" name="accessible" class="custom-control-input" value="1"checked >
+              <input type="radio" id="accessible_no" name="accessible" class="custom-control-input" value="0"checked >
               <label class="custom-control-label" for="accessible_no" >No</label>
             </div>
           </div>
@@ -150,17 +151,21 @@
                 <div class="col-auto mr-auto">
                   <select class='custom-select' id='categories_by_points_option'  onchange="createSelectPoints('categories_by_points_option','div_by_points','table_points')"><script>showCategory("categories_by_points_option");</script></select><br>
                 </div>
+                <div class="col md-4" >
+                  <h4  class="btn btn-light btn-md"> <span id="time_left_label" class="badge badge-pill "><script>setTimeLeft(); </script></span></h4>
+
+                </div>
               </div>
               <div class="row mt-3">
                 <div class="col-auto mr-auto" id="div_by_points"></div>
               </div>
               <div class="row mt-3">
                 <div class="col-auto mr-auto" id="divpoints_ta">
-                  <div class="card">
+                  <div class="card  border-0">
 
                     <div class="card-body">
                       <div id="table" class="table">
-                        <table class="table table-bordered table-responsive-md table-striped text-center" id="table_points">
+                        <table class="table table-bordered table-responsive-md table-striped text-center shadow p-3 mb-5 bg-white rounded" id="table_points">
                           <tr>
                             <th class="text-center">Point Name</th>
                             <th class="text-center">Average Time (Minutes)</th>
@@ -170,25 +175,152 @@
                         </table>
                       </div>
                     </div>
-                  </div><br><br>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
         </div>
-        <br>
-        <div class="form-group row" >
-          <div class="col-auto mr-auto">
-            <button type="button" class="btn btn-primary" onclick="formHandler()">Submit</button>
+
+
+
+          <div class="mb-5  row justify-content-center">
+            <button type="button" class="btn btn-primary btn-lg" onclick="formHandler()" style="width:250px;">Create Tour</button>
           </div>
-        </div>
+
         </form>
 
       </div>
-<br>
-    </div>
 
+    </div>
+    <!-- Footer -->
+    <footer class="card-footer font-small">
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left">
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+
+              <!-- Content -->
+              <h5 class="font-weight-bold text-uppercase mb-4">Footer Content</h5>
+              <p>Here you can use rows and columns here to organize your footer content.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit amet numquam iure provident voluptate esse
+                quasi, veritatis totam voluptas nostrum.</p>
+
+            </div>
+            <!-- Grid column -->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+              <!-- Links -->
+              <h5 class="font-weight-bold text-uppercase mb-4">About</h5>
+
+              <ul class="list-unstyled">
+                <li>
+                  <p>
+                    <a href="#!">PROJECTS</a>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a href="#!">ABOUT US</a>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a href="#!">BLOG</a>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a href="#!">AWARDS</a>
+                  </p>
+                </li>
+              </ul>
+
+            </div>
+            <!-- Grid column -->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+              <!-- Contact details -->
+              <h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
+
+              <ul class="list-unstyled">
+                <li>
+                  <p>
+                    <i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                </li>
+                <li>
+                  <p>
+                    <i class="fas fa-envelope mr-3"></i> info@example.com</p>
+                </li>
+                <li>
+                  <p>
+                    <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+                </li>
+                <li>
+                  <p>
+                    <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                </li>
+              </ul>
+
+            </div>
+            <!-- Grid column -->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!-- Grid column -->
+            <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
+
+              <!-- Social buttons -->
+              <h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
+
+              <!-- Facebook -->
+              <a type="button" class="btn-floating btn-fb">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <!-- Twitter -->
+              <a type="button" class="btn-floating btn-tw">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <!-- Google +-->
+              <a type="button" class="btn-floating btn-gplus">
+                <i class="fab fa-google-plus-g"></i>
+              </a>
+              <!-- Dribbble -->
+              <a type="button" class="btn-floating btn-dribbble">
+                <i class="fab fa-dribbble"></i>
+              </a>
+
+            </div>
+            <!-- Grid column -->
+
+          </div>
+          <!-- Grid row -->
+
+        </div>
+        <!-- Footer Links -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+          <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+
+      </footer>
+      <!-- Footer -->
 
 
       <script >
@@ -196,47 +328,66 @@
       var query_category='select * from category';
       var cat_ids=[];
 
+       document.getElementById("tour_duration_time").addEventListener("change",function(){
+         setTimeLeft();
+         console.log(tour_duration_time);
+       });
+
+
 
 
       function createSelectPoints(select_id,div_id,table_id){
 
         // var categories_select_el=document.getElementById(select_id);
         var categories_select_el=document.getElementById(select_id);
-
+        var tour_duration_time=document.getElementById("time_left_label").value;
+        var is_accessible=document.querySelector('input[name = accessible]:checked').value;
         var category_id=categories_select_el.options[categories_select_el.selectedIndex].id;
         var select_points_id="select_points_per_category";
-        var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id;
+        var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id+' and point_of_interest.is_accessible='+is_accessible + ' and point_of_interest.average_time_minutes<="'+tour_duration_time+'" order by point_of_interest.average_time_minutes desc ';
+        console.log(query_points);
         // var ht='<select class="custom-select" id="'+select_points_id+'" width=50px ><option selected  >Choose point</option></select>';
 
         // addElement(div_id,"select",select_points_id,ht);                                                                                               table_id table_id
-        document.getElementById(div_id).innerHTML='<select class="custom-select" id="'+select_points_id+'" name="'+select_points_id+'" onchange="addPointToTable( \''+select_points_id+'\' ,\''+table_id+'\',\''+query_points+'\')" width=50px ><option selected  >Choose point</option></select>';
-        var json_data_points=callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_points_id);
+        document.getElementById(div_id).innerHTML='<select class="custom-select" id="'+select_points_id+'" name="'+select_points_id+'" onchange="addPointToTable( \''+select_points_id+'\' ,\''+table_id+'\',\''+category_id+'\',\''+is_accessible+'\')" width=50px ><option selected  >Choose point</option></select>';
+        callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_points_id);
 
 
       }
 
-      function addPointToTable(select_points_id,table_id,c){
+      function addPointToTable(select_points_id,table_id,category_id,is_accessible){
         console.log(select_points_id);
         console.log(table_id);
         var tour_duration=document.getElementById("tour_duration_time").value;
         var points_select_el=document.getElementById(select_points_id);
         points_select_el.options[points_select_el.selectedIndex].disabled=true;
-        var selected_point_val=points_select_el.options[points_select_el.selectedIndex].value.split("-").map(function(item) {
-          return item.trim();
-        });
+        // var selected_point_val=points_select_el.options[points_select_el.selectedIndex].value.split("-").map(function(item) {
+        //   return item.trim();
+        // });
+        var selected_point_val=points_select_el.options[points_select_el.selectedIndex].value.split("-");
+        console.log(selected_point_val.length);
+        for (var i=1; i<selected_point_val.length; i++){
+          selected_point_val[i]=selected_point_val[i].split(":")[1];
+        }
 
         var selected_point_id=points_select_el.options[points_select_el.selectedIndex].id;
         console.log(selected_point_id + " : " + typeof selected_point_val);
         var j_point={"p_id":selected_point_id,"p_name":selected_point_val[0], "p_average_time":selected_point_val[1],"p_average_ranking":selected_point_val[2]};
         var tr_id="tr_p"+j_point["p_id"];
         var ht=' <td id="' + j_point["p_id"] + '" "class="pt-3-half" >'+j_point["p_name"]+'</td> <td class="pt-3-half">'+j_point["p_average_time"]+'</td><td class="pt-3-half" >'+j_point["p_average_ranking"]+'</td>';
-        ht+='<td><span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0" onclick="removeElement( \''+tr_id+'\' ,\''+select_points_id+'\', \''+j_point["p_id"]+'\');">Remove</button></span></td>';
+        ht+='<td><span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0" onclick="removeElement( \''+tr_id+'\' ,\''+select_points_id+'\', \''+j_point["p_id"]+'\',\'table\');">Remove</button></span></td>';
 
+        var current_time=parseInt(document.getElementById("time_left_label").value);
+        var p_average_time=parseInt(j_point["p_average_time"]);
+        var tour_duration_time=current_time-p_average_time;
+        document.getElementById("time_left_label").innerHTML="<b>Time left (minutes) : " +tour_duration_time+"</b>";
+        document.getElementById("time_left_label").value=tour_duration_time;
+        console.log("tour_duration_time: "+tour_duration_time);
         addElement(table_id,"tr",tr_id,ht);
+        var query_points='select * from point_of_interest where point_of_interest.category_id='+category_id+' and point_of_interest.is_accessible='+is_accessible + ' and point_of_interest.average_time_minutes<="'+tour_duration_time+'" order by point_of_interest.average_time_minutes desc';
+        callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_points_id);
 
       }
-
-
 
       function createCategoryInput(select_id,div_id){
         var categories_select_el=document.getElementById(select_id);
@@ -248,7 +399,7 @@
         var cat_div_id="div_"+category_id;
 
         var ht='<div id="'+cat_div_id+'"  class="col">';
-        ht+='<div class="card bg-light mb-3">';
+        ht+='<div class="card bg-light mb-3 border shadow rounded ">';
         ht+='<button  class="btn-close-custom"  type="button" onclick="removeElement( \''+cat_div_id+'\' ,\''+select_id+'\', \''+category_id+'\');"><i>Remove</i></button>';
         ht+='<div class="card-header">'+category_value+'</div>';
         ht+='<div class="card-body">';

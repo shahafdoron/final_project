@@ -12,7 +12,7 @@
 </head>
 <body>
   <?php include('navs.php'); ?>
-  <div class="container">
+  <div class="container border shadow p-3 mb-5 bg-white rounded">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
@@ -24,34 +24,45 @@
 
     <script src="script.js">  </script>
 
-    <div class="container border">
+    <div class="container border shadow p-3 mb-5 bg-white rounded">
       <h1><u>Enter Date Range For Existing Tours:</u></h1><br>
       <div class="row">
         <br>
         <div >
           <br>
+          <div class="form-group p-3 ">
+
+
           <form method="POST" action="Existing_guided_Tour.php">
-            Starting Date: <input type="date" name="enter" style="border-radius:5px;" min="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>">
-            <br>
-            <br>
-            <br>
-            Finishing Date: <input type="date" name="finish"  style="border-radius:5px;"  min="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>">
-            <br>
-            <br>
-            <br>
-            <label for="accessible_radio" >Accessible: </label>
-            <div class="custom-control custom-radio custom-control-inline">
+            <div class="form-group row">
+            <label for="enter"  class="col-md col-form-label" >  Starting Date: </label>
+            <div class="col-md">
+            <input type="date" name="enter" class="form-control" style="border-radius:5px;" min="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>">
+              <!-- <input type="text" class="form-control" id="tour_duration_time" name="tour_duration_time" placeholder="Enter time in minutes..."  required> -->
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="finish"  class="col-md col-form-label" >Finishing Date: </label>
+            <div class="col-md">
+            <input type="date" class="form-control" name="finish"  style="border-radius:5px;"  min="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-5 col-form-label" for="accessible_radio" >Accessible: </label>
+            <div class="custom-control custom-radio custom-control-inline mt-1">
               <input type="radio" id="accessible_yes" name="access" class="custom-control-input" value="1">
               <label class="custom-control-label" for="accessible_yes">Yes</label>
             </div>
-            <div class="custom-control custom-radio custom-control-inline">
+            <div class="custom-control custom-radio custom-control-inline mt-1">
               <input type="radio" id="accessible_no" name="access" class="custom-control-input" checked value="0">
               <label class="custom-control-label" for="accessible_no">No</label>
             </div>
-            <br>
-            <br>
+          </div>
+
+
             <div class="form-group row" >
-              <div class="col-auto mr-auto">
+              <div class="col-auto mr-auto mt-3">
                 <input class="btn btn-primary" type="submit" name="check_dates" value="Check Dates">
               </div>
             </div>
@@ -59,6 +70,7 @@
           </div>
         </div>
       </form>
+    </div>
     </div>
   </div>
 </div>

@@ -14,7 +14,7 @@
 <body >
   <?php include('navs.php'); ?>
 
-  <div class="container">
+  <div class="container border shadow p-3 mb-5 bg-white rounded">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
@@ -31,7 +31,7 @@
     </div>
   </div>
   <script>
-  var query='select * from category';
+  var query='select * from category where category.category_id NOT IN ("3") ';
   callAjax(concatenateCategories,'../db_conn.php?query='+query,"categories");
   document.getElementById("categories").addEventListener("change",showCategoryPoints);
 

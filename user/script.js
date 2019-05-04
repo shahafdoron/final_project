@@ -76,31 +76,69 @@ function concatenatePoints(json_data,id){
   // var points_div=document.getElementById("points");
   var points_div=document.getElementById(id);
   // points_div.innerHTML="<p>"+JSON.stringify(json_data)+"</p>";
-  var txt="<br><br><div class'container'>";
-  txt+="<div class='card-group'>";
+
+// ========old=================================
+  // var txt="<br><br><div class'container'>";
+  //   txt="<div class='card-group'>";
+// ========old=================================
+
+// ========new=================================
+var txt="<br><br><div class'container'>";
+  txt="<div class='card-group'>";
+
+
+// ========new=================================
+
 
   console.log(json_data);
   for (var i = 0; i < json_data.length; i++) {
     // txt+="<div class='card' >";4
-    txt+="<div class='col-4 mb-4'>";
-    txt+="<div class='card w-100 h-100 p-2'>";
-    txt+="<div class='card-body d-flex flex-column p-2'>";
+//===========================oldddd=========================
+    txt+="<div class='col-4 mb-4 mt-4'>";
+    txt+="<div class='card w-100 h-100 shadow p-3 mb-5 bg-white rounded'>";
+
+    txt+="<img class='card-img-top embed-responsive-item text-center border' src='../images/points/"+json_data[i].point_id+".jpg' alt='Card image cap'  style='width:100%; height:250px;'>";
+    txt+="<div class='card-header w-100 h-100  border'>";
+    txt+="<h5 class='card-title text-center mt-3'>"+json_data[i].name+"</h5>";
+    txt+="</div>";
+    txt+="<div class='card-body card-footer d-flex flex-column border' >";
     txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>";
-    txt+="<img class='card-img-top img-responsive text-center' src='../images/points/"+json_data[i].point_id+".jpg' alt='Card image cap'>";
-    txt+="<br><br><h5 class='card-title'>"+json_data[i].name+"</h5>";
-    txt+="<p class='card-text'>Average ranking:   "+json_data[i].average_ranking+"</p>";
-    txt+="<input class='btn btn-primary btn-lg btn-block' type='submit' value='For more details'>";
+
+  //card-footer text-muted text-center
+    txt+="<div class=' text-muted text-center'>";
+    txt+="<p class='card-text '>Average ranking: "+json_data[i].average_ranking+"</p>";
+    txt+="<input class='align-self-end btn btn-primary btn-lg btn-block' type='submit' value='For more details'>";
+
+    txt+="</div>";
     txt+="</form>";
     txt+="</div>";
-    txt+="</div>";
-    txt+="</div>";
 
+    txt+="</div>";
+    txt+="</div>";
+    //===========================oldddd=========================
+
+// ====================new========================================
+    // txt+="<div class='col-4 mb-4'>";
+    // txt+="<div class='card w-100 h-100 p-2'>";
+    // txt+="<div class='card-body d-flex flex-column p-2' >";
+    // txt+="<form method='POST' action='point_description.php?point="+JSON.stringify(json_data[i])+"'>";
+    // txt+="<img class='card-img-top img-responsive' src='../images/points/"+json_data[i].point_id+".jpg' alt='Card image cap'  style='width:100%; height:250px;'>";
+    // txt+="<br><br><h5 class='card-title'>"+json_data[i].name+"</h5>";
+    // txt+="<p class='card-text'>Average ranking:   "+json_data[i].average_ranking+"</p>";
+    // txt+="<input class='btn btn-primary btn-lg btn-block' type='submit' value='For more details'>";
+    // txt+="</form>";
+    // txt+="</div>";
+    // txt+="</div>";
+    // txt+="</div>";
+// ====================new========================================
 
   }
+  console.log("inside concatenatePoints");
 
   txt+="</div>";
   txt+="</div>";
   points_div.innerHTML=txt;
+  console.log(txt);
 
 
   // <div class="col-lg-4 mb-4">
@@ -117,6 +155,7 @@ function concatenatePoints(json_data,id){
 }
 
 
+
 function concatenateGuidedTours(json_data,id){
   var counter=1;
   var txt="";
@@ -125,8 +164,8 @@ function concatenateGuidedTours(json_data,id){
   }
   for (i=0;i<json_data.length;i++){
     // console.log(json_data);
-    txt+="<div class='row mt-2'>";
-    txt+="<div class='card w-100 h-50 mb-24 p-2'>";
+    txt+="<div class='row mt-2 border shadow p-3 mb-5 bg-white rounded'>";
+    txt+="<div class='card w-100 h-50 mb-24 p-2 '>";
     txt+="<div class='card-header'><u><h5>Tour number "+counter+"</h5>  </u></div>"
     txt+="<div class='card-body align-items-center d-flex justify-content-center'>";
     txt+="<form method='POST' action='guided_info_book.php?tour="+JSON.stringify(json_data[i])+"&counter="+counter+"'>";
@@ -217,7 +256,7 @@ function concatenatePointsDropDown(json_data,id){
   // var txt="<select id='categories' width=50px >";
   var txt="<option selected disabled hidden  >Choose point</option>";
   for (var i = 0; i < json_data.length; i++){
-    txt+="<option id='"+json_data[i].point_id+"' data-tokens='"+json_data[i].name+"'>"+json_data[i].name+ " - "+json_data[i].average_time_minutes+" - "+json_data[i].average_ranking+"</option>";
+    txt+="<option id='"+json_data[i].point_id+"' data-tokens='"+json_data[i].name+"'>"+json_data[i].name+ " - Minutes :"+json_data[i].average_time_minutes+" - Rank :"+json_data[i].average_ranking+"</option>";
     // addElement(id,"option",json_data[i].point_id,txt);
     // txt="";
   }
@@ -242,7 +281,7 @@ function concatenatePointsDropDown(json_data,id){
 }
 
 function showCategory(id){
-  var query_category='select * from category';
+  var query_category='select * from category where category.category_id NOT IN ("3","7")';
   callAjax(concatenateCategories,'../db_conn.php?query='+query_category,id);
 
 }
@@ -255,17 +294,35 @@ function addElement(parentId, elementTag, elementId, html) {
   newElement.innerHTML = html;
   p.appendChild(newElement);
 }
-function removeElement(remove_id,select_id,category_id) {
+function removeElement(remove_id,select_id,category_id,action="") {
   // Removes an element from the document
+  if (action=="table"){
+    var is_accessible=document.querySelector('input[name = accessible]:checked').value;
+    var select_el=document.getElementById("categories_by_points_option");
+    var cat_id=select_el.options[select_el.selectedIndex].id;
+    var p_average_time=parseInt(document.getElementById(remove_id).children[1].textContent);
+    var current_time=parseInt(document.getElementById("time_left_label").value);
+    var tour_duration_time=current_time+p_average_time;
+    document.getElementById("time_left_label").innerHTML="<b>Time left (minutes) : " +tour_duration_time+"</b>";
+    document.getElementById("time_left_label").value=tour_duration_time;
+    var query_points='select * from point_of_interest where point_of_interest.category_id='+cat_id+' and point_of_interest.is_accessible='+is_accessible + ' and point_of_interest.average_time_minutes<="'+tour_duration_time+'" order by point_of_interest.average_time_minutes desc';
+    callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_id);
+  }
   console.log('remove_id : '+remove_id);
   var element = document.getElementById(remove_id);
   element.parentNode.removeChild(element);
   var select_el=document.getElementById(select_id);
-  // select_el[category_id].disabled=false;
+  console.log("inside removeElement : category_id --> "+category_id);
+
   select_el.namedItem(category_id).disabled=false;
   console.log("inside removeElement: "+ category_id);
-  console.log(select_el[category_id]);
-  console.log(typeof category_id);
+
+
+}
+function setTimeLeft(){
+  var time= document.getElementById("tour_duration_time").value;
+  document.getElementById("time_left_label").innerHTML="<b>Time left (minutes): "+time+"</b>";
+  document.getElementById("time_left_label").value=time;
 }
 
 

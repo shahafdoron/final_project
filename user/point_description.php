@@ -13,8 +13,7 @@ $data=json_decode($point,true);
   <title></title>    <title></title>
 </head>
 <body>
-  <?php include('navs.php');  ?>;
-
+  <?php include('navs.php');  ?>
 
   <div class="container">
     <ol class="breadcrumb">
@@ -27,25 +26,40 @@ $data=json_decode($point,true);
       <li class="breadcrumb-item active">Point Description</li>
     </ol>
 
-    <br>
 
-    <section class="card">
-      <div class="card-body text-center">
-        <h2 class="card-title"><?php echo $data["name"]; ?></h2>
-        <br>
-        <img class="card-img-top img-responsive text-center" src="../images/points/<?php echo $data["point_id"].".jpg"; ?>" style="width: 18rem; "  >
-        <br><br>
-        <section class="card">
-          <br>
-          <h5 class="card-subtitle">Description</h5>
-          <p class="card-text"><?php echo $data["point_description"]; ?></p>
-          <br><br>
-        </section>
+
+
+    <div class="card w-100 h-100 shadow p-3 mb-5 bg-white rounded">
+      <div class='card-header w-100 h-100  border'>
+        <h2 class="card-title text-center"><u><?php echo $data["name"]; ?></u></h2>
       </div>
-    </section>
+      <img class="card-img-top img-responsive text-center border " src="../images/points/<?php echo $data["point_id"].".jpg"; ?>"   >
+      <div class='card-header w-100 h-100  border'>
+        <div class="row">
+          <div class="col-4 ">
+            <h3 class="card-title text-left">Average ranking: <?php echo $data["average_ranking"]; ?></h3>
+          </div>
+          <div class="col-5 ">
+          <h3 class="card-title text-left">Average time (minutes): <?php echo $data["average_time_minutes"]; ?></h3>
+          </div>
+          <div class="col-3">
+          <h3 class="card-title text-left">Accessiblity: <?php echo $data["is_accessible"]; ?></h3>
+          </div>
+        </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
-  </html>
+      </div>
+      <div class="card-body card-footer d-flex flex-column border">
+        <h4 class="card-subtitle mt-3">Description</h5>
+        <p class="card-text text-left mt-3" style="font-size:20px;"><?php echo $data["point_description"]; ?></p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

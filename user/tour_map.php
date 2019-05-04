@@ -56,8 +56,8 @@ foreach ($json_data as $key => $val){
 }
 $insert_tour_category_query=rtrim($insert_tour_category_query,",");
 mysqli_query($conn,$insert_tour_category_query);
-echo "<h5>insert_tour_category_query :</h5>  ". $insert_tour_category_query;
-echo "<br><br>";
+// echo "<h5>insert_tour_category_query :</h5>  ". $insert_tour_category_query;
+// echo "<br><br>";
 
 $insert_tour_points_query="insert into tour_points_of_interest (tour_id,point_id, point_position) VALUES ";
 foreach ($sorted_json_points as $position => $val){
@@ -65,11 +65,11 @@ foreach ($sorted_json_points as $position => $val){
 }
 $insert_tour_points_query=rtrim($insert_tour_points_query,  ",");
 mysqli_query($conn,$insert_tour_points_query);
-echo "<h5>insert_tour_points_query :</h5>  ". $insert_tour_points_query;
+// echo "<h5>insert_tour_points_query :</h5>  ". $insert_tour_points_query;
 
 $insert_independet_tour_query="insert into independent_tour (independent_tour_id,independent_tourist_id) values (".$generated_tour_id.",".$_SESSION["user_id"]. ")";
 mysqli_query($conn,$insert_independet_tour_query);
-echo $insert_independet_tour_query;
+// echo $insert_independet_tour_query;
 
 $_SESSION["tour_points"]=$sorted_json_points;
 $_SESSION["tour_id_current"]=$generated_tour_id;
@@ -130,8 +130,8 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
 </head>
 <body>
   <script src="script.js">  </script>
-  <?php //include('navs.php'); ?>
-  <div class="container">
+  <?php include('navs.php'); ?>
+  <div class="container col-8 mb-30 border shadow p-3  bg-white rounded" style="width:100%; height:100%;">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
@@ -141,90 +141,108 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
       </li>
       <li class="breadcrumb-item active">Map</li>
     </ol>
-  </div>
+    <div class="container border shadow p-3 mb-5 bg-white rounded" style="width:100%; height:90%;">
+        <h1 ><u>Tour Map:</u></h1><br>
+      <div class="container h-90 w-100 border shadow p-3 mb-5 bg-white rounded" id="map">
+        <script type="text/javascript" src="map.js"></script>
+        <script type="text/javascript">
+          var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+          passJsonPoints(sorted_json_points);
+        </script>
+      </div>
+      <div class="mb-5 mt-5 row justify-content-center">
+        <button class="btn btn-primary btn-lg " onclick="tourHandler()" style="width:250px;">Finish</button>
+      </div>
 
-  <button class="btn btn-primary" onclick="tourHandler()">Finish</button>
-  <div class="col-lg-8 mb-4" id="map"></div>
 
-  <script>
+    </div>
 
-  var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
 
-  function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 31.9045, lng: 34.8083},
-      zoom: 15
-    });
 
-    var point_pos={};
-    var tourPath=[]
-    for (var i = 0; i < sorted_json_points.length; i++) {
-      tourPath.push({lat: parseFloat(sorted_json_points[i].latitude), lng: parseFloat(sorted_json_points[i].longitude)});
-      new google.maps.Marker({
-        position: tourPath[i],
-        map: map,
-        label: {
-          text: ""+(i+1),
-          color: 'white',
-        },
-        title: "Station Number "+(i+1)+"\n"+sorted_json_points[i].name
+    <script>
+  // ====================================workkkkkkkkkkkkoinggg====================================
 
-      });
-    }
-    var lineSymbol = {
-      path: 'M 0,-1 0,1',
-      strokeOpacity: 1,
-      scale: 4
-    };
-    tourPath.push({lat: parseFloat(sorted_json_points[0].latitude), lng: parseFloat(sorted_json_points[0].longitude)})
-    var tourPath = new google.maps.Polyline({
-      path: tourPath,
-      geodesic: true,
-      map: map,
-      icons: [{
-        icon: lineSymbol,
-        offset: '0',
-        repeat: '20px'
-      }],
-      strokeColor: '#FF0000',
-      strokeOpacity: 0
-    });
-
-  }
-
-  function tourHandler() {
-    var ask = window.confirm("Would you like to share a feedback?");
-      if (ask) {
-          window.location.href = "tour_feedback.php";
-      }
-      else{
-        window.location.href = "homepage_user.php";
-      }
-
-  }
-    // // Zoom and center map automatically by stations (each station will be in visible map area)
-    // var lngs = stations.map(function(station) { return station.lng; });
-    // var lats = stations.map(function(station) { return station.lat; });
-    // map.fitBounds({
-    //     west: Math.min.apply(null, lngs),
-    //     east: Math.max.apply(null, lngs),
-    //     north: Math.min.apply(null, lats),
-    //     south: Math.max.apply(null, lats),
-    // });
-
-    // // Show stations on the map as markers
-    // for (var i = 0; i < stations.length; i++) {
+    // var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+    //
+    // function initMap() {
+    //   var map = new google.maps.Map(document.getElementById('map'), {
+    //     center: {lat: 31.9045, lng: 34.8083},
+    //     zoom: 15
+    //   });
+    //
+    //   var point_pos={};
+    //   var tourPath=[]
+    //   for (var i = 0; i < sorted_json_points.length; i++) {
+    //     tourPath.push({lat: parseFloat(sorted_json_points[i].latitude), lng: parseFloat(sorted_json_points[i].longitude)});
     //     new google.maps.Marker({
-    //         position: stations[i],
-    //         map: map,
-    //         title: stations[i].name
+    //       position: tourPath[i],
+    //       map: map,
+    //       label: {
+    //         text: ""+(i+1),
+    //         color: 'white',
+    //       },
+    //       title: "Station Number "+(i+1)+"\n"+sorted_json_points[i].name
+    //
     //     });
+    //   }
+    //   var lineSymbol = {
+    //     path: 'M 0,-1 0,1',
+    //     strokeOpacity: 1,
+    //     scale: 4
+    //   };
+    //   tourPath.push({lat: parseFloat(sorted_json_points[0].latitude), lng: parseFloat(sorted_json_points[0].longitude)})
+    //   var tourPath = new google.maps.Polyline({
+    //     path: tourPath,
+    //     geodesic: true,
+    //     map: map,
+    //     icons: [{
+    //       icon: lineSymbol,
+    //       offset: '0',
+    //       repeat: '20px'
+    //     }],
+    //     strokeColor: '#FF0000',
+    //     strokeOpacity: 0
+    //   });
+    //
+    // }
+    //
+    // function tourHandler() {
+    //   var ask = window.confirm("Would you like to share a feedback?");
+    //     if (ask) {
+    //         window.location.href = "tour_feedback.php";
+    //     }
+    //     else{
+    //       window.location.href = "homepage_user.php";
+    //     }
+    //
+    // }
+    // ====================================workkkkkkkkkkkkoinggg====================================
+      // // Zoom and center map automatically by stations (each station will be in visible map area)
+      // var lngs = stations.map(function(station) { return station.lng; });
+      // var lats = stations.map(function(station) { return station.lat; });
+      // map.fitBounds({
+      //     west: Math.min.apply(null, lngs),
+      //     east: Math.max.apply(null, lngs),
+      //     north: Math.min.apply(null, lats),
+      //     south: Math.max.apply(null, lats),
+      // });
+
+      // // Show stations on the map as markers
+      // for (var i = 0; i < stations.length; i++) {
+      //     new google.maps.Marker({
+      //         position: stations[i],
+      //         map: map,
+      //         title: stations[i].name
+      //     });
+      // }
+
     // }
 
-  // }
+
+    </script>
+  </div>
 
 
-  </script>
 
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb2-b5Z6Ce1SxyiByMODVVXLH-2O9w7ds&callback=initMap" async defer></script>

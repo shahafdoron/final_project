@@ -57,6 +57,9 @@
             <script type="text/javascript">
 
               var now=new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+              // var now=new Date();
+              // now=now.setMinutes(now.getMinutes() + 15);
+              // now=now.toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]
               size=now.length;
               now=now.slice(0,size-2);
               now+="00";

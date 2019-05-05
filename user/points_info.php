@@ -22,6 +22,9 @@
       <li class="breadcrumb-item active">Points Information</li>
     </ol>
 
+    <div class="container border shadow p-3 mb-5 bg-white rounded">
+
+
     <h2>Points of interest</h2>
     <div id="points_by_category" >
       <select class='custom-select' data-live-search='true' id='categories' width=50px ></select>
@@ -29,6 +32,7 @@
     </div>
     <div id="points">
     </div>
+  </div>
   </div>
   <script>
   var query='select * from category where category.category_id NOT IN ("3") ';

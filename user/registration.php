@@ -13,7 +13,7 @@
 		$gender='';
 		$date=date("Y-m-d");
 		if ($_REQUEST["gender"]==0) {
-			$gender='Male';
+			$gender='Male';s
 		} else {
 			$gender='Female';
 		}

@@ -131,7 +131,7 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
 <body>
   <script src="script.js">  </script>
   <?php include('navs.php'); ?>
-  <div class="container col-8 mb-30 border shadow p-3  bg-white rounded" style="width:100%; height:100%;">
+  <div class="container  border shadow p-3  bg-white rounded" style="width:100%; height:100%;">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
@@ -141,22 +141,27 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
       </li>
       <li class="breadcrumb-item active">Map</li>
     </ol>
-    <div class="container border shadow p-3 mb-5 bg-white rounded" style="width:100%; height:90%;">
+    <div class="container border shadow p-3 mb-5 bg-white rounded" style="width:100%; height:90%; ">
         <h1 ><u>Tour Map:</u></h1><br>
-      <div class="container h-90 w-100 border shadow p-3 mb-5 bg-white rounded" id="map">
-        <script type="text/javascript" src="map.js"></script>
-        <script type="text/javascript">
-          var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
-          passJsonPoints(sorted_json_points);
-        </script>
+      <div id="map" class="container border shadow p-3 mb-5 bg-white rounded" style="width:90%; height:75%;" >
+
+          <script type="text/javascript" src="map.js"></script>
+          <script type="text/javascript">
+            var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+            passJsonPoints(sorted_json_points);
+          </script>
+
+
+          <div class="row justify-content-center">
+            <button class="btn btn-primary btn-lg" onclick="tourHandler()" style="width:250px;">Finish</button>
+          </div>
       </div>
-      <div class="mb-5 mt-5 row justify-content-center">
-        <button class="btn btn-primary btn-lg " onclick="tourHandler()" style="width:250px;">Finish</button>
-      </div>
+
+
 
 
     </div>
-
+</div>
 
 
     <script>
@@ -206,15 +211,15 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
     //
     // }
     //
-    // function tourHandler() {
-    //   var ask = window.confirm("Would you like to share a feedback?");
-    //     if (ask) {
-    //         window.location.href = "tour_feedback.php";
-    //     }
-    //     else{
-    //       window.location.href = "homepage_user.php";
-    //     }
-    //
+    function tourHandler() {
+      var ask = window.confirm("Would you like to share a feedback?");
+        if (ask) {
+            window.location.href = "tour_feedback.php";
+        }
+        else{
+          window.location.href = "homepage_user.php";
+        }
+
     // }
     // ====================================workkkkkkkkkkkkoinggg====================================
       // // Zoom and center map automatically by stations (each station will be in visible map area)

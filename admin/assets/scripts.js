@@ -1,251 +1,107 @@
-Apex.grid = {
-  padding: {
-    right: 0,
-    left: 0
-  }
+// Apex.grid = {
+//   padding: {
+//     right: 0,
+//     left: 0
+//   }
+// }
+//
+Apex.yaxis = {
+  forceNiceScale: true
 }
 
-Apex.dataLabels = {
-  enabled: false
-}
 
-var randomizeArray = function (arg) {
-  var array = arg.slice();
-  var currentIndex = array.length, temporaryValue, randomIndex;
 
-  while (0 !== currentIndex) {
-
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-// data for the sparklines that appear below header area
-var sparklineData = [47, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46];
 
 // the default colorPalette for this dashboard
-//var colorPalette = ['#01BFD6', '#5564BE', '#F7A600', '#EDCD24', '#F74F58'];
-var colorPalette = ['#00D8B6','#008FFB',  '#FEB019', '#FF4560', '#775DD0']
+var colorPalette = ['#01BFD6', '#5564BE', '#F7A600', '#EDCD24', '#F74F58'];
+// var colorPalette = ['#00D8B6','#008FFB',  '#FEB019', '#FF4560', '#775DD0'];
 
 
-var monthlyEarningsOpt = {
+
+
+
+//histogram
+var optionsGrouped = {
   chart: {
-    type: 'area',
-    height: 260,
-    background: '#eff4f7',
-    sparkline: {
-      enabled: true
+    height: 350,
+    type: 'bar',
+  },
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: '45%',
     },
-    offsetY: 20
+  },
+  dataLabels: {
+    enabled: true
   },
   stroke: {
-    curve: 'straight'
-  },
-  fill: {
-    type: 'solid',
-    opacity: 1,
+    width: 2,
+    colors: ['transparent']
   },
   series: [{
-    data: randomizeArray(sparklineData)
+    name: 'Guided Tour Visitors',
+    data: count_participants_tour[1]
+  }, {
+    name: 'indepentent Tour Visitors',
+    data: count_participants_tour[2]
   }],
   xaxis: {
-    crosshairs: {
-      width: 1
-    },
+    categories: count_participants_tour[0]
   },
   yaxis: {
     min: 0,
-    max: 130
-  },
-  colors: ['#dce6ec'],
-
-  title: {
-    text: 'Total Earned',
-    offsetX: -30,
-    offsetY: 100,
-    align: 'right',
-    style: {
-      color: '#7c939f',
-      fontSize: '16px',
-      cssClass: 'apexcharts-yaxis-title'
-    }
-  },
-  subtitle: {
-    text: '$135,965',
-    offsetX: -30,
-    offsetY: 100,
-    align: 'right',
-    style: {
-      color: '#7c939f',
-      fontSize: '24px',
-      cssClass: 'apexcharts-yaxis-title'
-    }
-  }
-}
-
-
-
-
-var monthlyEarningsChart = new ApexCharts(document.querySelector("#monthly-earnings-chart"), monthlyEarningsOpt);
-
-
-var optionsArea = {
-  chart: {
-    height: 340,
-    type: 'area',
-    zoom: {
-      enabled: false
+    forceNiceScale: true,
+    title: {
+      text: 'Visitors'
     },
   },
-  stroke: {
-    curve: 'straight'
-  },
-  colors: colorPalette,
-  series: [
-    {
-      name: "Blog",
-      data: [{
-        x: 0,
-        y: 0
-      }, {
-        x: 4,
-        y: 5
-      }, {
-        x: 5,
-        y: 3
-      }, {
-        x: 9,
-        y: 8
-      }, {
-        x: 14,
-        y: 4
-      }, {
-        x: 18,
-        y: 5
-      }, {
-        x: 25,
-        y: 0
-      }]
-    },
-    {
-      name: "Social Media",
-      data: [{
-        x: 0,
-        y: 0
-        }, {
-        x: 4,
-        y: 6
-        }, {
-        x: 5,
-        y: 4
-        }, {
-        x: 14,
-        y: 8
-        }, {
-        x: 18,
-        y: 5.5
-        }, {
-        x: 21,
-        y: 6
-        }, {
-        x: 25,
-        y: 0
-      }]
-    }
-    // {
-    //   name: "External",
-    //   data: [{
-    //     x: 0,
-    //     y: 0
-    //   }, {
-    //     x: 2,
-    //     y: 5
-    //   }, {
-    //     x: 5,
-    //     y: 4
-    //   }, {
-    //     x: 10,
-    //     y: 11
-    //   }, {
-    //     x: 14,
-    //     y: 4
-    //   }, {
-    //     x: 18,
-    //     y: 8
-    //   }, {
-    //     x: 25,
-    //     y: 0
-    //   }]
-    // }
-  ],
   fill: {
-    opacity: 1,
+    opacity: 1
+
   },
   title: {
-    text: 'Daily Visits Insights',
+    text: 'Monthly Visitors',
     align: 'left',
     style: {
       fontSize: '18px'
     }
   },
-  markers: {
-    size: 0,
-    style: 'hollow',
-    hover: {
-      opacity: 5,
-    }
-  },
   tooltip: {
-    intersect: true,
-    shared: false,
-  },
-  xaxis: {
-    tooltip: {
-      enabled: false
-    },
-    labels: {
-      show: false
-    },
-    axisTicks: {
-      show: false
-    }
-  },
-  yaxis: {
-    tickAmount: 4,
-    max: 12,
-    axisBorder: {
-      show: false
-    },
-    axisTicks: {
-      show: false
-    },
-    labels: {
-      style: {
-        color: '#78909c'
+    y: {
+      formatter: function (val) {
+        return  val + " Visitors"
       }
     }
-  },
-  legend: {
-    show: false
   }
 }
-
-var chartArea = new ApexCharts(document.querySelector('#area'), optionsArea);
+var chartArea = new ApexCharts(document.querySelector('#area'), optionsGrouped);
 chartArea.render();
-
+//============================================================
+//stacked bar -
 var optionsBar = {
   chart: {
     type: 'bar',
     height: 380,
     width: '100%',
     stacked: true,
+    toolbar: {
+      show: true
+    },
   },
+  dataLabels: {
+    enabled: true
+  },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      legend: {
+        position: 'bottom',
+        offsetX: -10,
+        offsetY: 0
+      }
+    }
+  }],
   plotOptions: {
     bar: {
       columnWidth: '45%',
@@ -253,30 +109,35 @@ var optionsBar = {
   },
   colors: colorPalette,
   series: [{
-    name: "Clothing",
-    data: [42, 52, 16, 55, 59, 51, 45, 32, 26, 33, 44, 51, 42, 56],
+    name: "indepentent Tour Visitors",
+    data: cate_count[2],
   }, {
-    name: "Food Products",
-    data: [6, 12, 4, 7, 5, 3, 6, 4, 3, 3, 5, 6, 7, 4],
+    name: "Guided Tour Visitors",
+    data: cate_count[1],
   }],
-  labels: [10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+  labels: cate_count[0],
   xaxis: {
-      labels: {
-      show: false
+    labels: {
+      show: true
     },
     axisBorder: {
-      show: false
+      show: true
     },
     axisTicks: {
-      show: false
+      show: true
     },
   },
   yaxis: {
+    min: 0,
+    forceNiceScale: true,
+    title: {
+      text: 'Visitors'
+    },
     axisBorder: {
-      show: false
+      show: true
     },
     axisTicks: {
-      show: false
+      show: true
     },
     labels: {
       style: {
@@ -285,7 +146,7 @@ var optionsBar = {
     }
   },
   title: {
-    text: 'Monthly Sales',
+    text: 'Visitors by Category',
     align: 'left',
     style: {
       fontSize: '18px'
@@ -293,175 +154,112 @@ var optionsBar = {
   }
 
 }
-
 var chartBar = new ApexCharts(document.querySelector('#bar'), optionsBar);
 chartBar.render();
-
-
+//=========================================================
+//donut - category
 var optionDonut = {
   chart: {
-      type: 'donut',
-      width: '100%'
-  },
-  dataLabels: {
-    enabled: false,
-
-  },
-  plotOptions: {
-    pie: {
-      donut: {
-        size: '75%',
-      },
-      offsetY: 20,
-    },
-    stroke: {
-      colors: undefined
+    width: '100%',
+    type: 'donut',
+    toolbar: {
+      show: true,
+      tools: {
+        download: true
+      }
     }
+
   },
   colors: colorPalette,
   title: {
-    text: 'Department Sales',
+    text: 'Total Tours by Category',
     style: {
       fontSize: '18px'
     }
   },
-  series: [21, 23, 19, 14, 6],
-  labels: ['Clothing', 'Food Products', 'Electronics', 'Kitchen Utility', 'Gardening'],
+
+  labels: count_tour_points_category[0],
+  series: count_tour_points_category[1],
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 200
+      },
+      legend: {
+        position: 'left',
+        offsetY: 80
+      }
+    }
+  }],
   legend: {
     position: 'left',
     offsetY: 80
   }
 }
-
 var donut = new ApexCharts(document.querySelector("#donut"),optionDonut);
 donut.render();
-
-
-// var optionsLine = {
-//   chart: {
-//     height: 340,
-//     type: 'line',
-//     zoom: {
-//       enabled: false
-//     }
-//   },
-//   plotOptions: {
-//     stroke: {
-//       width: 4,
-//       curve: 'smooth'
-//     },
-//   },
-//   colors: colorPalette,
-//   series: [
-//     {
-//       name: "Day Time",
-//       data: trigoSeries(52, 20)
-//     }
-//   ],
-//   title: {
-//     floating: false,
-//     text: 'Customers',
-//     align: 'left',
-//     style: {
-//       fontSize: '18px'
-//     }
-//   },
-//   subtitle: {
-//     text: '168,215',
-//     align: 'center',
-//     margin: 30,
-//     offsetY: 40,
-//     style: {
-//       color: '#222',
-//       fontSize: '24px',
-//     }
-//   },
-//   markers: {
-//     size: 0
-//   },
-//
-//   grid: {
-//
-//   },
-//   xaxis: {
-//     labels: {
-//       show: false
-//     },
-//     axisTicks: {
-//       show: false
-//     },
-//     tooltip: {
-//       enabled: false
-//     }
-//   },
-//   yaxis: {
-//     tickAmount: 2,
-//     labels: {
-//       show: false
-//     },
-//     axisBorder: {
-//       show: false,
-//     },
-//     axisTicks: {
-//       show: false
-//     },
-//     min: 0,
-//   },
-//   legend: {
-//     position: 'top',
-//     horizontalAlign: 'left',
-//     offsetY: -20,
-//     offsetX: -30
-//   }
-// }
-
+//========================================================
+//line -
 var options = {
   chart: {
     height: 350,
-    type: "line",
+    type: 'line'
   },
-  plotOptions: {
-    stroke: {
-      width: 4,
-      curve: 'smooth'
-    },
+
+  stroke: {
+    width: 5,
+    curve: 'straight'
   },
-  colors: ['#99C2A2', '#C5EDAC', '#66C7F4'],
+  markers: {
+    size: 5
+  },
+  series: [{
+    name: "Users",
+    data: count_user[1]
+  }],
   title: {
     floating: false,
-    text: 'Customers',
+    text: 'Users Growth',
     align: 'left',
     style: {
       fontSize: '18px'
     }
   },
   subtitle: {
-    text: '168,215',
+    text: 'Total Users(last year): '+count_user[2],
     align: 'center',
     margin: 30,
     offsetY: 40,
     style: {
       color: '#222',
-      fontSize: '24px',
+      fontSize: '18px',
     }
   },
-  series: [
-    {
-      type: 'line',
-      data: [1.4, 2, 2.5, 3.5, 4.5, 4.8, 5.8, 6.6,8.2]
+  grid: {
+    row: {
+      colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      opacity: 1
     },
-  ],
+  },
   xaxis: {
-    categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016,2017]
+    categories: count_user[0],
+  },
+  yaxis: {
+    min: 0,
+    forceNiceScale: true,
+    max: Math.max.apply(null, count_user[1]),
+    title: {
+      text: 'Users'
+    }
   },
 };
 var chartLine = new ApexCharts(document.querySelector('#line'), options);
-
 // a small hack to extend height in website sample dashboard
 chartLine.render().then(function () {
   var ifr = document.querySelector("#wrapper");
   if (ifr.contentDocument) {
-    ifr.style.height = ifr.contentDocument.body.scrollHeight + 20 + 'px';
+    ifr.style.height = ifr.contentDocument.body.scrollHeight + 15 + 'px';
   }
 });
 //

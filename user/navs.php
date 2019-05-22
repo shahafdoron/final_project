@@ -42,10 +42,13 @@
 
   <a class="navbar-brand" href="homepage_user.php">Weizmann Institute of Science Tour Planing System</a>
 
-
 </div>
-</div>
-</nav><br><br><br><br>
+<form  action="../index.php" method="POST">
+  <button type="submit" name="logout" class="btn btn-light">
+    <i class="fas fa-sign-out-alt"></i> Log out
+  </button>
+</form>
+  </nav><br><br><br><br>
 
 
 
@@ -58,7 +61,7 @@
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #004f93 ;
+  background-color: #2e2eb8 ;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -66,10 +69,10 @@
 .ham {
     color: #007bff;
     text-decoration: none;
-    background-color: #023c7d;
+    background-color: #2e2eb8;
 }
 .bg-dark {
-    background-color: #023c7d !important;
+    background-color: #2e2eb8 !important;
 }/* The navigation menu links */
 .sidenav a {
   padding: 8px 8px 8px 32px;
@@ -102,7 +105,11 @@
   width:100%;
 }
 body {
-  overflow-x: hidden;
+
+    background-color: #eff4f7;
+    color: #777;
+    font-family: 'Titillium Web', Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
 }
 
 /* Add a black background color to the top navigation */

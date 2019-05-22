@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php include("../db_conn.php");
+echo "<br><br><br>";
+print_r($_SESSION["tour_points"]);
  ?>
 <html lang="en" dir="ltr">
   <head>
@@ -45,7 +47,7 @@
 
     <script type="text/javascript">
 
-      var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+      var sorted_json_points= (<?php print_r($_SESSION["tour_points"]); ?>);
       var div_el=document.getElementById("feedback");
       var ht='';
       console.log(sorted_json_points);
@@ -73,8 +75,9 @@
 
       function sendFeedback(){
 
-        var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+        var sorted_json_points= (<?php echo($_SESSION["tour_points"]); ?>);
         var points_ranking_by_user={};
+
 
         // define points_ranking_by_user:
         for (var i=1;i<sorted_json_points.length;i++){

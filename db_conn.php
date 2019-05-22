@@ -90,13 +90,25 @@ function ajaxCallPOST($action){
             mysqli_query($conn,$update_average_ranking);
           }
 
+            break;
+          case 'schedule':
+            $sorted_json_points=json_decode($_REQUEST["json_data"],true);
+            loadTourDetails($sorted_json_points);
+            break;
 
+          case 'remove_independent_from_schedule' :
+          $tour_id=json_decode($_REQUEST["json_data"],true);
+          removeIndependentFromSchedule($tour_id["tour_id"]);
+            break;
 
-
-          break;
-
+          case 'remove_guided_from_schedule':
+            $tour_id=json_decode($_REQUEST["json_data"],true);
+            removeGuidedFromSchedule($tour_id["tour_id"]);
+            break;
       }
 }
+
+
 
 function validate_email_password(){
 
@@ -136,6 +148,120 @@ function user_authintication($emailAddress,$password){
   if ($emailAddress=='' || $password==''){
     echo "Please enter email address and password";
   }
+}
+
+function setTourParameters(){
+
+  $total_tour_duration=floatval($_REQUEST["tour_duration_time"]);
+  $json_data=json_decode($_REQUEST["json_data"],true);
+  $planned_tour_date_time=$_REQUEST["planned_tour_date_time"];
+  $participants=$_REQUEST["participants"];
+
+
+  //set accessible and cafeteria:
+  $is_accessible_only=$_REQUEST["accessible"];
+  $is_cafeteria=$_REQUEST["cafeteria"];
+  $cafeteria_time=0;
+  if(intval($is_cafeteria)==1){
+    $cafeteria_time=floatval($_REQUEST["cafeteria_time"]);
+    $total_tour_duration=$total_tour_duration-$cafeteria_time;
+    $query="select * from point_of_interest where point_of_interest.category_id=7";
+    $_SESSION['cafeteria_json']=json_decode(extract_data_to_json($query),true);
+    $_SESSION["cafeteria_time"]=$_REQUEST["cafeteria_time"];
+
+  }
+
+  //set sessions
+  $query="select * from point_of_interest where name='main gate'";
+  $_SESSION["entry_point"]=json_decode(extract_data_to_json($query),true);
+  $_SESSION["total_tour_duration"]=$total_tour_duration;
+  $_SESSION["planned_tour_date_time"]=$planned_tour_date_time;
+  $_SESSION["participants"]=$participants;
+  $_SESSION["is_accessible_only"]=$is_accessible_only;
+  $_SESSION["is_cafeteria"]=$is_cafeteria;
+  $_SESSION["json_data"]=$json_data;
+  $_SESSION["cafeteria_time"]=$cafeteria_time;
+
+  echo "<br> <h3>entry_point:</h3>";
+  print_r($_SESSION["entry_point"]);
+  echo "<br> <h3>total_tour_duration:</h3>";
+  echo($total_tour_duration);
+  $insert_tour_query="insert into tour (planned_date_and_time_tour, tour_duration,is_acccessible_only,is_cafeteria, cafeteria_time, participants ,tour_type,has_started) VALUES ('".  $_SESSION["planned_tour_date_time"] ."' ,".$_SESSION["total_tour_duration"]." ,".$_SESSION["is_accessible_only"]." ,".  $_SESSION["is_cafeteria"]." ,".$_SESSION["cafeteria_time"]." ,".$_SESSION["participants"].",1 ,0)";
+  echo "<br> <h3>insert_tour_query:</h3>";
+  echo($insert_tour_query);
+}
+
+
+function loadTourDetails($sorted_json_points){
+  global  $conn;
+  $insert_tour_query="insert into tour (planned_date_and_time_tour, tour_duration,is_acccessible_only,is_cafeteria, cafeteria_time, participants ,tour_type,has_started) VALUES ('".  $_SESSION["planned_tour_date_time"] ."' ,".$_SESSION["total_tour_duration"]." ,".$_SESSION["is_accessible_only"]." ,".  $_SESSION["is_cafeteria"]." ,".$_SESSION["cafeteria_time"]." ,".$_SESSION["participants"].",1 ,0)";
+
+  $insert_tour_category_query="insert into tour_categories(tour_id, category_id) values ";
+  mysqli_query($conn,$insert_tour_query);
+
+  $generated_tour_id=mysqli_insert_id($conn);
+  //
+  //
+  foreach ($_SESSION["json_data"] as $key => $val){
+    $insert_tour_category_query.="(".$generated_tour_id.",".$_SESSION["json_data"][$key]["category_id"]. "),";
+  }
+  $insert_tour_category_query.="(".$generated_tour_id.",".$_SESSION["entry_point"][0]["category_id"].")";
+
+  $insert_tour_category_query=rtrim($insert_tour_category_query,",");
+
+  mysqli_query($conn,$insert_tour_category_query);
+
+
+  $insert_tour_points_query="insert into tour_points_of_interest (tour_id,point_id, point_position) VALUES ";
+  foreach ($sorted_json_points as $position => $val){
+    $insert_tour_points_query.="(".$generated_tour_id.",".$sorted_json_points[$position]["point_id"].",".$position. "),";
+  }
+  $insert_tour_points_query=rtrim($insert_tour_points_query,  ",");
+  mysqli_query($conn,$insert_tour_points_query);
+
+
+  $insert_independet_tour_query="insert into independent_tour (independent_tour_id,independent_tourist_id) values (".$generated_tour_id.",".$_SESSION["user_id"]. ")";
+  mysqli_query($conn,$insert_independet_tour_query);
+
+
+  $_SESSION["tour_id_current"]=$generated_tour_id;
+
+}
+
+function removeIndependentFromSchedule($tour_id){
+  global $conn;
+  $remove_independent_query="delete from independent_tour where independent_tour.independent_tour_id='".$tour_id."'";
+  mysqli_query($conn,$remove_independent_query);
+  deleteTourFromDB($tour_id);
+}
+
+function removeGuidedFromSchedule($tour_id){
+  global $conn;
+
+  $get_subscribers_query="select guided_tour_registration.subscribers from guided_tour_registration ";
+  $get_subscribers_query.="where guided_tour_registration.registered_tourist_id='".$_SESSION["user_id"]."' ";
+  $get_subscribers_query.="and guided_tour_registration.guided_tour_id='".$tour_id."' ";
+  $subscribers=json_decode(extract_data_to_json($get_subscribers_query),true);
+  $subscribers_num=$subscribers[0]["subscribers"];
+
+  $remove_guided_registration="delete from guided_tour_registration where guided_tour_registration.guided_tour_id='".$tour_id."' AND guided_tour_registration.registered_tourist_id='".$_SESSION["user_id"]."'";
+
+  $upadte_participents_query="update tour SET participants = participants - ".$subscribers_num." WHERE tour.tour_id ='".$tour_id."'";
+
+  mysqli_query($conn,$upadte_participents_query);
+  mysqli_query($conn,$remove_guided_registration);
+
+}
+
+function deleteTourFromDB($tour_id){
+  global $conn;
+  $remove_tour_query="delete from tour where tour.tour_id='".$tour_id."'";
+  $remove_tour_categories_query="delete from tour_categories where tour_categories.tour_id='".$tour_id."'";
+  $remove_tour_points_of_interest_query="delete from tour_points_of_interest where tour_points_of_interest.tour_id='".$tour_id."'";
+  mysqli_query($conn,$remove_tour_query);
+  mysqli_query($conn,$remove_tour_categories_query);
+  mysqli_query($conn,$remove_tour_points_of_interest_query);
+
 }
 
 function extract_data_to_json($query){

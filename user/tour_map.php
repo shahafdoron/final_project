@@ -7,36 +7,18 @@ include("algo.php");
 $sorted_json_points=array();
 
 if( isset($_POST['sel_tab']) ){
+  echo "<br><br><br><br><br>";
+setTourParameters();
 
-//set the entry point for the Nearest Neighbour Algorithm
-$query="select * from point_of_interest where name='main gate'";
-$total_tour_duration=floatval($_REQUEST["tour_duration_time"]);
-$_SESSION["entry_point"]=json_decode(extract_data_to_json($query),true);
-$json_data=json_decode($_REQUEST["json_data"],true);
-$planned_tour_date_time=$_REQUEST["planned_tour_date_time"];
-$participants=$_REQUEST["participants"];
 //set algo key
 $algorithem_key=$_REQUEST["sel_tab"];
-
-
-//set accessible and cafeteria:
-$is_accessible_only=$_REQUEST["accessible"];
-$is_cafeteria=$_REQUEST["cafeteria"];
-$cafeteria_time=0;
-if(intval($is_cafeteria)==1){
-  $cafeteria_time=floatval($_REQUEST["cafeteria_time"]);
-  $total_tour_duration=$total_tour_duration-$cafeteria_time;
-  $query="select * from point_of_interest where point_of_interest.category_id=7";
-  $_SESSION['cafeteria_json']=json_decode(extract_data_to_json($query),true);
-
-}
 //get algo key result
 $result=array();
 if ($algorithem_key=="1") {
-  $result=byCategoryAlgo($json_data,$total_tour_duration);
+  $result=byCategoryAlgo($_SESSION["json_data"],$_SESSION["total_tour_duration"]);
 }
 else {
-  $result=byPointAlgo($json_data);
+  $result=byPointAlgo($_SESSION["json_data"]);
 }
 
 // final tour points (sorted)
@@ -44,35 +26,9 @@ $sorted_json_points=nearest(json_decode($result,true));
 
 
 //=============================update db======================================
-$insert_tour_query="insert into tour (planned_date_and_time_tour, tour_duration,is_acccessible_only,is_cafeteria, cafeteria_time, participants ,tour_type) VALUES ('".$planned_tour_date_time."' ,$total_tour_duration ,$is_accessible_only ,$is_cafeteria ,$cafeteria_time ,$participants,1 )";
-$insert_tour_category_query="insert into tour_categories(tour_id, category_id) values ";
-mysqli_query($conn,$insert_tour_query);
-
-$generated_tour_id=mysqli_insert_id($conn);
-
-
-foreach ($json_data as $key => $val){
-  $insert_tour_category_query.="(".$generated_tour_id.",".$json_data[$key]["category_id"]. "),";
-}
-$insert_tour_category_query=rtrim($insert_tour_category_query,",");
-mysqli_query($conn,$insert_tour_category_query);
-// echo "<h5>insert_tour_category_query :</h5>  ". $insert_tour_category_query;
-// echo "<br><br>";
-
-$insert_tour_points_query="insert into tour_points_of_interest (tour_id,point_id, point_position) VALUES ";
-foreach ($sorted_json_points as $position => $val){
-  $insert_tour_points_query.="(".$generated_tour_id.",".$sorted_json_points[$position]["point_id"].",".$position. "),";
-}
-$insert_tour_points_query=rtrim($insert_tour_points_query,  ",");
-mysqli_query($conn,$insert_tour_points_query);
-// echo "<h5>insert_tour_points_query :</h5>  ". $insert_tour_points_query;
-
-$insert_independet_tour_query="insert into independent_tour (independent_tour_id,independent_tourist_id) values (".$generated_tour_id.",".$_SESSION["user_id"]. ")";
-mysqli_query($conn,$insert_independet_tour_query);
-// echo $insert_independet_tour_query;
 
 $_SESSION["tour_points"]=$sorted_json_points;
-$_SESSION["tour_id_current"]=$generated_tour_id;
+// $_SESSION["tour_id_current"]=$generated_tour_id;
 
 //=============================update db======================================
 
@@ -81,10 +37,12 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
 // ===================================echo parameters===========================================
 // echo "<br><br><br><br> ";
 //
+// echo "<br><br><br><br>";
 // print_r("<h5>final result :</h5> ". json_encode ($sorted_json_points));
 // echo "<br><br>";
 // print_r("<h5>category json: </h5>".json_encode($json_data));
 // echo "<br><br>";
+// echo $total_tour_duration;
 // echo "<h5>is_accessible_only :</h5>  ".$is_accessible_only;
 // echo "<br><br>";
 //
@@ -96,7 +54,7 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
 //
 // echo "<h5>user id :</h5>  ". $_SESSION["user_id"];
 // echo "<br><br>";
-//
+
 
 // ===================================echo parameters===========================================
 
@@ -131,30 +89,61 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
 <body>
   <script src="script.js">  </script>
   <?php include('navs.php'); ?>
-  <div class="container  border shadow p-3  bg-white rounded" style="width:100%; height:100%;">
+  <div class="container  border shadow p-3 h-100 w-100 bg-white rounded" style="width:100%; height:100%;">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="homepage_user.php">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="independent_tour.php">Independent Tour</a>
+        <a href="independent_tour.php">Build A Tour</a>
       </li>
       <li class="breadcrumb-item active">Map</li>
     </ol>
     <div class="container border shadow p-3 mb-5 bg-white rounded" style="width:100%; height:90%; ">
         <h1 ><u>Tour Map:</u></h1><br>
-      <div id="map" class="container border shadow p-3 mb-5 bg-white rounded" style="width:90%; height:75%;" >
 
-          <script type="text/javascript" src="map.js"></script>
-          <script type="text/javascript">
-            var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
-            passJsonPoints(sorted_json_points);
-          </script>
+      <div  class="container border shadow p-3 mb-3 bg-white rounded" style="width:100%; height:85%;" >
+        <div class="row border  mt-0 ml-0 mr-0 d-flex " style="width:100%; height:90%;">
+
+        <div id="data" class="col-3 p-0 mt-0 card-footer h-100 w-100 bg-light">
+
+          <script>
+
+        var algo_key=<?php echo $algorithem_key; ?>;
+        var total_tour_duration=<?php echo $_SESSION["total_tour_duration"]; ?>;
+        var points_json=<?php print_r(json_encode($_SESSION["tour_points"]));  ?>;
+        var category_json=(<?php print_r(json_encode($_SESSION["json_data"]));  ?>);
+        console.log("algo_key --> "+algo_key);
+        console.log("total_tour_duration --> "+total_tour_duration);
+        console.log(points_json);
+        console.log(category_json);
+        loadTourData(algo_key,total_tour_duration,points_json,category_json);
+      </script>
+
+        </div>
+
+        <div id="map" class="col-9 h-100 w-100 "  >
+
+        </div>
+        <script type="text/javascript">
+
+        var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+        console.log(sorted_json_points);
 
 
-          <div class="row justify-content-center">
-            <button class="btn btn-primary btn-lg" onclick="tourHandler()" style="width:250px;">Finish</button>
-          </div>
+        </script>
+        <script type="text/javascript" src="map.js"></script>
+
+
+        </div>
+
+        <div class="row justify-content-center mt-1">
+          <button class="btn btn-primary btn-lg" onclick="tourHandler()" style="width:250px;">Schedule Tour</button>
+        </div>
+      </div>
+
+
+
       </div>
 
 
@@ -165,9 +154,25 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
 
 
     <script>
+    function tourHandler() {
+      var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+
+
+      var ask = window.confirm("Are you sure you would like to schedule this tour?");
+        if (ask) {
+            sendAjax('../db_conn.php','schedule',sorted_json_points);
+            window.location.href = "my_tours.php";
+        }
+        else{
+            window.location.href = "homepage_user.php";
+        }
+
+
+
+      }
   // ====================================workkkkkkkkkkkkoinggg====================================
 
-    // var sorted_json_points= (<?php print_r(json_encode($_SESSION["tour_points"])); ?>);
+    // var sorted_json_points= (<?php //print_r(json_encode($_SESSION["tour_points"])); ?>);
     //
     // function initMap() {
     //   var map = new google.maps.Map(document.getElementById('map'), {
@@ -211,14 +216,7 @@ $_SESSION["tour_id_current"]=$generated_tour_id;
     //
     // }
     //
-    function tourHandler() {
-      var ask = window.confirm("Would you like to share a feedback?");
-        if (ask) {
-            window.location.href = "tour_feedback.php";
-        }
-        else{
-          window.location.href = "homepage_user.php";
-        }
+
 
     // }
     // ====================================workkkkkkkkkkkkoinggg====================================

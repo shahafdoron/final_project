@@ -1,9 +1,6 @@
 
 
-function passJsonPoints(json_points){
-  sorted_json_points=json_points;
-  initMap();
-}
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 31.9045, lng: 34.8083},
@@ -12,6 +9,7 @@ function initMap() {
 
   var point_pos={};
   var tourPath=[]
+
   for (var i = 0; i < sorted_json_points.length; i++) {
     tourPath.push({lat: parseFloat(sorted_json_points[i].latitude), lng: parseFloat(sorted_json_points[i].longitude)});
     new google.maps.Marker({
@@ -43,16 +41,5 @@ function initMap() {
     strokeColor: '#FF0000',
     strokeOpacity: 0
   });
-
-}
-
-function tourHandler() {
-  var ask = window.confirm("Would you like to share a feedback?");
-    if (ask) {
-        window.location.href = "tour_feedback.php";
-    }
-    else{
-      window.location.href = "homepage_user.php";
-    }
 
 }

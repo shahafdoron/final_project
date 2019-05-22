@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-// include("../db_conn.php");
+include("../db_conn.php");
 
 ?>
 <html lang="en" dir="ltr">
@@ -25,7 +25,7 @@
     <div class="container border shadow p-3 mb-5 bg-white rounded">
 
 
-    <h2>Points of interest</h2>
+    <h2><u>Points of interest</u></h2>
     <div id="points_by_category" >
       <select class='custom-select' data-live-search='true' id='categories' width=50px ></select>
 
@@ -36,6 +36,7 @@
   </div>
   <script>
   var query='select * from category where category.category_id NOT IN ("3") ';
+  var user_type=<?php echo $_SESSION["user_type"]; ?>;
   callAjax(concatenateCategories,'../db_conn.php?query='+query,"categories");
   document.getElementById("categories").addEventListener("change",showCategoryPoints);
 

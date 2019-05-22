@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-5 col-form-label" for="accessible_radio" >Accessible: </label>
+            <label class="col-5 col-form-label" for="accessible_radio" >Accessibility: </label>
             <div class="custom-control custom-radio custom-control-inline mt-1">
               <input type="radio" id="accessible_yes" name="access" class="custom-control-input" value="1">
               <label class="custom-control-label" for="accessible_yes">Yes</label>

@@ -90,9 +90,7 @@
         </div>
         <div class="form-group row">
           <label for="cafeteria_radio" class="col-3 col-form-label">Cafeteria:</label>
-          <!-- <div class="row"> -->
 
-          <!-- <div class="col-sm-2.5" id="cafeteria_radio"> -->
           <div class="custom-control custom-radio custom-control-inline mt-1 ">
             <input type="radio" id="cafeteria_yes" name="cafeteria" class="custom-control-input" onchange="document.getElementById('cafeteria_time_div').style.visibility='visible' ;" value="1"  onkeydown="return false">
             <label class="custom-control-label" for="cafeteria_yes">Yes</label>

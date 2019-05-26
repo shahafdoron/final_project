@@ -29,8 +29,8 @@ include("../db_conn.php");
     <div class="container border shadow p-3 mb-5 bg-white rounded">
       <h2><u>Points of interest</u></h2>
       <nav class="nav nav-pills flex-column flex-sm-row">
-        <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab"  href="#" onclick="showPoints()">Edit an exiting point</a>
-        <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="hide()">Create new point</a>
+        <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab"  href="#" onclick="hide('edit_point')">Edit an exiting point</a>
+        <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="hide('create_point')">Create new point</a>
       </nav>
       <div>
         <div id="admin_points" class="row mt-4 ml-3 mr-3"  >
@@ -49,15 +49,27 @@ include("../db_conn.php");
           // document.getElementById("categories").addEventListener("change",showCategoryPoints);
         }
 
-        function hide(){
-          console.log("here");
-          document.getElementById("admin_points").innerHTML="";
+        function hide(action){
+
+          switch (action) {
+            case "edit_point":
+
+              break;
+            default:
+
+          }
+          var txt ="<div id='points_by_category'>";
+          txt+="<select class='custom-select' data-live-search='true' id='categories' width=50px onchange='showCategoryPoints()'></select></div>";
+          txt+="<div id='points'>";
+
+          document.getElementById("admin_points").innerHTML=txt;
         }
 
         </script>
       </div>
     </div>
   </div>
+</div>
 
 
 
@@ -65,16 +77,5 @@ include("../db_conn.php");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-
-
-
-
-
-
-
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

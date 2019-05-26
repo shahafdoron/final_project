@@ -14,6 +14,7 @@ function callAjax(func,url,id){
 }
 function sendAjax(url,action,json_data={}){
   console.log("inside sendAjax");
+
   var request = new XMLHttpRequest();
   request.open("POST", url, true);
   request.setRequestHeader('X-Requested-With','XMLHttpRequest');
@@ -68,10 +69,10 @@ function concatenateCategories(json_data,id){
   // var el=document.getElementById("categories");
   var el=document.getElementById(id);
   // var txt="<select id='categories' width=50px >";
-  var txt="<option selected disabled hidden>Choose category</option>";
+  var txt="<option id='0' selected disabled hidden>Choose category</option>";
   var x = document.getElementById("categories");
   for (var i = 0; i < json_data.length; i++){
-    txt+="<option id='"+json_data[i].category_id+"' data-tokens='"+json_data[i].cat_name+"'>"+json_data[i].cat_name+"</option>";
+    txt+="<option id='"+json_data[i].category_id+"'>"+json_data[i].cat_name+"</option>";
   }
   // txt+="</select>";
   el.innerHTML=txt;
@@ -159,11 +160,10 @@ var action="point_description.php?point=";
 
 
 function concatenateGuidedTours(json_data,user_type){
-  console.log(json_data);
   var counter=1;
   var txt="";
   if (json_data.length==0) {
-    txt+="<h1 style=\"text-align: center;\"><u> There's no tours in the selected date</h1>";
+    txt+="<h1 style=\"text-align: center;\"> There's no tours in the selected date</h1>";
   }
   if (user_type==1) {
     for (i=0;i<json_data.length;i++){
@@ -185,6 +185,7 @@ function concatenateGuidedTours(json_data,user_type){
   else if (user_type==3)
   {
     for (i=0;i<json_data.length;i++){
+      console.log("heloo");
       txt+="<div class='row mt-2 border shadow p-3 mb-5 bg-white rounded'>";
       txt+="<div class='card w-100 h-50 mb-24 p-2 '>";
       txt+="<form method='POST' action='admin_edit_guided.php?tour="+JSON.stringify(json_data[i])+"&counter="+counter+"'>";
@@ -193,7 +194,7 @@ function concatenateGuidedTours(json_data,user_type){
       txt+="<div class='container'><div class='row justify-content-md-center'><div class='col-6 col-md-4'>";
       txt+="<p class='card-text '><u>Date</u>: "+json_data[i].tour_date+", <u>Hours</u>: "+json_data[i].Start_time+"-"+json_data[i].Finish_Time+"</p>";
       txt+="<p class='card-text'><u>Tour Cost</u>: "+json_data[i].tour_cost+"₪</p></div></div></div> ";
-      txt+="<form method='POST' action='admin_guided_table.php?remaining="+JSON.stringify(json_data[i].remaining_tickets)+"&tour_id="+JSON.stringify(json_data[i].guided_tour_id)+"'>";
+      txt+="<form method='POST' action='admin_tour_list.php?remaining="+json_data[i].remaining_tickets+"&tour_id="+json_data[i].guided_tour_id+"'>";
       txt+="<div style=\"text-align: center;\"><input class='btn btn-primary mt-3 ' type='submit' value='Show Current Participants List'></div>";
       txt+="</form>";
       txt+="</div>";
@@ -352,7 +353,7 @@ function addElement(parentId, elementTag, elementId, html) {
   newElement.innerHTML = html;
   p.appendChild(newElement);
 }
-function removeElement(remove_id,select_id,category_id,action="",step=0) {
+function removeElement(remove_id,select_id='',category_id,action="",step=0) {
   // Removes an element from the document
   if (action=="table"){
     var is_accessible=document.querySelector('input[name = accessible]:checked').value;
@@ -365,16 +366,38 @@ function removeElement(remove_id,select_id,category_id,action="",step=0) {
     console.log(query_points);
     callAjax(concatenatePointsDropDown,'../db_conn.php?query='+query_points,select_id);
   }
-  // console.log('remove_id : '+remove_id);
+remove(remove_id);
+var select_el=document.getElementById(select_id);
+select_el.namedItem(category_id).disabled=false;
+
+}
+
+// ==========delete beyond or take the updated remove element from ben==================================
+
+function remove(remove_id,action=''){
+  // console.log("alsjkfhaksjlfakjafkj");
   var element = document.getElementById(remove_id);
   element.parentNode.removeChild(element);
-  var select_el=document.getElementById(select_id);
-  // console.log("inside removeElement : category_id --> "+category_id);
-  select_el.namedItem(category_id).disabled=false;
-  // console.log("inside removeElement: "+ category_id);
+  if (action=="remove_participant") {
+    var js=remove_id.split(":");
+    console.log(js);
+    var user_id=js[0].substring(4, js[0].length);
+    var tour_id=js[1];
+    var tickets=js[2];
+    var json_data={};
+    json_data["tour_id"]=tour_id;
+    json_data["user_id"]=user_id;
+    json_data["tickets_number"]=tickets;
+    console.log(json_data);
+    console.log(typeof json_data["tickets_number"]);
+    sendAjax('../db_conn.php','remove_participant',json_data);
+    // window.location.reload();
+  }
 
 
 }
+
+// ==========delete above or take the updated remove element from ben==================================
 function setTimeLeft(){
   var time= parseInt(document.getElementById("tour_duration_time").value);
   document.getElementById("time_left_label").innerHTML="<b>Time left (minutes): "+time+"</b>";

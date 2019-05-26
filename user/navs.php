@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-static-top">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-static-top shadow">
   <div class="container">
     <div id="sideNavigation" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>

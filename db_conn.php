@@ -157,9 +157,11 @@ function validate_email_password(){
     $_SESSION["password"]=$row["password"];
     $_SESSION["user_id"]=$row["user_id"];
     $_SESSION["user_type"]=$row["user_type"];
+    $_SESSION["first_name"]=$row["first_name"];
+
     $result->free();
     if ($_SESSION["user_type"]=='3'){
-      header('location:admin/homepage_admin.php');
+      header('location:admin/analytics.php');
     }
     else {
       header('location:user/homepage_user.php');

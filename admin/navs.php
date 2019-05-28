@@ -4,10 +4,11 @@
   <div class="container">
     <div id="sideNavigation" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="homepage_admin.php"><i class="fas fa-home"></i> Home</a>
+      <!-- <a href="analytics.php"><i class="fas fa-home"></i> Home</a> -->
+      <a href="analytics.php"><i class="fas fa-chart-line"></i> Statistical Analysis</a>
+
       <a href="points_info.php"><i class="fas fa-sitemap"></i> Edit/Create Points Information</a>
       <a href="edit_guided.php"><i class="far fa-calendar-plus"></i> Edit/Create Guided Tours</a>
-      <a href="analytics.php"><i class="fas fa-chart-line"></i> Statistical Analysis</a>
 
     </div>
 
@@ -35,7 +36,7 @@
   </script>
 
 
-  <a class="navbar-brand" href="homepage_admin.php">Weizmann Institute of Science Tour Planing System</a>
+  <a class="navbar-brand" href="homepage_admin.php">Weizmann Institute of Science </a>
 
 
 </div>

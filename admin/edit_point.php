@@ -31,7 +31,7 @@
     <div class="container border shadow p-3 mb-5 bg-white rounded">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="homepage_admin.php">Home</a>
+          <a href="analytics.php">Statistical Analysis</a>
         </li>
         <li class="breadcrumb-item">
           <a href="points_info.php">Points information</a>
@@ -120,7 +120,7 @@
       </div>
   </div>
 
-  <br><br><br><br><br>
+  
 
   <script type="text/javascript">
   var query='select * from category where category.category_id NOT IN ("3") ';

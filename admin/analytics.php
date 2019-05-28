@@ -185,9 +185,7 @@
 
 	<div class="container border shadow p-3 mb-5 bg-white rounded">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item">
-				<a href="homepage_admin.php">Home</a>
-			</li>
+			
 			<li class="breadcrumb-item active">
 				<a >Statistical Analysis</a>
 			</li>

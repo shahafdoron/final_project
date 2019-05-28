@@ -44,7 +44,7 @@
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="homepage_admin.php">Home</a>
+        <a href="analytics.php">Statistical Analysis</a>
       </li>
       <li class="breadcrumb-item"><a href="edit_guided.php" >Guided Tours Administration</a>
       </li>

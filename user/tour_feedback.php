@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <?php include("../db_conn.php");
-echo "<br><br><br>";
-print_r($_SESSION["tour_points"]);
  ?>
 <html lang="en" dir="ltr">
   <head>

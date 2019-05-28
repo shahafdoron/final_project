@@ -10,7 +10,6 @@
       <a href="enter_dates_guided.php"><i class="fas fa-map-signs"></i> Guided Tours</a>
       <a href="independent_tour.php"><i class="fas fa-route"></i> Build A Tour</a>
       <a href="my_tours.php"><i class="fas fa-map"></i> My Tours</a>
-      <a href="contact.php"><i class="fas fa-envelope-open-text"></i> Contact Us</a>
 
     </div>
 
@@ -39,8 +38,7 @@
     }
   </script>
 
-
-  <a class="navbar-brand" href="homepage_user.php">Weizmann Institute of Science Tour Planing System</a>
+  <a class="navbar-brand text-center" href="homepage_user.php">Weizmann Institute of Science </a>
 
 </div>
 <form  action="../index.php" method="POST">
@@ -48,7 +46,8 @@
     <i class="fas fa-sign-out-alt"></i> Log out
   </button>
 </form>
-  </nav><br><br><br><br>
+  </nav>
+  <br><br><br><br>
 
 
 

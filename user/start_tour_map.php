@@ -2,8 +2,6 @@
 <?php
 include("../db_conn.php");
 $tour=json_decode($_REQUEST["json_tour"],true);
-echo "<br><br><br><br><br>";
-print_r($tour);
 $start_tour_query="update tour set has_started='1' where tour.tour_id='".$tour["tour_id"]."'";
 // global $conn;
 mysqli_query($conn,$start_tour_query);
@@ -14,8 +12,6 @@ $tour_points_query.='WHERE point_of_interest.point_id=tour_points_of_interest.po
 $tour_points_query.=' ORDER BY tour_points_of_interest.point_position ASC';
 $tour_points=(extract_data_to_json($tour_points_query));
 
-echo $tour_points_query. "<br><br>";
-echo($tour_points);
 
 $feedback_query="select * from feedback where feedback.tour_id='".$tour["tour_id"]."' and feedback.user_id='".$_SESSION["user_id"]."'";
 echo($feedback_query);

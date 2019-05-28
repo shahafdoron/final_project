@@ -22,7 +22,7 @@ include("../db_conn.php");
   <div class="container border shadow p-3 mb-5 bg-white rounded">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="homepage_user.php">Home</a>
+        <a href="analytics.php">Statistical Analysis</a>
       </li>
       <li class="breadcrumb-item active">Points Information</li>
     </ol>

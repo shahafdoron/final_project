@@ -87,7 +87,7 @@ function manageKnapsak($category_list){
 
 		// echo ($key. ", ". $val[0]. ", ". $val[1]. "<br>" );
 		$query="select point_of_interest.point_id,point_of_interest.name,point_of_interest.average_time_minutes, point_of_interest.average_ranking,point_of_interest.category_id,point_of_interest.longitude,point_of_interest.latitude";
-		$query.=" FROM point_of_interest WHERE point_of_interest.category_id=".$val[0] ." and point_of_interest.average_time_minutes<=".$val[2] ;
+		$query.=" FROM point_of_interest WHERE point_of_interest.category_id=".$val[0] ." and point_of_interest.average_time_minutes<=".$val[2]." order by point_of_interest.average_ranking asc" ;
 		// echo $query . "<br><br>";
 
 		$json_points=extract_data_to_json($query);
@@ -131,7 +131,7 @@ function byCategoryAlgo($json_data,$total_tour_duration){
 
 
 function byPointAlgo($json_data){
-	print_r( $json_data);
+	// print_r( $json_data);
 	$ids_points=array();
 	foreach ($json_data as $key => $value) {
 		$ids_points=array_merge($ids_points,$json_data[$key]["points"]);

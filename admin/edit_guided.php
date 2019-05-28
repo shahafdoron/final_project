@@ -216,7 +216,7 @@
         </script>
 
         <div id="enter_dates" class="tab-pane fade in active">
-          <div class="container border shadow p-3 mb-5 bg-white rounded">
+          <div class="container border  p-3 mb-5 bg-white rounded">
             <div class="row">
               <div class="form-group p-3 ">
 

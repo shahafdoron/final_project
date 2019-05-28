@@ -118,7 +118,7 @@ var action="point_description.php?point=";
     if (user_type_here=='3'){
     j=JSON.stringify(json_data[i]);
     txt+="<form method='POST' action='edit_point.php?point="+j+"'>";
-    txt+="<button class='btn w-25 btn-rounded btn-primary' type='submit'><i class='fas fa-edit'></i></button>";
+    txt+="<button class='btn w-25 btn-rounded btn-primary' type='submit'><i class='fas fa-pencil-alt'></i></button>";
     txt+="</form>";
   }
     txt+="<img class='card-img-top embed-responsive-item text-center border' src='../images/points/"+json_data[i].point_id+".jpg' alt='Card image cap'  style='width:100%; height:250px;'>";
@@ -129,10 +129,10 @@ var action="point_description.php?point=";
     txt+="<form  method='POST' action='"+action+JSON.stringify(json_data[i])+"'>";
 
     j=JSON.stringify(json_data[i]);
-    txt+="<div class=' text-muted text-center'>";
-    txt+="<p class='card-text '>Average ranking: "+json_data[i].average_ranking+"</p>";
-    txt+="<input class='align-self-end btn btn-primary btn-lg btn-block' type='submit' value='For more details'>";
-
+    txt+="<div class='text-muted text-center'>";
+    txt+=" <p class='card-text mt-3'>Average time: "+json_data[i].average_time_minutes+" </p>";
+    txt+=" <p class='card-text mt-3'>Average ranking: "+json_data[i].average_ranking+"</p>";
+    txt+="<input class='align-self-end btn btn-primary btn-lg btn-block mt-4' type='submit' value='For more details'>";
     txt+="</div>";
     txt+="</form>";
     txt+="</div>";
@@ -235,9 +235,11 @@ function concatenateSchedule(json_data,id){
     txt+="<div class='col-6'>";
     txt+="<h5 class='card-title mr-auto'>Tour number "+json_data[i].tour_id+" ("+type+") </h5>";
     txt+="</div>";
+    if (json_data[i].has_started=='0'){
     txt+="<div class='col-1'>";
     txt+="<span ><button class='btn btn-primary' type='button' onclick='removeTourFromSchedule("+tour_id+","+json_data[i].tour_type+")'><i class='fas fa-trash-alt'></i></button></span>";
     txt+="</div>";
+  }
     txt+="</div>";
     txt+="<p class='card-text'>Date: "+json_data[i].planned_date_and_time_tour+"</p>";
     if (json_data[i].has_started=='0'){
@@ -268,7 +270,7 @@ function removeTourFromSchedule(tour_id,tour_type){
 
   }
   sendAjax('../db_conn.php',action,json_data);
-  // window.location.reload();
+  window.location.reload();
   console.log(tour_id);
   console.log(action);
   console.log(tour_type);
@@ -741,4 +743,74 @@ function loadTourData(algo_key='',total_tour_duration,points_json,category_json=
     result["json_data"]=JSON.stringify(js);
 
     return result;
+  }
+
+  function manageAdminPointValidation(action,point_id=''){
+    var select_el=document.getElementById("categories");
+    var category_id_selected=select_el.options[select_el.selectedIndex].id;
+    var longitude=document.getElementById('point_longitude').value;
+    var latitude=document.getElementById('point_latitude').value;
+
+    var pass_validation=validationTest(longitude,latitude,category_id_selected);
+
+    if (pass_validation){
+      switch (action) {
+        case "edit_point":
+        var json_data={};
+        json_data["point_id"]=point_id;
+        json_data=setJsonData(json_data);
+        console.log(json_data);
+        sendAjax('../db_conn.php',action,json_data);
+        alert("Changes were successfully uploded to DB!");
+        window.location.href = "points_info.php";
+          break;
+
+          case "add_point":
+          var json_data={};
+          json_data["average_ranking"]=document.getElementById("point_average_ranking").value;
+          json_data=setJsonData(json_data);
+          sendAjax('../db_conn.php',action,json_data);
+          alert("Changes were successfully uploded to DB!");
+          window.location.href = "points_info.php";
+            break;
+      }
+    }
+
+  }
+
+  function setJsonData(json_data){
+
+    var select_el=document.getElementById("categories");
+    var category_id_selected=select_el.options[select_el.selectedIndex].id;
+    var longitude=document.getElementById('point_longitude').value;
+    var latitude=document.getElementById('point_latitude').value;
+    json_data["category_id"]=category_id_selected;
+    json_data["name"]=document.getElementById("point_name").value;
+    json_data["longitude"]=longitude;
+    json_data["latitude"]=latitude;
+    json_data["average_time_minutes"]=document.getElementById("point_average_time_minutes").value;
+    json_data["is_accessible"]=document.querySelector('input[name="accessible"]:checked').value;
+    json_data["point_description"]=document.getElementById("point_description").value;
+    return json_data;
+  }
+  function validationTest(longitude,latitude,category_id_selected){
+
+
+    if (category_id_selected.valueOf()== "0".valueOf()){
+      alert("Please chose category from the list");
+      return false;
+    }
+
+    if ( isNaN(parseFloat(longitude))) {
+      alert("Longitude must be a number");
+      return false;
+
+    }
+    if ( isNaN(parseFloat(latitude))) {
+      alert("latitude must be a number");
+      return false;
+
+    }
+
+    return true;
   }

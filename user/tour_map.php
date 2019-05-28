@@ -7,7 +7,7 @@ include("algo.php");
 $sorted_json_points=array();
 
 if( isset($_POST['sel_tab']) ){
-  echo "<br><br><br><br><br>";
+
 setTourParameters();
 
 //set algo key
@@ -16,6 +16,8 @@ $algorithem_key=$_REQUEST["sel_tab"];
 $result=array();
 if ($algorithem_key=="1") {
   $result=byCategoryAlgo($_SESSION["json_data"],$_SESSION["total_tour_duration"]);
+  // echo "<br><br><br><br><br>";
+  // print_r($result);
 }
 else {
   $result=byPointAlgo($_SESSION["json_data"]);

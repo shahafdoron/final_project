@@ -14,8 +14,7 @@
     where tour.tour_type=2 and tour.tour_id=guided_tour.guided_tour_id
     and tour.planned_date_and_time_tour BETWEEN '".$_SESSION['enter_date']."' and '".$_SESSION['finish_date']."' and
     tour.is_acccessible_only=".$_SESSION['is_access']." and (guided_tour.group_size-tour.participants)>0 and guided_tour.registration_deadline > NOW()and guide.guide_id=user.user_id and user.user_type=2";
-    echo "<br><br><br><br>";
-    echo $query;
+    
     $_SESSION['data']=extract_data_to_json($query);
 
   }

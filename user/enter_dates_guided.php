@@ -30,7 +30,7 @@
         <br>
         <div >
           <br>
-          <div class="form-group p-3 ">
+          <div class="form-group p-3">
 
 
           <form method="POST" action="Existing_guided_Tour.php">

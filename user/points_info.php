@@ -26,11 +26,15 @@ include("../db_conn.php");
 
 
     <h2><u>Points of interest</u></h2>
-    <div id="points_by_category" >
-      <select class='custom-select' data-live-search='true' id='categories' width=50px ></select>
-
+     <div  class="row mt-3 mr-3 mb-4 w-100"  >
+    <div class="col-3 ml-3" for="points_by_category">
+        <h4 ><b>Choose category:</b></h4>
     </div>
-    <div id="points">
+    <div id="points_by_category" class="col-3" >
+      <select class='custom-select'  id='categories' width=50px ></select>
+    </div>
+    </div>
+     <div id="points" class="ml-3 mr-3">
     </div>
   </div>
   </div>

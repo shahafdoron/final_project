@@ -29,9 +29,8 @@ $user_id=$_SESSION["user_id"];
     <div class="container border shadow p-3 mb-5 bg-white rounded">
     <h2><u>My Tours</u></h2><br>
     <nav class="nav nav-pills flex-column flex-sm-row">
-      <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab"  href="#" onclick="showMySchedule('>','0',<?php echo $user_id; ?>,'my_tours_schedule')">My future</a>
-
-      <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab"  href="#" onclick="showMySchedule('<','1',<?php echo $user_id; ?>,'my_tours_schedule')">My past tours</a>
+      <a class="flex-sm-fill text-sm-center nav-link active border" data-toggle="tab"  href="#" onclick="showMySchedule('>','0',<?php echo $user_id; ?>,'my_tours_schedule')">My future</a>
+      <a class="flex-sm-fill text-sm-center nav-link border" data-toggle="tab"  href="#" onclick="showMySchedule('<','1',<?php echo $user_id; ?>,'my_tours_schedule')">My past tours</a>
     </nav>
 
   <div >

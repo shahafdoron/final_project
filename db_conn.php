@@ -106,6 +106,24 @@ function ajaxCallPOST($action){
             removeGuidedFromSchedule($tour_id["tour_id"]);
             break;
 
+            case 'edit_point' :
+            $point=json_decode($_REQUEST["json_data"],true);
+            $update_point_query="update point_of_interest SET category_id='".$point["category_id"]."' , name='".$point["name"]."' , longitude='".$point["longitude"]."', ";
+            $update_point_query.="latitude='".$point["latitude"]."', average_time_minutes='".$point["average_time_minutes"]."', is_accessible='".$point["is_accessible"]."', point_description='".$point["point_description"]."' ";
+            $update_point_query.=" WHERE point_of_interest.point_id='".$point["point_id"]."'";
+            global $conn;
+            mysqli_query($conn,$update_point_query);
+            break;
+
+            case 'add_point' :
+            $point=json_decode($_REQUEST["json_data"],true);
+            $add_point_query="insert into point_of_interest (category_id,name,longitude,latitude, average_time_minutes, average_ranking, is_accessible, point_description) values ";
+            $add_point_query.="('".$point["category_id"]."','".$point["name"]."','".$point["longitude"]."','".$point["latitude"]."','".$point["average_time_minutes"]."','".$point["average_ranking"]."','".$point["is_accessible"]."','".$point["point_description"]."')";
+            global $conn;
+            mysqli_query($conn,$add_point_query);
+            break;
+
+
             case 'remove_participant':
             global $conn;
             $json_data=json_decode($_REQUEST["json_data"],true);
@@ -116,6 +134,8 @@ function ajaxCallPOST($action){
             mysqli_query($conn,$query_update);
             mysqli_query($conn,$query_remove_sub);
             break;
+
+
       }
 }
 

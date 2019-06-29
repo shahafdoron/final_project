@@ -179,7 +179,7 @@ function concatenateGuidedTours(json_data,user_type){
       txt+="</div>";
       txt+="</div>";
       txt+="</div>";
-      counter+=counter;
+      counter+=1;
     }
   }
   else if (user_type==3)
@@ -200,7 +200,7 @@ function concatenateGuidedTours(json_data,user_type){
       txt+="</div>";
       txt+="</div>";
       txt+="</div>";
-      counter+=counter;
+      counter+=1;
     }
   }
   document.getElementById("container").innerHTML=txt;

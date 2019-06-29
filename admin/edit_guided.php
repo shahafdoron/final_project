@@ -16,6 +16,8 @@
     loadTourDetails($sorted_json_points);
     $generated_tour_id=$_SESSION["tour_id_current"];
     $guided_tour_query="insert into guided_tour (guided_tour_id, guide_id, group_size, registration_deadline, tour_cost, description) VALUES ('".$generated_tour_id."', '".$_POST['guides_select']."', '".$group_size."', '".$deadline."', '".$_REQUEST['tour_cost']."', '".$_REQUEST['description']."' )";
+    // echo "<br><br><br><br><br><br><br>";
+    // echo $guided_tour_query;
     mysqli_query($conn,$guided_tour_query);
 
   }

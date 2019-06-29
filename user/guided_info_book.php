@@ -53,8 +53,10 @@
                 <p class='card-text align-items-center d-flex justify-content-center'> Tour duration: <?php echo floatval ($tour['tour_duration'])." Minutes."; ?></p>
               </div>
             </div>
+            <br>
             <div class=".col-md-6">
-              <p class='card-text align-items-center d-flex justify-content-center'> Tour description: <?php echo $tour['description']."."; ?></p>
+              <u><p class='card-text align-items-center d-flex justify-content-center'> Tour description: </p></u>
+              <p class='card-text align-items-center d-flex justify-content-center mt-1'><?php echo $tour['description']."."; ?></p>
             </div>
           </div>
         </div>
@@ -63,14 +65,17 @@
 
         <div class="card-footer align-items-center d-flex justify-content-center">
           <div class="container">
-            <div class="row justify-content-center">
-              <div class=".col-md-9">Ticket cost: <?php echo $tour['tour_cost'].' ₪'; ?></div>
+            <div class="row justify-content-center mt-1">
+              <div class=".col-md-9" style='color: red;'><b>Remaining tickets: <?php echo $tour['remaining_tickets']; ?></b></div>
             </div>
-            <br>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-1">
+              <div class=".col-md-9">Ticket cost (price per unit): <?php echo $tour['tour_cost'].' ₪'; ?></div>
+            </div>
 
-              <div class=".col-md-6 ">Number of tickets to purchase: <input name="Ticket" type="text" style="width: 100px" required oninvalid="this.setCustomValidity('Please Enter Number Of Tickets')"/></div>
+            <div class="row justify-content-center mt-1">
+              <div class=".col-md-6 ">Tickets to purchase: <input name="Ticket" type="text" style="width: 100px" required oninvalid="this.setCustomValidity('Please Enter Number Of Tickets')"/></div>
             </div>
+
             <?php
             if(isset($_POST['Ticket'])){
               if(floatval($_POST['Ticket'])>floatval($tour['remaining_tickets'])){

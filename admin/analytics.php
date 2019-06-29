@@ -49,7 +49,6 @@
 		where user_type=1
 		group by date
 		order by date";
-			echo $count_users_query;
 		$count_users=json_decode(extract_data_to_json($count_users_query),true);
 
 		$data=array();
@@ -78,9 +77,7 @@
 	}
 	function count_participants_tour(){
 		$count_participants_tour_query =  "select date_format(planned_date_and_time_tour, '%b %Y') as date,(case when tour_type=1 THEN '1' Else '0' end) as tour_type, sum(participants) as count
-		from tour
-		group by date,tour_type
-		order by date,tour_type";
+		from tour	group by date,tour_type	order by str_to_date(date,'%M') ,tour_type DESC";
 
 		$count_participants_tour=json_decode(extract_data_to_json($count_participants_tour_query),true);
 		$js=[];
@@ -92,6 +89,7 @@
 			$js[$count_participants_tour[$i]['date']][intval($count_participants_tour[$i]['tour_type'])]=intval($count_participants_tour[$i]['count']);
 			}
 		}
+		$js=array_reverse($js,true);
 		$dates=array();
 		$count_guided=array();
 		$count_inde=array();
@@ -101,8 +99,9 @@
 			array_push($count_guided,$value[0]);
 			array_push($count_inde,$value[1]);
 		}
-			array_push($data,$dates,$count_guided,$count_inde);
-			return $data;
+
+		array_push($data,$dates,$count_guided,$count_inde);
+		return $data;
 	}
 	function category_count(){
 		$category_count_query='select TABLE1.category,IFNULL(TABLE1.Count_guided,0) AS guided_count ,IFNULL(TABLE2.Count_inde,0) AS independent_count
@@ -185,7 +184,7 @@
 
 	<div class="container border shadow p-3 mb-5 bg-white rounded">
 		<ol class="breadcrumb">
-			
+
 			<li class="breadcrumb-item active">
 				<a >Statistical Analysis</a>
 			</li>

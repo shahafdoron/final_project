@@ -19,10 +19,10 @@
 		}
 		$number= $_REQUEST['code'];
 		$number.=$_REQUEST['number'];
-		$insert_user_query="insert into user (first_name, last_name, email, phone, city, street_name, house_number, date_of_birth, gender, user_type, registration_date) VALUES ( '".$_REQUEST["first"]."','".$_REQUEST["last"]."' ,'".$_REQUEST["email"]."' ,'".$number."', '".$_REQUEST["city"]."','".$_REQUEST["street"]."','".$_REQUEST["house"]."' ,'".$birthday."','".$gender."' ,1 ,'".$date."' )";
-		echo $insert_user_query;
+		$insert_user_query="insert into user (first_name, last_name, email, phone, city, street_name, house_number, date_of_birth, gender, user_type, registration_date,password) VALUES ( '".$_REQUEST["first"]."','".$_REQUEST["last"]."' ,'".$_REQUEST["email"]."' ,'".$number."', '".$_REQUEST["city"]."','".$_REQUEST["street"]."','".$_REQUEST["house"]."' ,'".$birthday."','".$gender."' ,1 ,'".
+		$date."' , ".$_REQUEST["password"]." )";
 		mysqli_query($conn,$insert_user_query);
-		header("Location: user/homepage_user.php");
+		header("Location: homepage_user.php");
 	}
 
 
